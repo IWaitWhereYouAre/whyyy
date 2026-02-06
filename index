@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Heart to Heart | ISA Chulalongkorn</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&family=Pinyon+Script&display=swap');
+
+    :root {
+      --gold: #c5a059;
+      --deep-green: #1a2a1d;
+      --cream: #f8f5f0;
+      --blush: #e8d5d1;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: var(--cream);
+      overflow: hidden;
+      -webkit-text-size-adjust: 100%;
+      touch-action: manipulation;
+    }
+
+    body {
+      min-height: 100svh;
+      background-color: var(--cream);
+      color: var(--deep-green);
+      font-family: 'Lato', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 1.2s ease;
+      position: relative;
+    }
+
+    #app-container {
+      text-align: center;
+      width: 100%;
+      max-width: 1200px;
+      padding: 20px;
+      z-index: 10;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    /* =========================
+       SECRET GARDEN BACKGROUND
+       ========================= */
+    .garden-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      background:
+        radial-gradient(900px 700px at 20% 20%, rgba(197,160,89,0.14), transparent 60%),
+        radial-gradient(800px 650px at 80% 30%, rgba(232,213,209,0.18), transparent 55%),
+        radial-gradient(900px 700px at 40% 90%, rgba(26,42,29,0.14), transparent 55%),
+        linear-gradient(120deg, rgba(248,245,240,1), rgba(248,245,240,1));
+    }
+
+    .garden-bg::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.55), transparent 55%),
+        radial-gradient(circle at 70% 40%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(circle at 50% 70%, rgba(255,255,255,0.25), transparent 65%),
+        linear-gradient(120deg, rgba(197,160,89,0.08), rgba(232,213,209,0.10), rgba(26,42,29,0.06));
+      filter: blur(18px);
+      opacity: 0.9;
+      animation: gardenDrift 18s ease-in-out infinite;
+      transform: translate3d(0,0,0);
+    }
+
+    .garden-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+      opacity: 0.55;
+      mix-blend-mode: multiply;
+    }
+
+    @keyframes gardenDrift {
+      0%   { transform: translate(-4%, -2%) rotate(-2deg); }
+      50%  { transform: translate(4%, 2%) rotate(2deg); }
+      100% { transform: translate(-4%, -2%) rotate(-2deg); }
+    }
+
+    /* =========================
+       PETALS
+       ========================= */
+    .petals {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      top: -10%;
+      width: 10px;
+      height: 16px;
+      border-radius: 60% 40% 60% 40%;
+      background: rgba(232,213,209,0.55);
+      box-shadow: 0 0 0 1px rgba(197,160,89,0.08);
+      filter: blur(0.15px);
+      animation: fall linear infinite;
+      transform: rotate(12deg);
+      opacity: 0.85;
+    }
+    @keyframes fall {
+      0%   { transform: translate3d(0, -20px, 0) rotate(10deg); }
+      100% { transform: translate3d(0, 120vh, 0) rotate(260deg); }
+    }
+
+    /* =========================
+       BIRDS
+       ========================= */
+    .birds {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      overflow: hidden;
+      opacity: 0.65;
+      filter: blur(0.1px);
+    }
+    .bird {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 56px;
+      height: 30px;
+      opacity: 0.55;
+      animation: flyDiag linear infinite;
+      transform: translate3d(var(--fromX), var(--fromY), 0) scale(var(--s, 1));
+      will-change: transform, opacity;
+    }
+    @keyframes flyDiag {
+      0%   { transform: translate3d(var(--fromX), var(--fromY), 0) scale(var(--s, 1)); opacity: 0; }
+      10%  { opacity: 0.65; }
+      90%  { opacity: 0.55; }
+      100% { transform: translate3d(var(--toX), var(--toY), 0) scale(var(--s, 1)); opacity: 0; }
+    }
+    .bird .wing { transform-box: fill-box; transform-origin: center; animation: flap 0.35s ease-in-out infinite; }
+    .bird .wing.right { animation-delay: 0.02s; }
+    @keyframes flap {
+      0%   { transform: rotate(8deg) scaleY(1); }
+      50%  { transform: rotate(-18deg) scaleY(0.92); }
+      100% { transform: rotate(8deg) scaleY(1); }
+    }
+
+    .vignette {
+      position: fixed; inset: 0;
+      background: radial-gradient(circle, transparent 50%, rgba(26, 42, 29, 0.1));
+      pointer-events: none; z-index: 5;
+    }
+    .botanical { position: fixed; width: 450px; opacity: 0.12; pointer-events: none; z-index: 3; }
+    .top-left { top: -120px; left: -120px; transform: rotate(15deg); }
+    .bottom-right { bottom: -120px; right: -120px; transform: rotate(195deg); }
+
+    /* =========================
+       HEADERS
+       ========================= */
+    .isa-tag {
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+      opacity: 0.7;
+      text-transform: uppercase;
+    }
+
+    h1.main-title {
+      font-family: 'Pinyon Script', cursive;
+      font-size: clamp(3rem, 12vw, 6rem);
+      color: var(--gold);
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    .sub-theme {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(0.7rem, 2vw, 1rem);
+      letter-spacing: clamp(4px, 1vw, 10px);
+      text-transform: uppercase;
+      margin-bottom: clamp(14px, 3vh, 30px);
+    }
+
+    /* =========================
+       STATIONS
+       ========================= */
+    .station-wrap {
+      width: 100%;
+      max-width: 820px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    @media (max-width: 820px) {
+      .station-wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    .station-btn {
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(197,160,89,0.55);
+      border-radius: 10px;
+      padding: 14px 12px;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.25s;
+      backdrop-filter: blur(4px);
+      min-height: 74px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+    .station-btn:hover { transform: translateY(-2px); border-color: var(--gold); }
+    .st-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+    }
+    .st-sub {
+      font-size: 0.62rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.75;
+      line-height: 1.3;
+    }
+
+    /* =========================
+       DECK
+       ========================= */
+    .deck-area {
+      position: relative;
+      height: clamp(240px, 36vh, 390px);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+      margin-top: 12px;
+    }
+
+    .card {
+      position: absolute;
+      width: clamp(120px, 25vw, 180px);
+      height: clamp(170px, 35vh, 260px);
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid var(--gold);
+      background-color: var(--deep-green);
+      background-image: url("https://www.transparenttextures.com/patterns/dark-matter.png");
+    }
+
+    .card-crest {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--gold);
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      z-index: 2;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* =========================
+       RESULT
+       ========================= */
+    #result-screen { display: none; opacity: 0; }
+
+    #capture-frame {
+      background: #fff;
+      padding: clamp(28px, 5vw, 56px) clamp(18px, 4vw, 38px);
+      width: 90vw;
+      max-width: 430px;
+      margin: 0 auto;
+      position: relative;
+      box-sizing: border-box;
+      border: 1px solid rgba(197, 160, 89, 0.2);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+      background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+    }
+    #capture-frame::before {
+      content: "";
+      position: absolute;
+      inset: 15px;
+      border: 0.5px solid var(--gold);
+      pointer-events: none;
+    }
+
+    .result-isa {
+      font-size: 0.55rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .result-theme {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 2.7rem;
+      color: var(--deep-green);
+      margin: 0 0 8px 0;
+      line-height: 1;
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .pill {
+      font-size: 0.55rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 8px 10px;
+      border: 1px solid rgba(197,160,89,0.45);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.55);
+    }
+
+    .front-line {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 4vw, 1.65rem);
+      line-height: 1.35;
+      margin: 18px 0 14px 0;
+      font-style: italic;
+    }
+
+    .section {
+      text-align: left;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 0.5px solid rgba(0,0,0,0.09);
+    }
+    .sec-label {
+      font-size: 0.52rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .sec-body {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      font-family: 'Playfair Display', serif;
+    }
+    .sec-body.small {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.88rem;
+      opacity: 0.9;
+    }
+
+    .advice {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.98rem;
+      line-height: 1.45;
+    }
+
+    /* =========================
+       BUTTONS
+       ========================= */
+    .btn-group {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: none;
+      border: 1px solid var(--gold);
+      padding: 10px 18px;
+      font-family: 'Lato', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: 0.3s;
+      backdrop-filter: blur(4px);
+      flex: 1 1 auto;
+      min-width: 120px;
+      max-width: 220px;
+    }
+
+    .btn-save { background: var(--gold); color: #fff; }
+    .btn-save:hover { background: var(--deep-green); border-color: var(--deep-green); }
+
+    .btn-sound {
+      border-color: rgba(197,160,89,0.65);
+      color: var(--deep-green);
+      background: rgba(255,255,255,0.45);
+    }
+    .btn-sound.active {
+      background: rgba(26,42,29,0.85);
+      color: #fff;
+      border-color: rgba(26,42,29,0.85);
+    }
+
+    .tiny-note {
+      font-size:0.62rem;
+      opacity:0.6;
+      letter-spacing:1px;
+      margin-top:10px;
+      line-height: 1.35;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="garden-bg"></div>
+  <div class="petals" id="petals"></div>
+  <div class="birds" id="birds"></div>
+  <div class="vignette"></div>
+
+  <img src="https://www.transparenttextures.com/patterns/flowers.png" class="botanical top-left" />
+  <img src="https://www.transparenttextures.com/patterns/flowers.png" class="botanical bottom-right" />
+
+  <div id="app-container">
+    <!-- =========================
+         RITUAL SCREEN
+         ========================= -->
+    <div id="ritual-screen">
+      <p class="isa-tag">ISA Chulalongkorn Presents</p>
+      <h1 class="main-title">Heart to Heart</h1>
+      <p class="sub-theme">Love Is Learned</p>
+
+      <!-- Station choose -->
+      <div id="station-screen">
+        <p style="margin: 10px 0 6px; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; opacity:0.75;">
+          Choose your primary teacher of love
+        </p>
+
+        <div class="station-wrap" id="station-wrap">
+          <!-- injected -->
+        </div>
+
+        <p class="tiny-note">
+          No right answer. Take what resonates, leave what doesn’t.
+        </p>
+      </div>
+
+      <!-- Deck draw -->
+      <div id="deck-screen" style="display:none;">
+        <p id="station-picked" style="margin: 10px 0 6px; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; opacity:0.75;"></p>
+
+        <div class="deck-area" id="deck-container"></div>
+
+        <p id="status-text" style="margin-top: 22px; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;">
+          Tap the deck to begin
+        </p>
+
+        <div class="btn-group" style="margin-top:16px;">
+          <button class="btn btn-sound active" id="soundBtn" type="button">Sound: On</button>
+          <button class="btn" id="backToStations" type="button">Change Station</button>
+        </div>
+        <p class="tiny-note">(Sound will begin on your first tap/click.)</p>
+      </div>
+    </div>
+
+    <!-- =========================
+         RESULT SCREEN
+         ========================= -->
+    <div id="result-screen">
+      <div id="capture-frame">
+        <span class="result-isa">ISA Chulalongkorn</span>
+        <h2 class="result-theme">Heart to Heart</h2>
+
+        <div class="pill-row">
+          <span class="pill" id="pill-teacher">Teacher: —</span>
+          <span class="pill" id="pill-vibe">You are not bad at love</span>
+        </div>
+
+        <div class="front-line" id="front-line"></div>
+
+        <div class="section">
+          <span class="sec-label">Social Explanation</span>
+          <div class="sec-body small" id="explain-text"></div>
+        </div>
+
+        <div class="section">
+          <span class="sec-label">Culture / Society Context</span>
+          <div class="sec-body small" id="context-text"></div>
+        </div>
+
+        <div class="section">
+          <span class="sec-label">Advice meant for you</span>
+          <div class="sec-body advice" id="advice-text"></div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn" onclick="location.reload()">Reset</button>
+        <button class="btn btn-save" onclick="saveImage()">Save Picture</button>
+        <button class="btn btn-sound active" id="soundBtn2" type="button">Sound: On</button>
+      </div>
+      <p class="tiny-note">Saved to your downloads folder</p>
+    </div>
+  </div>
+
+  <script>
+    /* =========================
+       PETALS
+       ========================= */
+    const petalsHost = document.getElementById('petals');
+
+    function spawnPetals(count = 16) {
+      petalsHost.innerHTML = '';
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'petal';
+        const left = Math.random() * 100;
+        const dur = 10 + Math.random() * 12;
+        const delay = Math.random() * 8;
+        const size = 8 + Math.random() * 10;
+        p.style.left = left + 'vw';
+        p.style.animationDuration = dur + 's';
+        p.style.animationDelay = delay + 's';
+        p.style.width = size + 'px';
+        p.style.height = (size * 1.5) + 'px';
+        p.style.opacity = (0.45 + Math.random() * 0.45).toFixed(2);
+        petalsHost.appendChild(p);
+      }
+    }
+
+    spawnPetals(18);
+    window.addEventListener('resize', () => spawnPetals(window.innerWidth < 480 ? 12 : 18));
+
+    /* =========================
+       SOUND (birds only)
+       ========================= */
+    let audioCtx = null;
+    let masterGain = null;
+    let soundOn = true;
+    let audioPrimed = false;
+
+    function ensureAudio() {
+      if (audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0.0001;
+      masterGain.connect(audioCtx.destination);
+    }
+
+    async function primeAndApplyAudio() {
+      ensureAudio();
+      if (audioCtx.state === "suspended") {
+        try { await audioCtx.resume(); } catch (e) {}
+      }
+      audioPrimed = true;
+
+      const now = audioCtx.currentTime;
+      masterGain.gain.cancelScheduledValues(now);
+      masterGain.gain.setValueAtTime(masterGain.gain.value, now);
+      masterGain.gain.exponentialRampToValueAtTime(soundOn ? 0.85 : 0.0001, now + 0.12);
+      updateSoundButtons();
+    }
+
+    function setSound(on) {
+      soundOn = on;
+      if (!audioPrimed || !audioCtx || !masterGain) { updateSoundButtons(); return; }
+
+      const now = audioCtx.currentTime;
+      masterGain.gain.cancelScheduledValues(now);
+      masterGain.gain.setValueAtTime(masterGain.gain.value, now);
+      masterGain.gain.exponentialRampToValueAtTime(on ? 0.85 : 0.0001, now + 0.12);
+      updateSoundButtons();
+    }
+
+    function toggleSound() { setSound(!soundOn); }
+
+    function updateSoundButtons() {
+      const label = soundOn ? "Sound: On" : "Sound: Off";
+      const btns = [document.getElementById("soundBtn"), document.getElementById("soundBtn2")].filter(Boolean);
+      btns.forEach(b => {
+        b.textContent = label;
+        b.classList.toggle("active", soundOn);
+      });
+    }
+
+    (function bindAutoStart() {
+      const once = async () => {
+        await primeAndApplyAudio();
+        window.removeEventListener("pointerdown", once);
+        window.removeEventListener("keydown", once);
+      };
+      window.addEventListener("pointerdown", once);
+      window.addEventListener("keydown", once);
+    })();
+
+    document.getElementById("soundBtn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleSound();
+    });
+
+    function pleasantChirp({ pan = 0, volume = 1 } = {}) {
+      if (!audioCtx || !audioPrimed || !soundOn) return;
+
+      const now = audioCtx.currentTime;
+      const osc1 = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      const filter = audioCtx.createBiquadFilter();
+      const panner = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
+
+      osc1.type = "sine";
+      osc2.type = "triangle";
+
+      filter.type = "bandpass";
+      filter.frequency.value = 2600;
+      filter.Q.value = 9;
+
+      const base = 1350 + Math.random() * 950;
+      const sweepUp = 1.30 + Math.random() * 0.30;
+      const duration = 0.18 + Math.random() * 0.08;
+
+      osc1.frequency.setValueAtTime(base, now);
+      osc1.frequency.exponentialRampToValueAtTime(base * sweepUp, now + duration * 0.65);
+
+      osc2.frequency.setValueAtTime(base * 0.985, now);
+      osc2.frequency.exponentialRampToValueAtTime(base * sweepUp * 1.02, now + duration * 0.65);
+
+      const lfo = audioCtx.createOscillator();
+      const lfoGain = audioCtx.createGain();
+      lfo.type = "sine";
+      lfo.frequency.value = 10 + Math.random() * 3;
+      lfoGain.gain.value = 14 + Math.random() * 9;
+      lfo.connect(lfoGain);
+      lfoGain.connect(osc1.frequency);
+      lfoGain.connect(osc2.frequency);
+
+      const peak = 0.045 * volume;
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(peak, now + 0.028);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+      osc1.connect(filter);
+      osc2.connect(filter);
+
+      if (panner) {
+        panner.pan.setValueAtTime(Math.max(-1, Math.min(1, pan)), now);
+        filter.connect(panner);
+        panner.connect(gain);
+      } else {
+        filter.connect(gain);
+      }
+
+      gain.connect(masterGain);
+
+      lfo.start(now);
+      osc1.start(now);
+      osc2.start(now);
+
+      const stopAt = now + duration + 0.02;
+      lfo.stop(stopAt);
+      osc1.stop(stopAt);
+      osc2.stop(stopAt);
+    }
+
+    updateSoundButtons();
+
+    /* =========================
+       BIRDS (visual + sound synced)
+       ========================= */
+    const birdsHost = document.getElementById('birds');
+
+    function spawnBird() {
+      if (!birdsHost) return;
+
+      const bird = document.createElement('div');
+      bird.className = 'bird';
+
+      const mode = Math.random() > 0.5 ? "up" : "down";
+      const fromX = "-25vw";
+      const toX   = "120vw";
+
+      const fromY = mode === "up"
+        ? (65 + Math.random() * 25) + "vh"
+        : (10 + Math.random() * 25) + "vh";
+
+      const toY = mode === "up"
+        ? (8 + Math.random() * 25) + "vh"
+        : (55 + Math.random() * 30) + "vh";
+
+      const dur = 9 + Math.random() * 10;
+      const delay = Math.random() * 2.5;
+      const scale = (0.75 + Math.random() * 0.7).toFixed(2);
+      const opacity = (0.28 + Math.random() * 0.35).toFixed(2);
+
+      bird.style.setProperty('--fromX', fromX);
+      bird.style.setProperty('--toX', toX);
+      bird.style.setProperty('--fromY', fromY);
+      bird.style.setProperty('--toY', toY);
+      bird.style.setProperty('--s', scale);
+
+      bird.style.animationDuration = dur + "s";
+      bird.style.animationDelay = delay + "s";
+      bird.style.opacity = opacity;
+
+      bird.innerHTML = `
+        <svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" stroke-linecap="round" stroke="rgba(26,42,29,0.62)">
+            <path d="M58 36 Q60 34 62 36" stroke-width="3"/>
+            <path class="wing left"  d="M60 36 Q40 18 18 26" stroke-width="3.2"/>
+            <path class="wing right" d="M60 36 Q80 18 102 26" stroke-width="3.2"/>
+          </g>
+          <g fill="none" stroke-linecap="round" stroke="rgba(197,160,89,0.28)">
+            <path class="wing left"  d="M60 36 Q43 22 22 28" stroke-width="2.1"/>
+            <path class="wing right" d="M60 36 Q77 22 98 28" stroke-width="2.1"/>
+          </g>
+        </svg>
+      `;
+
+      birdsHost.appendChild(bird);
+
+      const entryPan = -0.55 + Math.random() * 0.25;
+      const midPan   = -0.10 + Math.random() * 0.20;
+      const baseVol = 0.85 + Math.random() * 0.25;
+
+      setTimeout(() => {
+        pleasantChirp({ pan: entryPan, volume: baseVol });
+
+        if (Math.random() > 0.55) {
+          setTimeout(() => pleasantChirp({ pan: midPan, volume: baseVol * 0.92 }), (dur * 0.45) * 1000);
+        }
+
+        if (Math.random() > 0.7) {
+          setTimeout(() => pleasantChirp({ pan: entryPan, volume: baseVol * 0.72 }), 220 + Math.random() * 180);
+        }
+      }, delay * 1000);
+
+      setTimeout(() => bird.remove(), (dur + delay + 1) * 1000);
+    }
+
+    function startBirdFlights() {
+      spawnBird();
+      setInterval(() => {
+        if (Math.random() > 0.35) spawnBird();
+      }, 2200);
+    }
+    startBirdFlights();
+
+    /* =========================
+       GAME DATA (Stations + Cards)
+       ========================= */
+    const stations = {
+      family: {
+        label: "Family",
+        sub: "Love as care • harmony • duty",
+        bg: "#f3eddc",
+        cards: [
+          {
+            front: "I stay even when I’m unsure.",
+            explain: "If family taught you love, you likely learned that commitment means endurance—love is proven by showing up, even when it’s complicated.",
+            context: "In many collectivist or family-centered cultures, love is modeled through sacrifice and responsibility. Stability can be valued more than self-expression.",
+            advice: "Your advice: practice naming your needs without apologizing. Clarity is not selfishness."
+          },
+          {
+            front: "I feel guilty wanting more.",
+            explain: "You may have learned that wanting ‘too much’ creates conflict—so you shrink your needs to protect the relationship.",
+            context: "When harmony is a social value, people learn to manage tension silently. But silence can slowly become resentment.",
+            advice: "Your advice: start small—ask for one concrete thing. Let your needs exist in daylight."
+          },
+          {
+            front: "I prioritize peace over truth.",
+            explain: "You’re not ‘avoiding’—you’re preserving safety. You learned love by keeping the room calm.",
+            context: "Families teach emotional rules: who can speak, when, and how. Those rules travel into adult relationships.",
+            advice: "Your advice: practice ‘gentle honesty’: one honest sentence, said kindly, before you disappear."
+          }
+        ]
+      },
+      media: {
+        label: "Media",
+        sub: "Love as intensity • drama • destiny",
+        bg: "#fce3e3",
+        cards: [
+          {
+            front: "I fall too fast.",
+            explain: "If media taught you love, your nervous system may read ‘spark’ as truth—fast feelings look like fate.",
+            context: "Stories compress time. Two hours of romance becomes a template for real life, where intimacy actually takes repetition and boredom.",
+            advice: "Your advice: slow is not a lack of love. Let consistency be attractive."
+          },
+          {
+            front: "Boredom feels like failure.",
+            explain: "You learned love should be cinematic—so calm feels suspicious, like something is missing.",
+            context: "Modern romance content rewards high emotion. But real attachment often looks quiet: errands, support, ordinary days.",
+            advice: "Your advice: don’t chase adrenaline to prove love. Ask: ‘Do I feel safe here?’"
+          },
+          {
+            front: "I confuse intensity with connection.",
+            explain: "Intensity can be chemistry, not compatibility. Media often frames conflict as passion.",
+            context: "Some cultures romanticize suffering as proof of love. In reality, stability is also a love language.",
+            advice: "Your advice: choose peace on purpose. Love should not require constant crisis to feel real."
+          }
+        ]
+      },
+      religion: {
+        label: "Religion",
+        sub: "Love as meaning • commitment • moral care",
+        bg: "#fcfaf7",
+        cards: [
+          {
+            front: "I take love very seriously.",
+            explain: "If religion taught you love, you may value devotion, loyalty, and long-term intention more than quick feelings.",
+            context: "Communities often teach love as a practice—something you do, not just something you feel.",
+            advice: "Your advice: commitment is beautiful—just make sure it includes tenderness toward yourself too."
+          },
+          {
+            front: "I fear disappointing people.",
+            explain: "You may have learned love is linked to goodness—so conflict feels like failure, not a normal part of closeness.",
+            context: "Social belonging can become emotional pressure: to be ‘right,’ ‘pure,’ or ‘strong’ all the time.",
+            advice: "Your advice: allow imperfection. Love doesn’t require you to be flawless to be worthy."
+          },
+          {
+            front: "I struggle between desire and duty.",
+            explain: "You’re not broken—you’re holding two value systems at once: personal longing and communal responsibility.",
+            context: "Many people navigate love across cultural and religious expectations. That tension is real, not personal weakness.",
+            advice: "Your advice: name what you truly value, then choose in alignment—without shame as your compass."
+          }
+        ]
+      },
+      school: {
+        label: "School",
+        sub: "Love as comparison • performance • belonging",
+        bg: "#e0f0f5",
+        cards: [
+          {
+            front: "I feel behind.",
+            explain: "If school taught you love, you may measure relationships like achievements—milestones, labels, timing.",
+            context: "Competitive systems train us to compare. Love becomes another place to ‘keep up.’",
+            advice: "Your advice: stop tracking love like grades. Focus on growth, not speed."
+          },
+          {
+            front: "I overthink every signal.",
+            explain: "You may have learned that ‘getting it right’ is safety—so you analyze love like an exam.",
+            context: "In high-pressure environments, uncertainty feels dangerous. But intimacy requires tolerating not knowing.",
+            advice: "Your advice: ask directly once. One honest question can save 100 anxious spirals."
+          },
+          {
+            front: "I’m afraid of being chosen last.",
+            explain: "Belonging can feel conditional—so you perform to earn love rather than receive it.",
+            context: "Peer cultures shape self-worth. Popularity, validation, and visibility become emotional currencies.",
+            advice: "Your advice: practice receiving. Let someone care for you without proving you deserve it first."
+          }
+        ]
+      },
+      internet: {
+        label: "Internet",
+        sub: "Love as attention • trends • detachment",
+        bg: "#e8e1f5",
+        cards: [
+          {
+            front: "I leave first.",
+            explain: "If the internet taught you love, detachment can feel like control—ghosting becomes a way to avoid vulnerability.",
+            context: "Online culture normalizes quick exits: endless options, fast judgments, and fear of looking ‘too much.’",
+            advice: "Your advice: practice leaving loudly—one clear sentence is kinder than disappearing."
+          },
+          {
+            front: "I expect people to know without asking.",
+            explain: "You’ve absorbed indirect communication—likes, views, hints. But real relationships need words, not algorithms.",
+            context: "High-context signals work online, but they often create misunderstanding across cultures and personalities.",
+            advice: "Your advice: say one thing plainly. Directness is not desperation."
+          },
+          {
+            front: "I don’t feel enough.",
+            explain: "Constant comparison can numb you—when everyone is curated, your real feelings can seem ‘small’ or ‘not dramatic enough.’",
+            context: "Attention economies reward extremes. Normal human emotion can feel invisible in a world of highlights.",
+            advice: "Your advice: trust your quiet feelings. You don’t need to be loud to be real."
+          }
+        ]
+      }
+    };
+
+    /* =========================
+       STATION UI
+       ========================= */
+    const stationWrap = document.getElementById("station-wrap");
+    const stationScreen = document.getElementById("station-screen");
+    const deckScreen = document.getElementById("deck-screen");
+    const pickedLabel = document.getElementById("station-picked");
+    const backToStationsBtn = document.getElementById("backToStations");
+
+    let selectedStationKey = null;
+
+    function renderStations() {
+      stationWrap.innerHTML = "";
+      const order = ["family","media","religion","school","internet"];
+      order.forEach(key => {
+        const st = stations[key];
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "station-btn";
+        btn.innerHTML = `
+          <div class="st-title">${st.label}</div>
+          <div class="st-sub">${st.sub}</div>
+        `;
+        btn.addEventListener("click", () => chooseStation(key));
+        stationWrap.appendChild(btn);
+      });
+    }
+
+    function chooseStation(key) {
+      selectedStationKey = key;
+      const st = stations[key];
+      document.body.style.backgroundColor = st.bg;
+
+      stationScreen.style.display = "none";
+      deckScreen.style.display = "block";
+      pickedLabel.textContent = `Teacher selected: ${st.label}`;
+
+      resetDeckState();
+      buildDeck(12); // keep the same number of cards for the ritual feel
+      status.innerText = "Tap the deck to begin";
+    }
+
+    backToStationsBtn.addEventListener("click", () => {
+      selectedStationKey = null;
+      stationScreen.style.display = "block";
+      deckScreen.style.display = "none";
+      deck.innerHTML = "";
+      shuffleState = 0;
+      document.body.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--cream").trim() || "#f8f5f0";
+    });
+
+    renderStations();
+
+    /* =========================
+       CARDS / DECK MECHANIC
+       ========================= */
+    const deck = document.getElementById('deck-container');
+    const status = document.getElementById('status-text');
+    let shuffleState = 0;
+
+    function resetDeckState() {
+      deck.innerHTML = "";
+      shuffleState = 0;
+    }
+
+    function buildDeck(n = 12) {
+      for (let i = 0; i < n; i++) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.zIndex = i;
+        card.innerHTML = '<div class="card-crest">❦</div>';
+        card.style.transform = `translate(${i * 0.5}px, ${i * 0.5}px)`;
+        card.onclick = () => {
+          if (!selectedStationKey) return;
+          if (shuffleState < 3) runShuffle();
+          else if (shuffleState === 4) revealCard();
+        };
+        deck.appendChild(card);
+      }
+    }
+
+    function runShuffle() {
+      shuffleState++;
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((card) => {
+        const rx = (Math.random() - 0.5) * 400;
+        const ry = (Math.random() - 0.5) * 400;
+        const rr = (Math.random() - 0.5) * 100;
+        card.style.transform = `translate(${rx}px, ${ry}px) rotate(${rr}deg)`;
+      });
+      status.innerText = `Shuffling Intentions... (${shuffleState}/3)`;
+      setTimeout(() => {
+        cards.forEach((card, i) => card.style.transform = `translate(${i * 0.3}px, ${i * 0.3}px) rotate(0deg)`);
+        if (shuffleState === 3) setTimeout(fanCards, 600);
+      }, 800);
+    }
+
+    function fanCards() {
+      const cards = document.querySelectorAll('.card');
+      shuffleState = 4;
+      status.innerText = "Draw your love mirror";
+
+      const windowWidth = window.innerWidth;
+      let spread, angleStep;
+
+      if (windowWidth < 480) { spread = 22; angleStep = 5; }
+      else if (windowWidth < 1024) { spread = 35; angleStep = 7; }
+      else { spread = 45; angleStep = 9; }
+
+      cards.forEach((card, i) => {
+        const centerOffset = (cards.length - 1) / 2;
+        const angle = (i - centerOffset) * angleStep;
+        const x = (i - centerOffset) * spread;
+        const y = windowWidth < 480 ? 10 : 20;
+        card.style.transform = `translate(${x}px, ${y}px) rotate(${angle}deg)`;
+      });
+    }
+
+    function pickCardFromStation() {
+      const st = stations[selectedStationKey];
+      const idx = Math.floor(Math.random() * st.cards.length);
+      return st.cards[idx];
+    }
+
+    function revealCard() {
+      const st = stations[selectedStationKey];
+      const data = pickCardFromStation();
+
+      document.getElementById('ritual-screen').style.opacity = '0';
+      document.body.style.backgroundColor = st.bg;
+
+      setTimeout(() => {
+        document.getElementById('ritual-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+
+        document.getElementById('pill-teacher').innerText = `Teacher: ${st.label}`;
+        document.getElementById('front-line').innerText = data.front;
+        document.getElementById('explain-text').innerText = data.explain;
+        document.getElementById('context-text').innerText = data.context;
+        document.getElementById('advice-text').innerText = data.advice;
+
+        setTimeout(() => { document.getElementById('result-screen').style.opacity = '1'; }, 100);
+
+        const b2 = document.getElementById('soundBtn2');
+        if (b2 && !b2.dataset.bound) {
+          b2.dataset.bound = "1";
+          b2.addEventListener('click', (e) => { e.stopPropagation(); toggleSound(); });
+          updateSoundButtons();
+        }
+      }, 900);
+    }
+
+    function saveImage() {
+      const captureArea = document.getElementById('capture-frame');
+      html2canvas(captureArea, { backgroundColor: null, scale: 2 }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'HeartToHeart_ISA_LoveIsLearned.png';
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+
+    /* Keep deck empty until station chosen */
+  </script>
+</body>
+</html>
