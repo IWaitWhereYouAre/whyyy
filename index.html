@@ -726,7 +726,7 @@
     spawnMotes(18);
     window.addEventListener("resize", ()=> spawnMotes(window.innerWidth < 480 ? 12 : 18));
 
-  /* =========================
+/* =========================
    SOUND (relaxing piano ambient)
    - no external audio files
    - safe, gentle, non-intrusive
@@ -801,14 +801,14 @@ function updateSoundButtons() {
   window.addEventListener("keydown", once);
 })();
 
-/* Bind button */
+/* Bind sound buttons (only once) */
 document.getElementById("soundBtn")?.addEventListener("click", (e) => {
   e.stopPropagation();
   toggleSound();
 });
 
 /* -------------------------
-   "Felt piano" note synth
+   Felt-piano note synth
    ------------------------- */
 function playPianoNote(freq, {
   when = 0,
@@ -820,32 +820,27 @@ function playPianoNote(freq, {
 
   const t0 = audioCtx.currentTime + when;
 
-  // Main tone
   const osc = audioCtx.createOscillator();
   osc.type = "triangle";
   osc.frequency.setValueAtTime(freq, t0);
 
-  // Soft transient (tiny "hammer")
   const click = audioCtx.createOscillator();
   click.type = "sine";
   click.frequency.setValueAtTime(freq * 2.0, t0);
 
-  // Envelope
   const g = audioCtx.createGain();
   const peak = 0.08 * vel;
 
   g.gain.setValueAtTime(0.0001, t0);
-  g.gain.exponentialRampToValueAtTime(peak, t0 + 0.01);        // attack
-  g.gain.exponentialRampToValueAtTime(peak * 0.35, t0 + 0.18); // decay
-  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);       // release
+  g.gain.exponentialRampToValueAtTime(peak, t0 + 0.01);
+  g.gain.exponentialRampToValueAtTime(peak * 0.35, t0 + 0.18);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
 
-  // Piano-ish filtering
   const filter = audioCtx.createBiquadFilter();
   filter.type = "lowpass";
   filter.frequency.setValueAtTime(1800 + vel * 1200, t0);
   filter.Q.setValueAtTime(0.8, t0);
 
-  // Gentle reverb-like smear using delay + feedback (small room)
   const delay = audioCtx.createDelay();
   delay.delayTime.setValueAtTime(0.14, t0);
 
@@ -861,7 +856,6 @@ function playPianoNote(freq, {
   const panner = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
   if (panner) panner.pan.setValueAtTime(Math.max(-1, Math.min(1, pan)), t0);
 
-  // Routing: osc -> filter -> (dry + wet chain) -> master
   osc.connect(filter);
   click.connect(filter);
 
@@ -884,26 +878,18 @@ function playPianoNote(freq, {
   osc.start(t0);
   click.start(t0);
 
-  // stop
-  const stopAt = t0 + dur + 0.05;
-  osc.stop(stopAt);
-  click.stop(t0 + 0.03); // transient ends quickly
+  osc.stop(t0 + dur + 0.05);
+  click.stop(t0 + 0.03);
 }
 
 /* -------------------------
    Ambient progression loop
    ------------------------- */
-const SCALES = {
-  // D major-ish calm palette
-  dMaj: [293.66, 329.63, 369.99, 440.00, 493.88, 587.33, 659.25],
-};
-
 const CHORDS = [
-  // (D) Dmaj add2, (G) Gmaj, (Bm) Bm7, (A) A sus2
   [293.66, 369.99, 440.00],   // D F# A
   [392.00, 493.88, 587.33],   // G B D
   [246.94, 293.66, 369.99],   // B D F#
-  [220.00, 293.66, 329.63],   // A D E (sus2-ish)
+  [220.00, 293.66, 329.63],   // A D E
 ];
 
 function startPianoAmbience() {
@@ -915,18 +901,46 @@ function startPianoAmbience() {
   const tick = () => {
     if (!soundOn || !audioPrimed || !audioCtx) return;
 
-    // every ~2.4s place a small arpeggio + one soft bass
     const chord = CHORDS[step % CHORDS.length];
     const basePan = -0.25 + Math.random() * 0.5;
     const vel = 0.45 + Math.random() * 0.25;
 
-    // soft bass
+    // bass + arpeggio
     playPianoNote(chord[0] / 2, { when: 0.00, dur: 2.2, vel: vel * 0.65, pan: basePan * 0.6 });
+    playPianoNote(chord[0],     { when: 0.05, dur: 1.8, vel: vel,        pan: basePan });
+    playPianoNote(chord[1],     { when: 0.32, dur: 1.6, vel: vel * 0.90, pan: basePan * 0.8 });
+    playPianoNote(chord[2],     { when: 0.62, dur: 1.4, vel: vel * 0.85, pan: basePan * 0.6 });
 
-    // arpeggio
-    playPianoNote(chord[0], { when: 0.05, dur: 1.8, vel: vel, pan: basePan });
-    playPianoNote(chord[1], { when: 0.32, dur: 1.6, vel: vel * 0.9, pan: basePan * 0.8 });
-    playPianoNote(chord[2], { when: 0.62, dur: 1.4, vel: vel * 0.85, pan: base
+    step++;
+    pianoLoopTimer = setTimeout(tick, 2400);
+  };
+
+  tick();
+}
+
+function stopPianoAmbience() {
+  pianoIsRunning = false;
+  if (pianoLoopTimer) {
+    clearTimeout(pianoLoopTimer);
+    pianoLoopTimer = null;
+  }
+}
+
+/* Optional: tiny UI chimes (safe + subtle) */
+function softChime(type = "place") {
+  if (!audioCtx || !audioPrimed || !soundOn) return;
+  const now = audioCtx.currentTime;
+
+  const map = {
+    place: [659.25, 880.00],   // E5 -> A5
+    gate:  [523.25, 659.25],   // C5 -> E5
+    reveal:[392.00, 523.25],   // G4 -> C5
+  };
+  const seq = map[type] || map.place;
+
+  playPianoNote(seq[0], { when: 0.00, dur: 0.55, vel: 0.35, pan: -0.05 });
+  playPianoNote(seq[1], { when: 0.08, dur: 0.60, vel: 0.30, pan:  0.08 });
+}
 
     /* =========================
        RITUAL DATA (NO tarot; trait-driven)
