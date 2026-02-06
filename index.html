@@ -9,22 +9,6 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&family=Pinyon+Script&display=swap');
 
-.opening-line{
-  margin: 12px auto 16px;
-  max-width: 720px;
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.1rem, 3.4vw, 1.6rem);
-  line-height: 1.45;
-  font-style: italic;
-  color: rgba(26,42,29,0.9);
-}
-
-.opening-soft{
-  display:block;
-  margin-top: 6px;
-  opacity: 0.8;
-}
-
     :root{
       --gold:#c5a059;
       --deep-green:#1a2a1d;
@@ -72,7 +56,6 @@
 
     /* =========================
        SECRET GARDEN BACKGROUND
-       (more aristocratic: paper + light + gilding)
        ========================= */
     .garden-bg{
       position:fixed; inset:0;
@@ -112,7 +95,7 @@
     }
 
     /* =========================
-       SYMBOLIC VISUAL: GOLD MOTES (instead of birds)
+       SYMBOLIC VISUAL: GOLD MOTES
        ========================= */
     .motes{
       position:fixed; inset:0;
@@ -145,7 +128,7 @@
       background: radial-gradient(circle, transparent 50%, rgba(26,42,29,0.10));
     }
 
-    /* Corner filigree (symbolic, aristocratic) */
+    /* Corner filigree */
     .filigree{
       position: fixed;
       width: min(440px, 55vw);
@@ -181,6 +164,24 @@
       letter-spacing:clamp(4px,1vw,10px);
       text-transform:uppercase;
       margin-bottom: clamp(10px, 2vh, 18px);
+    }
+
+    /* =========================
+       OPENING LINE (polished)
+       ========================= */
+    .opening-line{
+      margin: 12px auto 16px;
+      max-width: 720px;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 3.4vw, 1.6rem);
+      line-height: 1.45;
+      font-style: italic;
+      color: rgba(26,42,29,0.9);
+    }
+    .opening-soft{
+      display:block;
+      margin-top: 6px;
+      opacity: 0.8;
     }
 
     /* =========================
@@ -271,7 +272,7 @@
     .dot.filled{ background: rgba(197,160,89,0.85); }
 
     /* =========================
-       TRAIT GRID (symbolic “traits”, not teachers)
+       TRAIT GRID
        ========================= */
     .trait-grid{
       width: min(920px, 96vw);
@@ -507,7 +508,6 @@
       margin-bottom: 6px;
     }
 
-    /* Articulation gets a distinct “thesis” feel */
     .articulation{
       font-family:'Playfair Display', serif;
       font-size: 1.05rem;
@@ -521,7 +521,6 @@
       line-height: 1.6;
     }
 
-    /* Counsel gets a gold “seal box” */
     .counsel-box{
       margin-top: 8px;
       padding: 14px 14px;
@@ -603,32 +602,35 @@
     <circle cx="205" cy="368" r="7" fill="#c5a059" opacity="0.45"/>
   </svg>
 
-<p class="isa-tag">ISA Chulalongkorn Presents</p>
+  <!-- ✅ FIXED STRUCTURE: wrappers restored -->
+  <div id="app-container">
+    <div id="ritual-screen">
 
-<h1 class="main-title">Heart to Heart</h1>
+      <p class="isa-tag">ISA Chulalongkorn Presents</p>
+      <h1 class="main-title">Heart to Heart</h1>
+      <p class="sub-theme">Love is Learned.</p>
 
-<p class="sub-theme">Love is Learned.</p>
+      <!-- ✅ polished opening -->
+      <p class="opening-line">
+        You’re not bad at love.
+        <span class="opening-soft">You learned it from what you lived.</span>
+      </p>
 
-<p class="opening-line"> You’re not bad at love.</p>
-
-
-<div class="ritual-bar" aria-label="Ritual progress">
-  <div class="steps">
-    <div class="step active" id="stepToken"><span class="step-dot"></span><span class="step-label">Tokens</span></div>
-    <div class="step" id="stepRecognize"><span class="step-dot"></span><span class="step-label">Recognition</span></div>
-    <div class="step" id="stepArticulate"><span class="step-dot"></span><span class="step-label">Articulation</span></div>
-    <div class="step" id="stepCounsel"><span class="step-dot"></span><span class="step-label">Counsel</span></div>
-  </div>
-</div>
+      <div class="ritual-bar" aria-label="Ritual progress">
+        <div class="steps">
+          <div class="step active" id="stepToken"><span class="step-dot"></span><span class="step-label">Tokens</span></div>
+          <div class="step" id="stepRecognize"><span class="step-dot"></span><span class="step-label">Recognition</span></div>
+          <div class="step" id="stepArticulate"><span class="step-dot"></span><span class="step-label">Articulation</span></div>
+          <div class="step" id="stepCounsel"><span class="step-dot"></span><span class="step-label">Counsel</span></div>
+        </div>
+      </div>
 
       <!-- TOKEN SCREEN -->
       <div id="token-screen">
         <p style="margin: 6px 0 6px; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; opacity:0.75;">
           Spend 3 tokens on traits that feel like you
         </p>
-        <p class="tiny-note" style="margin-top:6px;">
-          Not a test. Not fate. Just recognition.
-        </p>
+        <p class="tiny-note" style="margin-top:6px;">Not a test. Not fate. Just recognition.</p>
 
         <div class="token-top">
           <div class="token-badge">
@@ -648,9 +650,7 @@
       <div id="recognition-screen" style="display:none;">
         <div class="panel">
           <div class="panel-inner">
-            <p style="margin: 0; font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; opacity:0.75;">
-              Recognition
-            </p>
+            <p style="margin: 0; font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; opacity:0.75;">Recognition</p>
             <div class="recognition-line" id="recognitionLine">“Love is learned before it is chosen.”</div>
             <div class="countdown" id="countdownText">Continue unlocks in 3s</div>
             <div class="bar" aria-hidden="true"><div id="countBar"></div></div>
@@ -659,13 +659,12 @@
               <button class="btn" id="backToTokens" type="button">Back</button>
               <button class="btn btn-save" id="continueToSlip" type="button" disabled>Continue</button>
             </div>
-            <p class="tiny-note">
-              Take what resonates, leave what doesn’t.
-            </p>
+            <p class="tiny-note">Take what resonates, leave what doesn’t.</p>
           </div>
         </div>
       </div>
-    </div>
+
+    </div><!-- /#ritual-screen -->
 
     <!-- RESULT SCREEN -->
     <div id="result-screen">
@@ -711,11 +710,12 @@
       </div>
       <p class="tiny-note">Saved to your downloads folder</p>
     </div>
-  </div>
+
+  </div><!-- /#app-container -->
 
   <script>
     /* =========================
-       GOLD MOTES (symbolic motion)
+       GOLD MOTES
        ========================= */
     const motesHost = document.getElementById("motes");
     function spawnMotes(count = 18){
@@ -745,354 +745,298 @@
     spawnMotes(18);
     window.addEventListener("resize", ()=> spawnMotes(window.innerWidth < 480 ? 12 : 18));
 
-/* =========================
-   SOUND (relaxing piano ambient)
-   - no external audio files
-   - safe, gentle, non-intrusive
-   ========================= */
-let audioCtx = null;
-let masterGain = null;
-let soundOn = true;
-let audioPrimed = false;
+    /* =========================
+       SOUND (relaxing piano ambient)
+       ========================= */
+    let audioCtx = null;
+    let masterGain = null;
+    let soundOn = true;
+    let audioPrimed = false;
 
-let pianoLoopTimer = null;
-let pianoIsRunning = false;
+    let pianoLoopTimer = null;
+    let pianoIsRunning = false;
 
-function ensureAudio() {
-  if (audioCtx) return;
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  masterGain = audioCtx.createGain();
-  masterGain.gain.value = 0.0001;
-  masterGain.connect(audioCtx.destination);
-}
+    function ensureAudio() {
+      if (audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0.0001;
+      masterGain.connect(audioCtx.destination);
+    }
 
-async function primeAndApplyAudio() {
-  ensureAudio();
-  if (audioCtx.state === "suspended") {
-    try { await audioCtx.resume(); } catch (e) {}
-  }
-  audioPrimed = true;
+    async function primeAndApplyAudio() {
+      ensureAudio();
+      if (audioCtx.state === "suspended") {
+        try { await audioCtx.resume(); } catch (e) {}
+      }
+      audioPrimed = true;
 
-  const now = audioCtx.currentTime;
-  masterGain.gain.cancelScheduledValues(now);
-  masterGain.gain.setValueAtTime(masterGain.gain.value, now);
-  masterGain.gain.exponentialRampToValueAtTime(soundOn ? 0.55 : 0.0001, now + 0.12);
+      const now = audioCtx.currentTime;
+      masterGain.gain.cancelScheduledValues(now);
+      masterGain.gain.setValueAtTime(masterGain.gain.value, now);
+      masterGain.gain.exponentialRampToValueAtTime(soundOn ? 0.55 : 0.0001, now + 0.12);
 
-  updateSoundButtons();
+      updateSoundButtons();
+      if (soundOn && !pianoIsRunning) startPianoAmbience();
+    }
 
-  if (soundOn && !pianoIsRunning) startPianoAmbience();
-}
+    function setSound(on) {
+      soundOn = on;
+      if (!audioPrimed || !audioCtx || !masterGain) { updateSoundButtons(); return; }
 
-function setSound(on) {
-  soundOn = on;
-  if (!audioPrimed || !audioCtx || !masterGain) { updateSoundButtons(); return; }
+      const now = audioCtx.currentTime;
+      masterGain.gain.cancelScheduledValues(now);
+      masterGain.gain.setValueAtTime(masterGain.gain.value, now);
+      masterGain.gain.exponentialRampToValueAtTime(on ? 0.55 : 0.0001, now + 0.12);
 
-  const now = audioCtx.currentTime;
-  masterGain.gain.cancelScheduledValues(now);
-  masterGain.gain.setValueAtTime(masterGain.gain.value, now);
-  masterGain.gain.exponentialRampToValueAtTime(on ? 0.55 : 0.0001, now + 0.12);
+      updateSoundButtons();
+      if (on) startPianoAmbience();
+      else stopPianoAmbience();
+    }
 
-  updateSoundButtons();
+    function toggleSound() { setSound(!soundOn); }
 
-  if (on) startPianoAmbience();
-  else stopPianoAmbience();
-}
+    function updateSoundButtons() {
+      const label = soundOn ? "Sound: On" : "Sound: Off";
+      const btns = [document.getElementById("soundBtn"), document.getElementById("soundBtn2")].filter(Boolean);
+      btns.forEach(b => {
+        b.textContent = label;
+        b.classList.toggle("active", soundOn);
+      });
+    }
 
-function toggleSound() { setSound(!soundOn); }
+    /* Autostart on first user gesture (Safari requirement) */
+    (function bindAutoStart() {
+      const once = async () => {
+        await primeAndApplyAudio();
+        window.removeEventListener("pointerdown", once);
+        window.removeEventListener("keydown", once);
+      };
+      window.addEventListener("pointerdown", once);
+      window.addEventListener("keydown", once);
+    })();
 
-function updateSoundButtons() {
-  const label = soundOn ? "Sound: On" : "Sound: Off";
-  const btns = [document.getElementById("soundBtn"), document.getElementById("soundBtn2")].filter(Boolean);
-  btns.forEach(b => {
-    b.textContent = label;
-    b.classList.toggle("active", soundOn);
-  });
-}
+    /* Bind sound buttons (ONLY ONCE) */
+    document.getElementById("soundBtn")?.addEventListener("click", (e) => { e.stopPropagation(); toggleSound(); });
 
-/* Autostart on first user gesture (Safari requirement) */
-(function bindAutoStart() {
-  const once = async () => {
-    await primeAndApplyAudio();
-    window.removeEventListener("pointerdown", once);
-    window.removeEventListener("keydown", once);
-  };
-  window.addEventListener("pointerdown", once);
-  window.addEventListener("keydown", once);
-})();
+    /* -------------------------
+       Felt-piano note synth
+       ------------------------- */
+    function playPianoNote(freq, { when=0, dur=1.8, vel=0.6, pan=0 } = {}) {
+      if (!audioCtx || !audioPrimed || !soundOn) return;
+      const t0 = audioCtx.currentTime + when;
 
-/* Bind sound buttons (only once) */
-document.getElementById("soundBtn")?.addEventListener("click", (e) => {
-  e.stopPropagation();
-  toggleSound();
-});
+      const osc = audioCtx.createOscillator();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(freq, t0);
 
-/* -------------------------
-   Felt-piano note synth
-   ------------------------- */
-function playPianoNote(freq, {
-  when = 0,
-  dur = 1.8,
-  vel = 0.6,
-  pan = 0
-} = {}) {
-  if (!audioCtx || !audioPrimed || !soundOn) return;
+      const click = audioCtx.createOscillator();
+      click.type = "sine";
+      click.frequency.setValueAtTime(freq * 2.0, t0);
 
-  const t0 = audioCtx.currentTime + when;
+      const g = audioCtx.createGain();
+      const peak = 0.08 * vel;
 
-  const osc = audioCtx.createOscillator();
-  osc.type = "triangle";
-  osc.frequency.setValueAtTime(freq, t0);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(peak, t0 + 0.01);
+      g.gain.exponentialRampToValueAtTime(peak * 0.35, t0 + 0.18);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
 
-  const click = audioCtx.createOscillator();
-  click.type = "sine";
-  click.frequency.setValueAtTime(freq * 2.0, t0);
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(1800 + vel * 1200, t0);
+      filter.Q.setValueAtTime(0.8, t0);
 
-  const g = audioCtx.createGain();
-  const peak = 0.08 * vel;
+      const delay = audioCtx.createDelay();
+      delay.delayTime.setValueAtTime(0.14, t0);
 
-  g.gain.setValueAtTime(0.0001, t0);
-  g.gain.exponentialRampToValueAtTime(peak, t0 + 0.01);
-  g.gain.exponentialRampToValueAtTime(peak * 0.35, t0 + 0.18);
-  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      const fb = audioCtx.createGain();
+      fb.gain.setValueAtTime(0.22, t0);
 
-  const filter = audioCtx.createBiquadFilter();
-  filter.type = "lowpass";
-  filter.frequency.setValueAtTime(1800 + vel * 1200, t0);
-  filter.Q.setValueAtTime(0.8, t0);
+      const wet = audioCtx.createGain();
+      wet.gain.setValueAtTime(0.35, t0);
 
-  const delay = audioCtx.createDelay();
-  delay.delayTime.setValueAtTime(0.14, t0);
+      const dry = audioCtx.createGain();
+      dry.gain.setValueAtTime(0.9, t0);
 
-  const fb = audioCtx.createGain();
-  fb.gain.setValueAtTime(0.22, t0);
+      const panner = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
+      if (panner) panner.pan.setValueAtTime(Math.max(-1, Math.min(1, pan)), t0);
 
-  const wet = audioCtx.createGain();
-  wet.gain.setValueAtTime(0.35, t0);
+      osc.connect(filter);
+      click.connect(filter);
 
-  const dry = audioCtx.createGain();
-  dry.gain.setValueAtTime(0.9, t0);
+      filter.connect(dry);
+      dry.connect(g);
 
-  const panner = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
-  if (panner) panner.pan.setValueAtTime(Math.max(-1, Math.min(1, pan)), t0);
+      filter.connect(delay);
+      delay.connect(fb);
+      fb.connect(delay);
+      delay.connect(wet);
+      wet.connect(g);
 
-  osc.connect(filter);
-  click.connect(filter);
+      if (panner) { g.connect(panner); panner.connect(masterGain); }
+      else { g.connect(masterGain); }
 
-  filter.connect(dry);
-  dry.connect(g);
+      osc.start(t0);
+      click.start(t0);
 
-  filter.connect(delay);
-  delay.connect(fb);
-  fb.connect(delay);
-  delay.connect(wet);
-  wet.connect(g);
+      osc.stop(t0 + dur + 0.05);
+      click.stop(t0 + 0.03);
+    }
 
-  if (panner) {
-    g.connect(panner);
-    panner.connect(masterGain);
-  } else {
-    g.connect(masterGain);
-  }
+    const CHORDS = [
+      [293.66, 369.99, 440.00],
+      [392.00, 493.88, 587.33],
+      [246.94, 293.66, 369.99],
+      [220.00, 293.66, 329.63],
+    ];
 
-  osc.start(t0);
-  click.start(t0);
+    function startPianoAmbience() {
+      if (pianoIsRunning) return;
+      pianoIsRunning = true;
 
-  osc.stop(t0 + dur + 0.05);
-  click.stop(t0 + 0.03);
-}
+      let step = 0;
+      const tick = () => {
+        if (!soundOn || !audioPrimed || !audioCtx) return;
+        const chord = CHORDS[step % CHORDS.length];
+        const basePan = -0.25 + Math.random() * 0.5;
+        const vel = 0.45 + Math.random() * 0.25;
 
-/* -------------------------
-   Ambient progression loop
-   ------------------------- */
-const CHORDS = [
-  [293.66, 369.99, 440.00],   // D F# A
-  [392.00, 493.88, 587.33],   // G B D
-  [246.94, 293.66, 369.99],   // B D F#
-  [220.00, 293.66, 329.63],   // A D E
-];
+        playPianoNote(chord[0] / 2, { when: 0.00, dur: 2.2, vel: vel * 0.65, pan: basePan * 0.6 });
+        playPianoNote(chord[0],     { when: 0.05, dur: 1.8, vel: vel,        pan: basePan });
+        playPianoNote(chord[1],     { when: 0.32, dur: 1.6, vel: vel * 0.90, pan: basePan * 0.8 });
+        playPianoNote(chord[2],     { when: 0.62, dur: 1.4, vel: vel * 0.85, pan: basePan * 0.6 });
 
-function startPianoAmbience() {
-  if (pianoIsRunning) return;
-  pianoIsRunning = true;
+        step++;
+        pianoLoopTimer = setTimeout(tick, 2400);
+      };
+      tick();
+    }
 
-  let step = 0;
+    function stopPianoAmbience() {
+      pianoIsRunning = false;
+      if (pianoLoopTimer) { clearTimeout(pianoLoopTimer); pianoLoopTimer = null; }
+    }
 
-  const tick = () => {
-    if (!soundOn || !audioPrimed || !audioCtx) return;
-
-    const chord = CHORDS[step % CHORDS.length];
-    const basePan = -0.25 + Math.random() * 0.5;
-    const vel = 0.45 + Math.random() * 0.25;
-
-    // bass + arpeggio
-    playPianoNote(chord[0] / 2, { when: 0.00, dur: 2.2, vel: vel * 0.65, pan: basePan * 0.6 });
-    playPianoNote(chord[0],     { when: 0.05, dur: 1.8, vel: vel,        pan: basePan });
-    playPianoNote(chord[1],     { when: 0.32, dur: 1.6, vel: vel * 0.90, pan: basePan * 0.8 });
-    playPianoNote(chord[2],     { when: 0.62, dur: 1.4, vel: vel * 0.85, pan: basePan * 0.6 });
-
-    step++;
-    pianoLoopTimer = setTimeout(tick, 2400);
-  };
-
-  tick();
-}
-
-function stopPianoAmbience() {
-  pianoIsRunning = false;
-  if (pianoLoopTimer) {
-    clearTimeout(pianoLoopTimer);
-    pianoLoopTimer = null;
-  }
-}
-
-/* Optional: tiny UI chimes (safe + subtle) */
-function softChime(type = "place") {
-  if (!audioCtx || !audioPrimed || !soundOn) return;
-  const now = audioCtx.currentTime;
-
-  const map = {
-    place: [659.25, 880.00],   // E5 -> A5
-    gate:  [523.25, 659.25],   // C5 -> E5
-    reveal:[392.00, 523.25],   // G4 -> C5
-  };
-  const seq = map[type] || map.place;
-
-  playPianoNote(seq[0], { when: 0.00, dur: 0.55, vel: 0.35, pan: -0.05 });
-  playPianoNote(seq[1], { when: 0.08, dur: 0.60, vel: 0.30, pan:  0.08 });
-}
+    function softChime(type = "place") {
+      if (!audioCtx || !audioPrimed || !soundOn) return;
+      const map = { place:[659.25,880.0], gate:[523.25,659.25], reveal:[392.0,523.25] };
+      const seq = map[type] || map.place;
+      playPianoNote(seq[0], { when: 0.00, dur: 0.55, vel: 0.35, pan: -0.05 });
+      playPianoNote(seq[1], { when: 0.08, dur: 0.60, vel: 0.30, pan:  0.08 });
+    }
 
     /* =========================
-       RITUAL DATA (NO tarot; trait-driven)
+       RITUAL DATA
        ========================= */
     const teachers = {
-      family: {
-        label: "House of Kin",
-        analysis: "This House learns love through responsibility, harmony, and belonging. It values steadiness, care, and the quiet work of staying.",
-        bg: "#f3eddc",
-        slips: [
-          {
-            pattern: "You protect closeness by staying.",
-            articulation: "When love is learned as responsibility, devotion can become endurance—staying becomes the proof.",
-            context: "In many family-centered settings, emotions are managed to keep peace. Needs often become indirect requests.",
-            counsel: "Name one need plainly, kindly, and early. Clarity is not disrespect."
+      family: { label:"House of Kin",
+        analysis:"This House learns love through responsibility, harmony, and belonging. It values steadiness, care, and the quiet work of staying.",
+        bg:"#f3eddc",
+        slips:[
+          { pattern:"You protect closeness by staying.",
+            articulation:"When love is learned as responsibility, devotion can become endurance—staying becomes the proof.",
+            context:"In many family-centered settings, emotions are managed to keep peace. Needs often become indirect requests.",
+            counsel:"Name one need plainly, kindly, and early. Clarity is not disrespect."
           },
-          {
-            pattern: "You keep peace by shrinking needs.",
-            articulation: "When harmony is the rule, wanting more can feel like a threat—so you become easy to live with, not fully known.",
-            context: "High-context communication rewards restraint. Over time, silence can turn into quiet resentment.",
-            counsel: "Let your needs exist in daylight. Start small: one concrete request."
+          { pattern:"You keep peace by shrinking needs.",
+            articulation:"When harmony is the rule, wanting more can feel like a threat—so you become easy to live with, not fully known.",
+            context:"High-context communication rewards restraint. Over time, silence can turn into quiet resentment.",
+            counsel:"Let your needs exist in daylight. Start small: one concrete request."
           },
-          {
-            pattern: "You manage love like a room’s temperature.",
-            articulation: "If moods mattered growing up, you may track tension instinctively—peace becomes the metric of safety.",
-            context: "Families teach invisible emotional rules: who can speak, when, and how.",
-            counsel: "Practice gentle honesty: one true sentence before you disappear."
+          { pattern:"You manage love like a room’s temperature.",
+            articulation:"If moods mattered growing up, you may track tension instinctively—peace becomes the metric of safety.",
+            context:"Families teach invisible emotional rules: who can speak, when, and how.",
+            counsel:"Practice gentle honesty: one true sentence before you disappear."
           }
         ]
       },
-      media: {
-        label: "House of Theatre",
-        analysis: "This House learns love through stories and intensity. It seeks meaning in spark, narrative, and emotional momentum.",
-        bg: "#fce3e3",
-        slips: [
-          {
-            pattern: "You read intensity as truth.",
-            articulation: "When romance is learned through stories, adrenaline can look like destiny—fast feelings feel final.",
-            context: "Narratives compress time and reward high emotion. Real intimacy grows through repetition and reliability.",
-            counsel: "Slow is not a lack of love. Let consistency be attractive."
+      media: { label:"House of Theatre",
+        analysis:"This House learns love through stories and intensity. It seeks meaning in spark, narrative, and emotional momentum.",
+        bg:"#fce3e3",
+        slips:[
+          { pattern:"You read intensity as truth.",
+            articulation:"When romance is learned through stories, adrenaline can look like destiny—fast feelings feel final.",
+            context:"Narratives compress time and reward high emotion. Real intimacy grows through repetition and reliability.",
+            counsel:"Slow is not a lack of love. Let consistency be attractive."
           },
-          {
-            pattern: "Calm feels suspicious.",
-            articulation: "If love is taught as a storyline, quiet can feel like emptiness—so peace looks like ‘nothing is happening.’",
-            context: "Modern romance often frames conflict as passion. Stable attachment often feels ordinary and safe.",
-            counsel: "Don’t chase adrenaline to prove love. Ask: do I feel safe here?"
+          { pattern:"Calm feels suspicious.",
+            articulation:"If love is taught as a storyline, quiet can feel like emptiness—so peace looks like ‘nothing is happening.’",
+            context:"Modern romance often frames conflict as passion. Stable attachment often feels ordinary and safe.",
+            counsel:"Don’t chase adrenaline to prove love. Ask: do I feel safe here?"
           },
-          {
-            pattern: "You confuse chemistry with compatibility.",
-            articulation: "Stories romanticize turbulence. But intensity can be chemistry without kindness, repair, or alignment.",
-            context: "Some cultures also glorify suffering as proof. In practice, peace is a love language too.",
-            counsel: "Choose peace on purpose. Love should not require crisis to feel real."
+          { pattern:"You confuse chemistry with compatibility.",
+            articulation:"Stories romanticize turbulence. But intensity can be chemistry without kindness, repair, or alignment.",
+            context:"Some cultures also glorify suffering as proof. In practice, peace is a love language too.",
+            counsel:"Choose peace on purpose. Love should not require crisis to feel real."
           }
         ]
       },
-      religion: {
-        label: "House of Meaning",
-        analysis: "This House learns love through values, devotion, and moral care. It treats love as practice—something you do, not only feel.",
-        bg: "#fcfaf7",
-        slips: [
-          {
-            pattern: "You take love seriously—beautifully.",
-            articulation: "When love is shaped by values, commitment can be an ethic—care becomes a daily practice.",
-            context: "Community ethics can strengthen loyalty. Sometimes the pressure to be ‘good’ makes normal conflict feel like failure.",
-            counsel: "Devotion should include tenderness toward yourself. Imperfection doesn’t cancel worth."
+      religion: { label:"House of Meaning",
+        analysis:"This House learns love through values, devotion, and moral care. It treats love as practice—something you do, not only feel.",
+        bg:"#fcfaf7",
+        slips:[
+          { pattern:"You take love seriously—beautifully.",
+            articulation:"When love is shaped by values, commitment can be an ethic—care becomes a daily practice.",
+            context:"Community ethics can strengthen loyalty. Sometimes the pressure to be ‘good’ makes normal conflict feel like failure.",
+            counsel:"Devotion should include tenderness toward yourself. Imperfection doesn’t cancel worth."
           },
-          {
-            pattern: "You fear disappointing people.",
-            articulation: "When love is linked to goodness, boundaries can feel like selfishness—so you over-carry expectations.",
-            context: "Belonging is powerful. Shame-based belonging can silently shape how you ask for care.",
-            counsel: "Let values guide you—not shame. You can be kind and still be clear."
+          { pattern:"You fear disappointing people.",
+            articulation:"When love is linked to goodness, boundaries can feel like selfishness—so you over-carry expectations.",
+            context:"Belonging is powerful. Shame-based belonging can silently shape how you ask for care.",
+            counsel:"Let values guide you—not shame. You can be kind and still be clear."
           },
-          {
-            pattern: "You hold desire and duty at once.",
-            articulation: "When love has communal meaning, you may feel torn between personal longing and responsibility.",
-            context: "Navigating love across expectations is a cultural task, not personal weakness.",
-            counsel: "Choose in alignment with your values—without using fear as your compass."
+          { pattern:"You hold desire and duty at once.",
+            articulation:"When love has communal meaning, you may feel torn between personal longing and responsibility.",
+            context:"Navigating love across expectations is a cultural task, not personal weakness.",
+            counsel:"Choose in alignment with your values—without using fear as your compass."
           }
         ]
       },
-      school: {
-        label: "House of Measure",
-        analysis: "This House learns love through performance, comparison, and belonging. It seeks certainty, progress, and signs of being chosen.",
-        bg: "#e0f0f5",
-        slips: [
-          {
-            pattern: "You grade love like an exam.",
-            articulation: "When safety comes from ‘getting it right,’ you may analyze love for certainty—signals become evidence.",
-            context: "High-pressure environments train comparison. Uncertainty becomes emotionally expensive.",
-            counsel: "Ask directly once. One honest question can save 100 spirals."
+      school: { label:"House of Measure",
+        analysis:"This House learns love through performance, comparison, and belonging. It seeks certainty, progress, and signs of being chosen.",
+        bg:"#e0f0f5",
+        slips:[
+          { pattern:"You grade love like an exam.",
+            articulation:"When safety comes from ‘getting it right,’ you may analyze love for certainty—signals become evidence.",
+            context:"High-pressure environments train comparison. Uncertainty becomes emotionally expensive.",
+            counsel:"Ask directly once. One honest question can save 100 spirals."
           },
-          {
-            pattern: "You feel behind.",
-            articulation: "When life is measured in milestones, love becomes another timeline—labels can overshadow connection.",
-            context: "Peer environments shape self-worth. ‘Keeping up’ becomes a hidden rule even in intimacy.",
-            counsel: "Stop grading love. Focus on growth, not speed."
+          { pattern:"You feel behind.",
+            articulation:"When life is measured in milestones, love becomes another timeline—labels can overshadow connection.",
+            context:"Peer environments shape self-worth. ‘Keeping up’ becomes a hidden rule even in intimacy.",
+            counsel:"Stop grading love. Focus on growth, not speed."
           },
-          {
-            pattern: "You perform to be chosen.",
-            articulation: "If belonging was conditional, you may earn love through competence—being impressive becomes protection.",
-            context: "Social hierarchies teach people to trade authenticity for acceptance.",
-            counsel: "Practice receiving without proving. Let care land."
+          { pattern:"You perform to be chosen.",
+            articulation:"If belonging was conditional, you may earn love through competence—being impressive becomes protection.",
+            context:"Social hierarchies teach people to trade authenticity for acceptance.",
+            counsel:"Practice receiving without proving. Let care land."
           }
         ]
       },
-      internet: {
-        label: "House of Distance",
-        analysis: "This House learns love through attention, trends, and detachment. It values control, optionality, and protecting dignity.",
-        bg: "#e8e1f5",
-        slips: [
-          {
-            pattern: "You leave first to stay safe.",
-            articulation: "When love is mediated by endless options, distance can feel like dignity—exiting becomes protection.",
-            context: "Attention economies normalize quick exits and fear of looking ‘too much.’",
-            counsel: "Leave loudly—one clear sentence is kinder than disappearing."
+      internet: { label:"House of Distance",
+        analysis:"This House learns love through attention, trends, and detachment. It values control, optionality, and protecting dignity.",
+        bg:"#e8e1f5",
+        slips:[
+          { pattern:"You leave first to stay safe.",
+            articulation:"When love is mediated by endless options, distance can feel like dignity—exiting becomes protection.",
+            context:"Attention economies normalize quick exits and fear of looking ‘too much.’",
+            counsel:"Leave loudly—one clear sentence is kinder than disappearing."
           },
-          {
-            pattern: "You speak in hints.",
-            articulation: "When love is learned through signals—timing, likes, silence—needs can become indirect tests.",
-            context: "High-context signaling works online, but misfires across personalities and cultures.",
-            counsel: "Say one thing plainly. Directness is not desperation."
+          { pattern:"You speak in hints.",
+            articulation:"When love is learned through signals—timing, likes, silence—needs can become indirect tests.",
+            context:"High-context signaling works online, but misfires across personalities and cultures.",
+            counsel:"Say one thing plainly. Directness is not desperation."
           },
-          {
-            pattern: "Your feelings feel ‘not enough.’",
-            articulation: "When life is curated, normal emotion can feel small—so you doubt your quiet love.",
-            context: "Online comparison rewards extremes. Real intimacy often looks ordinary and steady.",
-            counsel: "Trust your quiet feelings. You don’t need to be loud to be real."
+          { pattern:"Your feelings feel ‘not enough.’",
+            articulation:"When life is curated, normal emotion can feel small—so you doubt your quiet love.",
+            context:"Online comparison rewards extremes. Real intimacy often looks ordinary and steady.",
+            counsel:"Trust your quiet feelings. You don’t need to be loud to be real."
           }
         ]
       }
     };
 
-    // Threshold lines: symbolic, not predictive
     const recognitionLines = [
       "“Love is learned before it is chosen.”",
       "“Most patterns began as protection.”",
@@ -1101,7 +1045,6 @@ function softChime(type = "place") {
       "“You are not bad at love. You are trained by it.”"
     ];
 
-    // Trait bank (user chooses traits; houses inferred later)
     const TRAITS = [
       { id:"fast",  title:"I fall too fast.", sub:"speed • spark • rush", w:{ media:2, internet:1 } },
       { id:"numb",  title:"I don’t feel enough.", sub:"muted • small • numb", w:{ internet:2, media:1 } },
@@ -1113,9 +1056,7 @@ function softChime(type = "place") {
       { id:"duty",  title:"I take love seriously.", sub:"meaning • devotion • care", w:{ religion:2, family:1 } }
     ];
 
-    /* =========================
-       UI REFS
-       ========================= */
+    /* UI REFS */
     const tokenScreen = document.getElementById("token-screen");
     const recognitionScreen = document.getElementById("recognition-screen");
     const traitGrid = document.getElementById("traitGrid");
@@ -1137,9 +1078,7 @@ function softChime(type = "place") {
     const stepArticulate = document.getElementById("stepArticulate");
     const stepCounsel = document.getElementById("stepCounsel");
 
-    /* =========================
-       STATE
-       ========================= */
+    /* STATE */
     let tokensTotal = 3;
     let tokensLeft = 3;
 
@@ -1188,7 +1127,6 @@ function softChime(type = "place") {
       beginRecognitionBtn.disabled = (tokensLeft !== 0);
     }
 
-    // deterministic mapping to slip index (no randomness; professor-friendly)
     function deterministicSlipIndex(forTeacherKey){
       const w = { fast:3, numb:5, leave:7, guilt:11, peace:13, think:17, prove:19, duty:23 };
       let h = 0;
@@ -1198,9 +1136,7 @@ function softChime(type = "place") {
       return h % teachers[forTeacherKey].slips.length;
     }
 
-    // symbolic “seal” id for sharing (deterministic)
     function computeSeal(){
-      // base-36 short signature from weighted sum
       const w = { fast:31, numb:37, leave:41, guilt:43, peace:47, think:53, prove:59, duty:61 };
       let n = 0;
       for(const tr of TRAITS){
@@ -1241,15 +1177,12 @@ function softChime(type = "place") {
 
           renderTokenDots();
           renderTraits();
-
-          // tasteful chime on interaction
           softChime("place");
 
           tokenStatus.textContent = (tokensLeft > 0)
             ? `Token placed. ${tokensLeft} left.`
             : `Allocation complete. Proceed to recognition.`;
 
-          // subtle palette shift once a primary emerges (still not revealing it)
           if(primaryKey){
             document.body.style.backgroundColor = teachers[primaryKey].bg;
           }
@@ -1284,9 +1217,6 @@ function softChime(type = "place") {
 
     tokenClearBtn.addEventListener("click", clearTraits);
 
-    /* =========================
-       RECOGNITION GATE (3 seconds)
-       ========================= */
     function startRecognition(){
       if(tokensLeft !== 0){
         tokenStatus.textContent = "Please spend all tokens first.";
@@ -1302,14 +1232,11 @@ function softChime(type = "place") {
       tokenScreen.style.display = "none";
       recognitionScreen.style.display = "block";
 
-      // Recognition line chosen deterministically (still not revealing House)
       const idx = deterministicSlipIndex(primaryKey) % recognitionLines.length;
       recognitionLineEl.textContent = recognitionLines[idx];
 
-      // “Gate” chime
       softChime("gate");
 
-      // 3-second unlock
       continueToSlipBtn.disabled = true;
       countdownTextEl.textContent = "Continue unlocks in 3s";
       countBarEl.style.width = "0%";
@@ -1346,18 +1273,13 @@ function softChime(type = "place") {
       softChime("place");
     });
 
-    /* =========================
-       SLIP REVEAL (Trait -> House Analysis -> Counsel)
-       ========================= */
     function showSlip(){
       recomputeScores();
       if(!primaryKey) return;
 
-      // Choose deterministic slip
       const i = deterministicSlipIndex(primaryKey);
       const slip = teachers[primaryKey].slips[i];
 
-      // Step highlight with staged counsel
       setStep("articulation");
 
       document.getElementById("ritual-screen").style.display = "none";
@@ -1365,32 +1287,23 @@ function softChime(type = "place") {
       result.style.display = "block";
       requestAnimationFrame(()=> result.style.opacity = "1");
 
-      // Fill pills (House revealed here, after traits + recognition)
       document.getElementById("pill-primary").textContent = `House: ${teachers[primaryKey].label}`;
       document.getElementById("pill-secondary").textContent = `Secondary: ${secondaryKey ? teachers[secondaryKey].label : "—"}`;
       document.getElementById("pill-sig").textContent = `Seal: ${computeSeal()}`;
 
-      // Pattern + articulation + house analysis + context + counsel
       document.getElementById("frontLine").textContent = slip.pattern;
-
-      document.getElementById("articulationText").textContent =
-        slip.articulation + " (Derived from the traits you selected.)";
-
+      document.getElementById("articulationText").textContent = slip.articulation + " (Derived from the traits you selected.)";
       document.getElementById("houseText").textContent =
         teachers[primaryKey].analysis +
         (secondaryKey ? ` A secondary influence from ${teachers[secondaryKey].label} may color how this shows up.` : "");
-
       document.getElementById("contextText").textContent = slip.context;
-
       document.getElementById("counselText").textContent = slip.counsel;
 
-      // staged reveal so counsel feels distinct
       const counselBox = document.getElementById("counselBox");
       counselBox.style.opacity = "0";
       counselBox.style.transform = "translateY(6px)";
       counselBox.style.transition = "opacity .5s ease, transform .5s ease";
 
-      // Reveal chime + counsel
       softChime("reveal");
       setTimeout(()=>{
         setStep("counsel");
@@ -1398,10 +1311,8 @@ function softChime(type = "place") {
         counselBox.style.transform = "translateY(0)";
       }, 900);
 
-      // background to house palette
       document.body.style.backgroundColor = teachers[primaryKey].bg;
 
-      // bind sound button on result
       const b2 = document.getElementById("soundBtn2");
       if (b2 && !b2.dataset.bound) {
         b2.dataset.bound = "1";
@@ -1412,9 +1323,6 @@ function softChime(type = "place") {
 
     continueToSlipBtn.addEventListener("click", showSlip);
 
-    /* =========================
-       SAVE IMAGE
-       ========================= */
     function saveImage(){
       const captureArea = document.getElementById('capture-frame');
       html2canvas(captureArea, { backgroundColor: null, scale: 2 }).then(canvas => {
@@ -1426,17 +1334,11 @@ function softChime(type = "place") {
     }
     window.saveImage = saveImage;
 
-    /* =========================
-       INIT
-       ========================= */
+    /* INIT */
     renderTokenDots();
     renderTraits();
     setStep("token");
-
-    /* Keep the “Sound” toggle working */
-    document.getElementById("soundBtn").addEventListener("click", (e)=>{ e.stopPropagation(); toggleSound(); });
+    // ✅ removed duplicate soundBtn binding
   </script>
 </body>
 </html>
-
-
