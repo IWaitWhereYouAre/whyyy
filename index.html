@@ -726,120 +726,207 @@
     spawnMotes(18);
     window.addEventListener("resize", ()=> spawnMotes(window.innerWidth < 480 ? 12 : 18));
 
-    /* =========================
-       SOUND: aristocratic chime / music-box
-       (replaces birds)
-       ========================= */
-    let audioCtx = null;
-    let masterGain = null;
-    let soundOn = true;
-    let audioPrimed = false;
+  /* =========================
+   SOUND (relaxing piano ambient)
+   - no external audio files
+   - safe, gentle, non-intrusive
+   ========================= */
+let audioCtx = null;
+let masterGain = null;
+let soundOn = true;
+let audioPrimed = false;
 
-    function ensureAudio(){
-      if(audioCtx) return;
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      masterGain = audioCtx.createGain();
-      masterGain.gain.value = 0.0001;
-      masterGain.connect(audioCtx.destination);
-    }
+let pianoLoopTimer = null;
+let pianoIsRunning = false;
 
-    async function primeAndApplyAudio(){
-      ensureAudio();
-      if(audioCtx.state === "suspended"){
-        try{ await audioCtx.resume(); }catch(e){}
-      }
-      audioPrimed = true;
-      const now = audioCtx.currentTime;
-      masterGain.gain.cancelScheduledValues(now);
-      masterGain.gain.setValueAtTime(masterGain.gain.value, now);
-      masterGain.gain.exponentialRampToValueAtTime(soundOn ? 0.75 : 0.0001, now + 0.12);
-      updateSoundButtons();
-    }
+function ensureAudio() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0.0001;
+  masterGain.connect(audioCtx.destination);
+}
 
-    function setSound(on){
-      soundOn = on;
-      if(!audioPrimed || !audioCtx || !masterGain){ updateSoundButtons(); return; }
-      const now = audioCtx.currentTime;
-      masterGain.gain.cancelScheduledValues(now);
-      masterGain.gain.setValueAtTime(masterGain.gain.value, now);
-      masterGain.gain.exponentialRampToValueAtTime(on ? 0.75 : 0.0001, now + 0.12);
-      updateSoundButtons();
-    }
-    function toggleSound(){ setSound(!soundOn); }
+async function primeAndApplyAudio() {
+  ensureAudio();
+  if (audioCtx.state === "suspended") {
+    try { await audioCtx.resume(); } catch (e) {}
+  }
+  audioPrimed = true;
 
-    function updateSoundButtons(){
-      const label = soundOn ? "Sound: On" : "Sound: Off";
-      const btns = [document.getElementById("soundBtn"), document.getElementById("soundBtn2")].filter(Boolean);
-      btns.forEach(b=>{
-        b.textContent = label;
-        b.classList.toggle("active", soundOn);
-      });
-    }
+  const now = audioCtx.currentTime;
+  masterGain.gain.cancelScheduledValues(now);
+  masterGain.gain.setValueAtTime(masterGain.gain.value, now);
+  masterGain.gain.exponentialRampToValueAtTime(soundOn ? 0.55 : 0.0001, now + 0.12);
 
-    (function bindAutoStart(){
-      const once = async ()=>{
-        await primeAndApplyAudio();
-        window.removeEventListener("pointerdown", once);
-        window.removeEventListener("keydown", once);
-      };
-      window.addEventListener("pointerdown", once);
-      window.addEventListener("keydown", once);
-    })();
+  updateSoundButtons();
 
-    document.getElementById("soundBtn").addEventListener("click", (e)=>{ e.stopPropagation(); toggleSound(); });
+  if (soundOn && !pianoIsRunning) startPianoAmbience();
+}
 
-    function softChime(type="place"){
-      if(!audioCtx || !audioPrimed || !soundOn) return;
+function setSound(on) {
+  soundOn = on;
+  if (!audioPrimed || !audioCtx || !masterGain) { updateSoundButtons(); return; }
 
-      const now = audioCtx.currentTime;
+  const now = audioCtx.currentTime;
+  masterGain.gain.cancelScheduledValues(now);
+  masterGain.gain.setValueAtTime(masterGain.gain.value, now);
+  masterGain.gain.exponentialRampToValueAtTime(on ? 0.55 : 0.0001, now + 0.12);
 
-      // A tiny “music box” chord
-      const freqs = (type==="reveal")
-        ? [784, 988, 1175]   // G5 B5 D6-ish
-        : (type==="gate")
-          ? [659, 784, 988]  // E5 G5 B5-ish
-          : [523, 659, 784]; // C5 E5 G5-ish
+  updateSoundButtons();
 
-      const out = audioCtx.createGain();
-      out.gain.setValueAtTime(0.0001, now);
-      out.gain.exponentialRampToValueAtTime(0.08, now + 0.02);
-      out.gain.exponentialRampToValueAtTime(0.0001, now + 0.55);
+  if (on) startPianoAmbience();
+  else stopPianoAmbience();
+}
 
-      // Gentle “room” via delay
-      const delay = audioCtx.createDelay();
-      delay.delayTime.value = 0.09;
+function toggleSound() { setSound(!soundOn); }
 
-      const fb = audioCtx.createGain();
-      fb.gain.value = 0.18;
+function updateSoundButtons() {
+  const label = soundOn ? "Sound: On" : "Sound: Off";
+  const btns = [document.getElementById("soundBtn"), document.getElementById("soundBtn2")].filter(Boolean);
+  btns.forEach(b => {
+    b.textContent = label;
+    b.classList.toggle("active", soundOn);
+  });
+}
 
-      const lp = audioCtx.createBiquadFilter();
-      lp.type = "lowpass";
-      lp.frequency.value = 4200;
+/* Autostart on first user gesture (Safari requirement) */
+(function bindAutoStart() {
+  const once = async () => {
+    await primeAndApplyAudio();
+    window.removeEventListener("pointerdown", once);
+    window.removeEventListener("keydown", once);
+  };
+  window.addEventListener("pointerdown", once);
+  window.addEventListener("keydown", once);
+})();
 
-      out.connect(lp);
-      lp.connect(masterGain);
+/* Bind button */
+document.getElementById("soundBtn")?.addEventListener("click", (e) => {
+  e.stopPropagation();
+  toggleSound();
+});
 
-      lp.connect(delay);
-      delay.connect(fb);
-      fb.connect(delay);
-      delay.connect(lp);
+/* -------------------------
+   "Felt piano" note synth
+   ------------------------- */
+function playPianoNote(freq, {
+  when = 0,
+  dur = 1.8,
+  vel = 0.6,
+  pan = 0
+} = {}) {
+  if (!audioCtx || !audioPrimed || !soundOn) return;
 
-      freqs.forEach((f, i)=>{
-        const osc = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        osc.type = "triangle";
-        osc.frequency.setValueAtTime(f, now);
-        g.gain.setValueAtTime(0.0001, now);
-        g.gain.exponentialRampToValueAtTime(0.18 / (i+1), now + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.50 + i*0.03);
-        osc.connect(g);
-        g.connect(out);
-        osc.start(now + i*0.012);
-        osc.stop(now + 0.62);
-      });
-    }
+  const t0 = audioCtx.currentTime + when;
 
-    updateSoundButtons();
+  // Main tone
+  const osc = audioCtx.createOscillator();
+  osc.type = "triangle";
+  osc.frequency.setValueAtTime(freq, t0);
+
+  // Soft transient (tiny "hammer")
+  const click = audioCtx.createOscillator();
+  click.type = "sine";
+  click.frequency.setValueAtTime(freq * 2.0, t0);
+
+  // Envelope
+  const g = audioCtx.createGain();
+  const peak = 0.08 * vel;
+
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(peak, t0 + 0.01);        // attack
+  g.gain.exponentialRampToValueAtTime(peak * 0.35, t0 + 0.18); // decay
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);       // release
+
+  // Piano-ish filtering
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = "lowpass";
+  filter.frequency.setValueAtTime(1800 + vel * 1200, t0);
+  filter.Q.setValueAtTime(0.8, t0);
+
+  // Gentle reverb-like smear using delay + feedback (small room)
+  const delay = audioCtx.createDelay();
+  delay.delayTime.setValueAtTime(0.14, t0);
+
+  const fb = audioCtx.createGain();
+  fb.gain.setValueAtTime(0.22, t0);
+
+  const wet = audioCtx.createGain();
+  wet.gain.setValueAtTime(0.35, t0);
+
+  const dry = audioCtx.createGain();
+  dry.gain.setValueAtTime(0.9, t0);
+
+  const panner = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
+  if (panner) panner.pan.setValueAtTime(Math.max(-1, Math.min(1, pan)), t0);
+
+  // Routing: osc -> filter -> (dry + wet chain) -> master
+  osc.connect(filter);
+  click.connect(filter);
+
+  filter.connect(dry);
+  dry.connect(g);
+
+  filter.connect(delay);
+  delay.connect(fb);
+  fb.connect(delay);
+  delay.connect(wet);
+  wet.connect(g);
+
+  if (panner) {
+    g.connect(panner);
+    panner.connect(masterGain);
+  } else {
+    g.connect(masterGain);
+  }
+
+  osc.start(t0);
+  click.start(t0);
+
+  // stop
+  const stopAt = t0 + dur + 0.05;
+  osc.stop(stopAt);
+  click.stop(t0 + 0.03); // transient ends quickly
+}
+
+/* -------------------------
+   Ambient progression loop
+   ------------------------- */
+const SCALES = {
+  // D major-ish calm palette
+  dMaj: [293.66, 329.63, 369.99, 440.00, 493.88, 587.33, 659.25],
+};
+
+const CHORDS = [
+  // (D) Dmaj add2, (G) Gmaj, (Bm) Bm7, (A) A sus2
+  [293.66, 369.99, 440.00],   // D F# A
+  [392.00, 493.88, 587.33],   // G B D
+  [246.94, 293.66, 369.99],   // B D F#
+  [220.00, 293.66, 329.63],   // A D E (sus2-ish)
+];
+
+function startPianoAmbience() {
+  if (pianoIsRunning) return;
+  pianoIsRunning = true;
+
+  let step = 0;
+
+  const tick = () => {
+    if (!soundOn || !audioPrimed || !audioCtx) return;
+
+    // every ~2.4s place a small arpeggio + one soft bass
+    const chord = CHORDS[step % CHORDS.length];
+    const basePan = -0.25 + Math.random() * 0.5;
+    const vel = 0.45 + Math.random() * 0.25;
+
+    // soft bass
+    playPianoNote(chord[0] / 2, { when: 0.00, dur: 2.2, vel: vel * 0.65, pan: basePan * 0.6 });
+
+    // arpeggio
+    playPianoNote(chord[0], { when: 0.05, dur: 1.8, vel: vel, pan: basePan });
+    playPianoNote(chord[1], { when: 0.32, dur: 1.6, vel: vel * 0.9, pan: basePan * 0.8 });
+    playPianoNote(chord[2], { when: 0.62, dur: 1.4, vel: vel * 0.85, pan: base
 
     /* =========================
        RITUAL DATA (NO tarot; trait-driven)
