@@ -14,9 +14,11 @@
       --deep-green:#1a2a1d;
       --cream:#f8f5f0;
       --blush:#e8d5d1;
-      --ink: rgba(26,42,29,0.84);
+      --ink: rgba(26,42,29,0.86);
     }
 
+    /* Keep body hidden overflow (background cinematic),
+       BUT make the app scrollable (fix: only 4 tiles visible). */
     html, body{
       width:100%; height:100%;
       margin:0; padding:0;
@@ -34,15 +36,19 @@
       display:flex;
       justify-content:center;
       align-items:center;
-      transition: background-color 1.1s ease;
+      transition: background-color 1.05s ease;
       position:relative;
     }
 
+    /* App becomes scroll container */
     #app-container{
+      height: 100svh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       text-align:center;
       width:100%;
       max-width:1200px;
-      padding:20px;
+      padding:20px 20px 40px;
       z-index:10;
       box-sizing:border-box;
       position:relative;
@@ -50,6 +56,7 @@
 
     /* =========================
        SECRET GARDEN BACKGROUND
+       (more aristocratic: paper + light + gilding)
        ========================= */
     .garden-bg{
       position:fixed; inset:0;
@@ -58,18 +65,18 @@
       overflow:hidden;
       background:
         radial-gradient(900px 700px at 20% 20%, rgba(197,160,89,0.14), transparent 60%),
-        radial-gradient(800px 650px at 80% 30%, rgba(232,213,209,0.18), transparent 55%),
-        radial-gradient(900px 700px at 40% 90%, rgba(26,42,29,0.14), transparent 55%),
+        radial-gradient(800px 650px at 80% 30%, rgba(232,213,209,0.14), transparent 55%),
+        radial-gradient(900px 700px at 40% 90%, rgba(26,42,29,0.12), transparent 55%),
         linear-gradient(120deg, rgba(248,245,240,1), rgba(248,245,240,1));
     }
     .garden-bg::before{
       content:"";
-      position:absolute; inset:-40%;
+      position:absolute; inset:-35%;
       background:
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.55), transparent 55%),
-        radial-gradient(circle at 70% 40%, rgba(255,255,255,0.35), transparent 60%),
-        radial-gradient(circle at 50% 70%, rgba(255,255,255,0.25), transparent 65%),
-        linear-gradient(120deg, rgba(197,160,89,0.08), rgba(232,213,209,0.10), rgba(26,42,29,0.06));
+        radial-gradient(circle at 22% 28%, rgba(255,255,255,0.60), transparent 58%),
+        radial-gradient(circle at 78% 44%, rgba(255,255,255,0.38), transparent 62%),
+        radial-gradient(circle at 52% 74%, rgba(255,255,255,0.26), transparent 68%),
+        linear-gradient(120deg, rgba(197,160,89,0.10), rgba(232,213,209,0.10), rgba(26,42,29,0.06));
       filter: blur(18px);
       opacity:0.9;
       animation: gardenDrift 18s ease-in-out infinite;
@@ -89,54 +96,51 @@
     }
 
     /* =========================
-       PETALS
+       SYMBOLIC VISUAL: GOLD MOTES (instead of birds)
        ========================= */
-    .petals{ position:fixed; inset:0; z-index:2; pointer-events:none; overflow:hidden; }
-    .petal{
-      position:absolute; top:-10%;
-      width:10px; height:16px;
-      border-radius:60% 40% 60% 40%;
-      background:rgba(232,213,209,0.55);
-      box-shadow:0 0 0 1px rgba(197,160,89,0.08);
-      filter:blur(0.15px);
-      animation: fall linear infinite;
-      transform:rotate(12deg);
-      opacity:0.85;
+    .motes{
+      position:fixed; inset:0;
+      z-index:2;
+      pointer-events:none;
+      overflow:hidden;
+      opacity: 0.85;
     }
-    @keyframes fall{
-      0%{transform:translate3d(0,-20px,0) rotate(10deg);}
-      100%{transform:translate3d(0,120vh,0) rotate(260deg);}
+    .mote{
+      position:absolute;
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.75), rgba(197,160,89,0.45) 45%, rgba(197,160,89,0.10) 70%, transparent 75%);
+      filter: blur(0.2px);
+      animation: moteFloat linear infinite;
+      opacity: 0.8;
+      box-shadow: 0 0 0 1px rgba(197,160,89,0.08);
+      transform: translate3d(0,0,0);
+    }
+    @keyframes moteFloat{
+      0%   { transform: translate3d(var(--x), 110vh, 0) scale(var(--s)); opacity: 0; }
+      15%  { opacity: 0.7; }
+      85%  { opacity: 0.6; }
+      100% { transform: translate3d(var(--x2), -15vh, 0) scale(var(--s)); opacity: 0; }
     }
 
-    /* =========================
-       BIRDS
-       ========================= */
-    .birds{ position:fixed; inset:0; z-index:3; pointer-events:none; overflow:hidden; opacity:0.65; filter:blur(0.1px); }
-    .bird{
-      position:absolute; left:0; top:0;
-      width:56px; height:30px;
-      opacity:0.55;
-      animation: flyDiag linear infinite;
-      transform: translate3d(var(--fromX), var(--fromY), 0) scale(var(--s, 1));
-      will-change: transform, opacity;
-    }
-    @keyframes flyDiag{
-      0%{transform:translate3d(var(--fromX),var(--fromY),0) scale(var(--s,1)); opacity:0;}
-      10%{opacity:0.65;}
-      90%{opacity:0.55;}
-      100%{transform:translate3d(var(--toX),var(--toY),0) scale(var(--s,1)); opacity:0;}
-    }
-    .bird .wing{ transform-box:fill-box; transform-origin:center; animation: flap 0.35s ease-in-out infinite; }
-    .bird .wing.right{ animation-delay:0.02s; }
-    @keyframes flap{
-      0%{transform:rotate(8deg) scaleY(1);}
-      50%{transform:rotate(-18deg) scaleY(0.92);}
-      100%{transform:rotate(8deg) scaleY(1);}
+    .vignette{
+      position:fixed; inset:0;
+      pointer-events:none; z-index:5;
+      background: radial-gradient(circle, transparent 50%, rgba(26,42,29,0.10));
     }
 
-    .vignette{ position:fixed; inset:0; pointer-events:none; z-index:5;
-      background: radial-gradient(circle, transparent 50%, rgba(26,42,29,0.1));
+    /* Corner filigree (symbolic, aristocratic) */
+    .filigree{
+      position: fixed;
+      width: min(440px, 55vw);
+      opacity: 0.12;
+      pointer-events:none;
+      z-index: 3;
+      mix-blend-mode: multiply;
+      filter: blur(0.1px);
     }
+    .filigree.tl{ top:-110px; left:-120px; transform: rotate(18deg); }
+    .filigree.br{ bottom:-110px; right:-120px; transform: rotate(198deg); }
 
     /* =========================
        HEADERS
@@ -160,11 +164,11 @@
       font-size:clamp(0.7rem, 2vw, 1rem);
       letter-spacing:clamp(4px,1vw,10px);
       text-transform:uppercase;
-      margin-bottom: clamp(14px, 2.6vh, 24px);
+      margin-bottom: clamp(10px, 2vh, 18px);
     }
 
     /* =========================
-       PROGRESS / RITUAL BAR
+       RITUAL BAR
        ========================= */
     .ritual-bar{
       width:min(820px, 96vw);
@@ -218,7 +222,7 @@
     }
 
     /* =========================
-       TOKEN UI
+       TOKEN TOP
        ========================= */
     .token-top{
       width:min(900px, 96vw);
@@ -250,18 +254,21 @@
     }
     .dot.filled{ background: rgba(197,160,89,0.85); }
 
-    /* Teacher cards */
-    .teacher-grid{
+    /* =========================
+       TRAIT GRID (symbolic “traits”, not teachers)
+       ========================= */
+    .trait-grid{
       width: min(920px, 96vw);
       margin: 0 auto;
       display:grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap:10px;
       padding:10px;
       box-sizing:border-box;
     }
-    @media (max-width: 900px){ .teacher-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
-    .teacher{
+    @media (max-width: 900px){ .trait-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+
+    .trait{
       background: rgba(255,255,255,0.55);
       border:1px solid rgba(197,160,89,0.55);
       border-radius:14px;
@@ -272,28 +279,24 @@
       backdrop-filter: blur(4px);
       position:relative;
       overflow:hidden;
-      min-height: 118px;
+      min-height: 102px;
     }
-    .teacher:hover{ transform: translateY(-2px); border-color: var(--gold); }
-    .teacher::after{
+    .trait:hover{ transform: translateY(-2px); border-color: var(--gold); }
+    .trait::after{
       content:"";
-      position:absolute;
-      inset:10px;
-      border:0.8px solid rgba(197,160,89,0.32);
+      position:absolute; inset:10px;
+      border:0.8px solid rgba(197,160,89,0.28);
       border-radius:10px;
       pointer-events:none;
-      opacity:0.9;
+      opacity:0.95;
     }
-    .t-title{
+    .trait-title{
       font-family:'Playfair Display', serif;
-      font-size:1.05rem;
-      letter-spacing:0.2px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
+      font-size:1.02rem;
+      line-height:1.22;
+      letter-spacing:0.1px;
     }
-    .t-sub{
+    .trait-sub{
       margin-top:6px;
       font-size:0.62rem;
       letter-spacing:2px;
@@ -301,19 +304,9 @@
       opacity:0.72;
       line-height:1.35;
     }
-    .t-meter{
-      margin-top:10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .t-count{
-      font-size:0.6rem;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      opacity:0.78;
-    }
+    .trait-meter{ margin-top:10px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .trait-count{ font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; opacity:0.78; }
+
     .pips{ display:inline-flex; gap:6px; }
     .pip{
       width:12px; height:12px;
@@ -322,26 +315,10 @@
       background: rgba(26,42,29,0.06);
     }
     .pip.on{ background: rgba(26,42,29,0.75); border-color: rgba(26,42,29,0.25); }
-    .t-tag{
-      position:absolute;
-      top:12px; right:12px;
-      font-size:0.55rem;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      padding:7px 9px;
-      border-radius:999px;
-      background: rgba(26,42,29,0.85);
-      color:#fff;
-      opacity:0;
-      transform: translateY(-6px);
-      transition: .18s ease;
-      pointer-events:none;
-    }
-    .teacher.leading .t-tag{ opacity:1; transform: translateY(0); }
-    .teacher.locked{ opacity:0.82; }
-    .teacher.locked:hover{ transform:none; }
 
-    /* Buttons */
+    /* =========================
+       BUTTONS
+       ========================= */
     .btn-group{
       margin-top: 14px;
       display:flex;
@@ -361,16 +338,13 @@
       transition:0.3s;
       backdrop-filter: blur(4px);
       flex: 1 1 auto;
-      min-width: 140px;
-      max-width: 240px;
+      min-width: 150px;
+      max-width: 260px;
       border-radius: 10px;
     }
     .btn-save{ background: var(--gold); color:#fff; }
     .btn-save:hover{ background: var(--deep-green); border-color: var(--deep-green); }
-    .btn:disabled{
-      opacity:0.5;
-      cursor:not-allowed;
-    }
+    .btn:disabled{ opacity:0.5; cursor:not-allowed; }
 
     .tiny-note{
       font-size:0.62rem;
@@ -381,7 +355,7 @@
     }
 
     /* =========================
-       RECOGNITION SCREEN
+       RECOGNITION PANEL
        ========================= */
     .panel{
       width: min(760px, 94vw);
@@ -397,10 +371,10 @@
     }
     .panel::before{
       content:"";
-      position:absolute;
-      inset:0;
-      background: radial-gradient(900px 500px at 20% 20%, rgba(197,160,89,0.10), transparent 60%),
-                  radial-gradient(700px 450px at 80% 50%, rgba(232,213,209,0.12), transparent 60%);
+      position:absolute; inset:0;
+      background:
+        radial-gradient(900px 500px at 20% 20%, rgba(197,160,89,0.10), transparent 60%),
+        radial-gradient(700px 450px at 80% 50%, rgba(232,213,209,0.12), transparent 60%);
       opacity:0.9;
       pointer-events:none;
     }
@@ -437,14 +411,14 @@
     }
 
     /* =========================
-       RESULT (CAPTURE FRAME)
+       RESULT
        ========================= */
     #result-screen{ display:none; opacity:0; transition: opacity .35s ease; }
     #capture-frame{
       background:#fff;
       padding: clamp(28px, 5vw, 56px) clamp(18px, 4vw, 38px);
       width: 92vw;
-      max-width: 520px;
+      max-width: 540px;
       margin: 0 auto;
       position: relative;
       box-sizing: border-box;
@@ -459,6 +433,7 @@
       border: 0.5px solid var(--gold);
       pointer-events:none;
     }
+
     .result-isa{
       font-size:0.55rem;
       letter-spacing:4px;
@@ -474,6 +449,7 @@
       margin: 0 0 8px 0;
       line-height: 1;
     }
+
     .pill-row{
       display:flex;
       gap:8px;
@@ -490,6 +466,7 @@
       border-radius: 999px;
       background: rgba(255,255,255,0.55);
     }
+
     .front-line{
       font-family:'Playfair Display', serif;
       font-size: clamp(1.15rem, 4vw, 1.55rem);
@@ -498,6 +475,7 @@
       font-style: italic;
       color: rgba(26,42,29,0.88);
     }
+
     .section{
       text-align:left;
       margin-top: 12px;
@@ -512,25 +490,47 @@
       display:block;
       margin-bottom: 6px;
     }
+
+    /* Articulation gets a distinct “thesis” feel */
+    .articulation{
+      font-family:'Playfair Display', serif;
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+
     .sec-body.small{
       font-family:'Lato', sans-serif;
       font-size: 0.88rem;
       opacity: 0.92;
-      line-height: 1.55;
+      line-height: 1.6;
     }
-    .sec-body{
-      font-family:'Playfair Display', serif;
-      font-size: 0.95rem;
-      line-height: 1.55;
+
+    /* Counsel gets a gold “seal box” */
+    .counsel-box{
+      margin-top: 8px;
+      padding: 14px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(197,160,89,0.55);
+      background: rgba(197,160,89,0.08);
+      position: relative;
     }
-    .advice{
+    .counsel-box::before{
+      content:"";
+      position:absolute;
+      top: 10px; right: 10px;
+      width: 12px; height: 12px;
+      border-radius: 999px;
+      background: rgba(197,160,89,0.85);
+      box-shadow: 0 0 0 4px rgba(197,160,89,0.14);
+    }
+    .counsel{
       font-family:'Playfair Display', serif;
       font-size: 1.02rem;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     /* =========================
-       SOUND TOGGLE BUTTONS
+       SOUND BUTTON
        ========================= */
     .btn-sound{
       border-color: rgba(197,160,89,0.65);
@@ -547,20 +547,55 @@
 
 <body>
   <div class="garden-bg"></div>
-  <div class="petals" id="petals"></div>
-  <div class="birds" id="birds"></div>
+  <div class="motes" id="motes"></div>
   <div class="vignette"></div>
+
+  <!-- Filigree SVG (symbolic ornament) -->
+  <svg class="filigree tl" viewBox="0 0 600 600" aria-hidden="true">
+    <defs>
+      <linearGradient id="fg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#1a2a1d" stop-opacity="0.75"/>
+        <stop offset="1" stop-color="#c5a059" stop-opacity="0.75"/>
+      </linearGradient>
+    </defs>
+    <path d="M80 210 C120 110 220 70 310 90 C390 108 440 160 430 230
+             C420 290 360 330 300 320 C230 310 210 250 235 215
+             C260 180 320 178 338 206 C356 235 330 260 308 257
+             C285 254 280 230 295 220" fill="none" stroke="url(#fg)" stroke-width="6" opacity="0.85"/>
+    <path d="M120 360 C160 300 220 260 290 270 C360 280 400 330 390 395
+             C380 450 320 485 260 470 C200 455 180 400 205 365" fill="none" stroke="url(#fg)" stroke-width="5" opacity="0.55"/>
+    <circle cx="120" cy="220" r="10" fill="#c5a059" opacity="0.55"/>
+    <circle cx="410" cy="235" r="8" fill="#1a2a1d" opacity="0.45"/>
+    <circle cx="205" cy="368" r="7" fill="#c5a059" opacity="0.45"/>
+  </svg>
+
+  <svg class="filigree br" viewBox="0 0 600 600" aria-hidden="true">
+    <defs>
+      <linearGradient id="fg2" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#1a2a1d" stop-opacity="0.75"/>
+        <stop offset="1" stop-color="#c5a059" stop-opacity="0.75"/>
+      </linearGradient>
+    </defs>
+    <path d="M80 210 C120 110 220 70 310 90 C390 108 440 160 430 230
+             C420 290 360 330 300 320 C230 310 210 250 235 215
+             C260 180 320 178 338 206 C356 235 330 260 308 257
+             C285 254 280 230 295 220" fill="none" stroke="url(#fg2)" stroke-width="6" opacity="0.85"/>
+    <path d="M120 360 C160 300 220 260 290 270 C360 280 400 330 390 395
+             C380 450 320 485 260 470 C200 455 180 400 205 365" fill="none" stroke="url(#fg2)" stroke-width="5" opacity="0.55"/>
+    <circle cx="120" cy="220" r="10" fill="#c5a059" opacity="0.55"/>
+    <circle cx="410" cy="235" r="8" fill="#1a2a1d" opacity="0.45"/>
+    <circle cx="205" cy="368" r="7" fill="#c5a059" opacity="0.45"/>
+  </svg>
 
   <div id="app-container">
     <div id="ritual-screen">
       <p class="isa-tag">ISA Chulalongkorn Presents</p>
       <h1 class="main-title">Heart to Heart</h1>
-      <p class="sub-theme">Love Is Learned</p>
+      <p class="sub-theme">A Reflection Ritual</p>
 
-      <!-- ritual progress -->
       <div class="ritual-bar" aria-label="Ritual progress">
         <div class="steps">
-          <div class="step active" id="stepToken"><span class="step-dot"></span><span class="step-label">Token</span></div>
+          <div class="step active" id="stepToken"><span class="step-dot"></span><span class="step-label">Tokens</span></div>
           <div class="step" id="stepRecognize"><span class="step-dot"></span><span class="step-label">Recognition</span></div>
           <div class="step" id="stepArticulate"><span class="step-dot"></span><span class="step-label">Articulation</span></div>
           <div class="step" id="stepCounsel"><span class="step-dot"></span><span class="step-label">Counsel</span></div>
@@ -570,10 +605,10 @@
       <!-- TOKEN SCREEN -->
       <div id="token-screen">
         <p style="margin: 6px 0 6px; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; opacity:0.75;">
-          Allocate 3 tokens to what shaped your idea of love
+          Spend 3 tokens on traits that feel like you
         </p>
         <p class="tiny-note" style="margin-top:6px;">
-          Reflection, not prediction. No gambling. No divination. Just insight.
+          Not a test. Not fate. Just recognition.
         </p>
 
         <div class="token-top">
@@ -586,7 +621,7 @@
           <button class="btn btn-sound active" id="soundBtn" type="button">Sound: On</button>
         </div>
 
-        <div class="teacher-grid" id="teacherGrid"></div>
+        <div class="trait-grid" id="traitGrid"></div>
         <p class="tiny-note" id="tokenStatus"></p>
       </div>
 
@@ -620,16 +655,21 @@
         <h2 class="result-theme">Heart to Heart</h2>
 
         <div class="pill-row">
-          <span class="pill" id="pill-primary">Primary: —</span>
+          <span class="pill" id="pill-primary">House: —</span>
           <span class="pill" id="pill-secondary">Secondary: —</span>
-          <span class="pill">Not a diagnosis • A lens</span>
+          <span class="pill" id="pill-sig">Seal: —</span>
         </div>
 
         <div class="front-line" id="frontLine"></div>
 
         <div class="section">
           <span class="sec-label">Articulation</span>
-          <div class="sec-body" id="articulationText"></div>
+          <div class="articulation" id="articulationText"></div>
+        </div>
+
+        <div class="section">
+          <span class="sec-label">House Analysis</span>
+          <div class="sec-body small" id="houseText"></div>
         </div>
 
         <div class="section">
@@ -639,7 +679,9 @@
 
         <div class="section">
           <span class="sec-label">Counsel meant for you</span>
-          <div class="sec-body advice" id="counselText"></div>
+          <div class="counsel-box" id="counselBox">
+            <div class="counsel" id="counselText"></div>
+          </div>
         </div>
       </div>
 
@@ -654,82 +696,88 @@
 
   <script>
     /* =========================
-       PETALS
+       GOLD MOTES (symbolic motion)
        ========================= */
-    const petalsHost = document.getElementById('petals');
-    function spawnPetals(count = 16) {
-      petalsHost.innerHTML = '';
-      for (let i = 0; i < count; i++) {
-        const p = document.createElement('div');
-        p.className = 'petal';
-        const left = Math.random() * 100;
-        const dur = 10 + Math.random() * 12;
+    const motesHost = document.getElementById("motes");
+    function spawnMotes(count = 18){
+      motesHost.innerHTML = "";
+      for(let i=0;i<count;i++){
+        const m = document.createElement("div");
+        m.className = "mote";
+        const x = Math.random() * 100;
+        const x2 = Math.max(0, Math.min(100, x + (Math.random()*18 - 9)));
+        const dur = 12 + Math.random() * 14;
         const delay = Math.random() * 8;
-        const size = 8 + Math.random() * 10;
-        p.style.left = left + 'vw';
-        p.style.animationDuration = dur + 's';
-        p.style.animationDelay = delay + 's';
-        p.style.width = size + 'px';
-        p.style.height = (size * 1.5) + 'px';
-        p.style.opacity = (0.45 + Math.random() * 0.45).toFixed(2);
-        petalsHost.appendChild(p);
+        const s = (0.55 + Math.random() * 1.2).toFixed(2);
+
+        m.style.setProperty("--x", x + "vw");
+        m.style.setProperty("--x2", x2 + "vw");
+        m.style.setProperty("--s", s);
+        m.style.animationDuration = dur + "s";
+        m.style.animationDelay = delay + "s";
+        m.style.opacity = (0.35 + Math.random()*0.55).toFixed(2);
+
+        const size = 6 + Math.random()*10;
+        m.style.width = size + "px";
+        m.style.height = size + "px";
+        motesHost.appendChild(m);
       }
     }
-    spawnPetals(18);
-    window.addEventListener('resize', () => spawnPetals(window.innerWidth < 480 ? 12 : 18));
+    spawnMotes(18);
+    window.addEventListener("resize", ()=> spawnMotes(window.innerWidth < 480 ? 12 : 18));
 
     /* =========================
-       SOUND (birds only)
+       SOUND: aristocratic chime / music-box
+       (replaces birds)
        ========================= */
     let audioCtx = null;
     let masterGain = null;
     let soundOn = true;
     let audioPrimed = false;
 
-    function ensureAudio() {
-      if (audioCtx) return;
+    function ensureAudio(){
+      if(audioCtx) return;
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       masterGain = audioCtx.createGain();
       masterGain.gain.value = 0.0001;
       masterGain.connect(audioCtx.destination);
     }
 
-    async function primeAndApplyAudio() {
+    async function primeAndApplyAudio(){
       ensureAudio();
-      if (audioCtx.state === "suspended") {
-        try { await audioCtx.resume(); } catch (e) {}
+      if(audioCtx.state === "suspended"){
+        try{ await audioCtx.resume(); }catch(e){}
       }
       audioPrimed = true;
       const now = audioCtx.currentTime;
       masterGain.gain.cancelScheduledValues(now);
       masterGain.gain.setValueAtTime(masterGain.gain.value, now);
-      masterGain.gain.exponentialRampToValueAtTime(soundOn ? 0.85 : 0.0001, now + 0.12);
+      masterGain.gain.exponentialRampToValueAtTime(soundOn ? 0.75 : 0.0001, now + 0.12);
       updateSoundButtons();
     }
 
-    function setSound(on) {
+    function setSound(on){
       soundOn = on;
-      if (!audioPrimed || !audioCtx || !masterGain) { updateSoundButtons(); return; }
+      if(!audioPrimed || !audioCtx || !masterGain){ updateSoundButtons(); return; }
       const now = audioCtx.currentTime;
       masterGain.gain.cancelScheduledValues(now);
       masterGain.gain.setValueAtTime(masterGain.gain.value, now);
-      masterGain.gain.exponentialRampToValueAtTime(on ? 0.85 : 0.0001, now + 0.12);
+      masterGain.gain.exponentialRampToValueAtTime(on ? 0.75 : 0.0001, now + 0.12);
       updateSoundButtons();
     }
+    function toggleSound(){ setSound(!soundOn); }
 
-    function toggleSound() { setSound(!soundOn); }
-
-    function updateSoundButtons() {
+    function updateSoundButtons(){
       const label = soundOn ? "Sound: On" : "Sound: Off";
       const btns = [document.getElementById("soundBtn"), document.getElementById("soundBtn2")].filter(Boolean);
-      btns.forEach(b => {
+      btns.forEach(b=>{
         b.textContent = label;
         b.classList.toggle("active", soundOn);
       });
     }
 
-    (function bindAutoStart() {
-      const once = async () => {
+    (function bindAutoStart(){
+      const once = async ()=>{
         await primeAndApplyAudio();
         window.removeEventListener("pointerdown", once);
         window.removeEventListener("keydown", once);
@@ -738,322 +786,257 @@
       window.addEventListener("keydown", once);
     })();
 
-    document.getElementById("soundBtn").addEventListener("click", (e) => { e.stopPropagation(); toggleSound(); });
+    document.getElementById("soundBtn").addEventListener("click", (e)=>{ e.stopPropagation(); toggleSound(); });
 
-    function pleasantChirp({ pan = 0, volume = 1 } = {}) {
-      if (!audioCtx || !audioPrimed || !soundOn) return;
+    function softChime(type="place"){
+      if(!audioCtx || !audioPrimed || !soundOn) return;
 
       const now = audioCtx.currentTime;
-      const osc1 = audioCtx.createOscillator();
-      const osc2 = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      const filter = audioCtx.createBiquadFilter();
-      const panner = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
 
-      osc1.type = "sine";
-      osc2.type = "triangle";
+      // A tiny “music box” chord
+      const freqs = (type==="reveal")
+        ? [784, 988, 1175]   // G5 B5 D6-ish
+        : (type==="gate")
+          ? [659, 784, 988]  // E5 G5 B5-ish
+          : [523, 659, 784]; // C5 E5 G5-ish
 
-      filter.type = "bandpass";
-      filter.frequency.value = 2600;
-      filter.Q.value = 9;
+      const out = audioCtx.createGain();
+      out.gain.setValueAtTime(0.0001, now);
+      out.gain.exponentialRampToValueAtTime(0.08, now + 0.02);
+      out.gain.exponentialRampToValueAtTime(0.0001, now + 0.55);
 
-      const base = 1350 + Math.random() * 950;
-      const sweepUp = 1.30 + Math.random() * 0.30;
-      const duration = 0.18 + Math.random() * 0.08;
+      // Gentle “room” via delay
+      const delay = audioCtx.createDelay();
+      delay.delayTime.value = 0.09;
 
-      osc1.frequency.setValueAtTime(base, now);
-      osc1.frequency.exponentialRampToValueAtTime(base * sweepUp, now + duration * 0.65);
+      const fb = audioCtx.createGain();
+      fb.gain.value = 0.18;
 
-      osc2.frequency.setValueAtTime(base * 0.985, now);
-      osc2.frequency.exponentialRampToValueAtTime(base * sweepUp * 1.02, now + duration * 0.65);
+      const lp = audioCtx.createBiquadFilter();
+      lp.type = "lowpass";
+      lp.frequency.value = 4200;
 
-      const lfo = audioCtx.createOscillator();
-      const lfoGain = audioCtx.createGain();
-      lfo.type = "sine";
-      lfo.frequency.value = 10 + Math.random() * 3;
-      lfoGain.gain.value = 14 + Math.random() * 9;
-      lfo.connect(lfoGain);
-      lfoGain.connect(osc1.frequency);
-      lfoGain.connect(osc2.frequency);
+      out.connect(lp);
+      lp.connect(masterGain);
 
-      const peak = 0.045 * volume;
-      gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.exponentialRampToValueAtTime(peak, now + 0.028);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+      lp.connect(delay);
+      delay.connect(fb);
+      fb.connect(delay);
+      delay.connect(lp);
 
-      osc1.connect(filter);
-      osc2.connect(filter);
-
-      if (panner) {
-        panner.pan.setValueAtTime(Math.max(-1, Math.min(1, pan)), now);
-        filter.connect(panner);
-        panner.connect(gain);
-      } else {
-        filter.connect(gain);
-      }
-
-      gain.connect(masterGain);
-
-      lfo.start(now);
-      osc1.start(now);
-      osc2.start(now);
-
-      const stopAt = now + duration + 0.02;
-      lfo.stop(stopAt);
-      osc1.stop(stopAt);
-      osc2.stop(stopAt);
+      freqs.forEach((f, i)=>{
+        const osc = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(f, now);
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.exponentialRampToValueAtTime(0.18 / (i+1), now + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.50 + i*0.03);
+        osc.connect(g);
+        g.connect(out);
+        osc.start(now + i*0.012);
+        osc.stop(now + 0.62);
+      });
     }
 
     updateSoundButtons();
 
     /* =========================
-       BIRDS (visual + sound synced)
-       ========================= */
-    const birdsHost = document.getElementById('birds');
-
-    function spawnBird() {
-      if (!birdsHost) return;
-
-      const bird = document.createElement('div');
-      bird.className = 'bird';
-
-      const mode = Math.random() > 0.5 ? "up" : "down";
-      const fromX = "-25vw";
-      const toX   = "120vw";
-
-      const fromY = mode === "up" ? (65 + Math.random() * 25) + "vh" : (10 + Math.random() * 25) + "vh";
-      const toY   = mode === "up" ? (8 + Math.random() * 25) + "vh"  : (55 + Math.random() * 30) + "vh";
-
-      const dur = 9 + Math.random() * 10;
-      const delay = Math.random() * 2.5;
-      const scale = (0.75 + Math.random() * 0.7).toFixed(2);
-      const opacity = (0.28 + Math.random() * 0.35).toFixed(2);
-
-      bird.style.setProperty('--fromX', fromX);
-      bird.style.setProperty('--toX', toX);
-      bird.style.setProperty('--fromY', fromY);
-      bird.style.setProperty('--toY', toY);
-      bird.style.setProperty('--s', scale);
-
-      bird.style.animationDuration = dur + "s";
-      bird.style.animationDelay = delay + "s";
-      bird.style.opacity = opacity;
-
-      bird.innerHTML = `
-        <svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
-          <g fill="none" stroke-linecap="round" stroke="rgba(26,42,29,0.62)">
-            <path d="M58 36 Q60 34 62 36" stroke-width="3"/>
-            <path class="wing left"  d="M60 36 Q40 18 18 26" stroke-width="3.2"/>
-            <path class="wing right" d="M60 36 Q80 18 102 26" stroke-width="3.2"/>
-          </g>
-          <g fill="none" stroke-linecap="round" stroke="rgba(197,160,89,0.28)">
-            <path class="wing left"  d="M60 36 Q43 22 22 28" stroke-width="2.1"/>
-            <path class="wing right" d="M60 36 Q77 22 98 28" stroke-width="2.1"/>
-          </g>
-        </svg>
-      `;
-
-      birdsHost.appendChild(bird);
-
-      const entryPan = -0.55 + Math.random() * 0.25;
-      const midPan   = -0.10 + Math.random() * 0.20;
-      const baseVol  = 0.85 + Math.random() * 0.25;
-
-      setTimeout(() => {
-        pleasantChirp({ pan: entryPan, volume: baseVol });
-        if (Math.random() > 0.55) setTimeout(() => pleasantChirp({ pan: midPan, volume: baseVol * 0.92 }), (dur * 0.45) * 1000);
-        if (Math.random() > 0.7)  setTimeout(() => pleasantChirp({ pan: entryPan, volume: baseVol * 0.72 }), 220 + Math.random() * 180);
-      }, delay * 1000);
-
-      setTimeout(() => bird.remove(), (dur + delay + 1) * 1000);
-    }
-
-    function startBirdFlights() {
-      spawnBird();
-      setInterval(() => { if (Math.random() > 0.35) spawnBird(); }, 2200);
-    }
-    startBirdFlights();
-
-    /* =========================
-       RITUAL DATA (NO TAROT)
-       - deterministic mapping from tokens -> slip
+       RITUAL DATA (NO tarot; trait-driven)
        ========================= */
     const teachers = {
       family: {
-        label: "Family",
+        label: "House of Kin",
+        analysis: "This House learns love through responsibility, harmony, and belonging. It values steadiness, care, and the quiet work of staying.",
         bg: "#f3eddc",
-        sub: "care • harmony • duty",
         slips: [
           {
             pattern: "You protect closeness by staying.",
-            articulation: "People who learned love through family often equate devotion with endurance—staying becomes the proof.",
-            context: "In many family-centered or harmony-focused contexts, love is modeled through responsibility and sacrifice. Needs can be expressed indirectly to avoid conflict.",
-            counsel: "Your counsel: name one need plainly, kindly, and early. Clarity is not disrespect."
+            articulation: "When love is learned as responsibility, devotion can become endurance—staying becomes the proof.",
+            context: "In many family-centered settings, emotions are managed to keep peace. Needs often become indirect requests.",
+            counsel: "Name one need plainly, kindly, and early. Clarity is not disrespect."
           },
           {
             pattern: "You keep peace by shrinking needs.",
-            articulation: "When love is taught as harmony, people often treat wanting more as ‘too much’—so they become easy to live with, not fully known.",
-            context: "High-context environments reward emotional restraint. Over time, silence can turn into quiet resentment or withdrawal.",
-            counsel: "Your counsel: let your needs exist in daylight. Start small: one concrete request."
+            articulation: "When harmony is the rule, wanting more can feel like a threat—so you become easy to live with, not fully known.",
+            context: "High-context communication rewards restraint. Over time, silence can turn into quiet resentment.",
+            counsel: "Let your needs exist in daylight. Start small: one concrete request."
           },
           {
             pattern: "You manage love like a room’s temperature.",
-            articulation: "If you learned love in a home where moods mattered, you may track tension instinctively—peace becomes the metric of safety.",
-            context: "Families teach invisible emotional rules: who can speak, when, and how. Those rules travel into adult intimacy.",
-            counsel: "Your counsel: practice gentle honesty—one true sentence before you disappear."
+            articulation: "If moods mattered growing up, you may track tension instinctively—peace becomes the metric of safety.",
+            context: "Families teach invisible emotional rules: who can speak, when, and how.",
+            counsel: "Practice gentle honesty: one true sentence before you disappear."
           }
         ]
       },
       media: {
-        label: "Media",
+        label: "House of Theatre",
+        analysis: "This House learns love through stories and intensity. It seeks meaning in spark, narrative, and emotional momentum.",
         bg: "#fce3e3",
-        sub: "spark • drama • destiny",
         slips: [
           {
             pattern: "You read intensity as truth.",
-            articulation: "People who learned love through media often mistake adrenaline for meaning—fast feelings look like fate.",
-            context: "Stories compress time and reward high emotion. Real intimacy grows through repetition, reliability, and ordinary days.",
-            counsel: "Your counsel: slow is not a lack of love. Let consistency be attractive."
+            articulation: "When romance is learned through stories, adrenaline can look like destiny—fast feelings feel final.",
+            context: "Narratives compress time and reward high emotion. Real intimacy grows through repetition and reliability.",
+            counsel: "Slow is not a lack of love. Let consistency be attractive."
           },
           {
             pattern: "Calm feels suspicious.",
-            articulation: "When love is taught as a storyline, boredom feels like failure—so peace can look like ‘nothing is happening.’",
-            context: "Modern romance content frames conflict as passion. But stable attachment often feels quiet: support, routines, repair.",
-            counsel: "Your counsel: don’t chase adrenaline to prove love. Ask: do I feel safe here?"
+            articulation: "If love is taught as a storyline, quiet can feel like emptiness—so peace looks like ‘nothing is happening.’",
+            context: "Modern romance often frames conflict as passion. Stable attachment often feels ordinary and safe.",
+            counsel: "Don’t chase adrenaline to prove love. Ask: do I feel safe here?"
           },
           {
             pattern: "You confuse chemistry with compatibility.",
-            articulation: "Media often romanticizes turbulence. But intensity can be chemistry without kindness, devotion, or alignment.",
-            context: "Some cultures also romanticize suffering as proof. In practice, peace is a love language too.",
-            counsel: "Your counsel: choose peace on purpose. Love should not require constant crisis to feel real."
+            articulation: "Stories romanticize turbulence. But intensity can be chemistry without kindness, repair, or alignment.",
+            context: "Some cultures also glorify suffering as proof. In practice, peace is a love language too.",
+            counsel: "Choose peace on purpose. Love should not require crisis to feel real."
           }
         ]
       },
       religion: {
-        label: "Religion",
+        label: "House of Meaning",
+        analysis: "This House learns love through values, devotion, and moral care. It treats love as practice—something you do, not only feel.",
         bg: "#fcfaf7",
-        sub: "meaning • commitment • moral care",
         slips: [
           {
             pattern: "You take love seriously—beautifully.",
-            articulation: "People who learned love through faith communities often treat love as practice and responsibility, not just a feeling.",
-            context: "Community ethics can strengthen loyalty and care. Sometimes, the pressure to be ‘good’ can make normal conflict feel like failure.",
-            counsel: "Your counsel: devotion should include tenderness toward yourself. Imperfection doesn’t cancel worth."
+            articulation: "When love is shaped by values, commitment can be an ethic—care becomes a daily practice.",
+            context: "Community ethics can strengthen loyalty. Sometimes the pressure to be ‘good’ makes normal conflict feel like failure.",
+            counsel: "Devotion should include tenderness toward yourself. Imperfection doesn’t cancel worth."
           },
           {
-            pattern: "You fear disappointing others.",
-            articulation: "When love is linked to goodness, people can confuse boundaries with selfishness—so they over-carry others’ expectations.",
-            context: "Belonging is powerful. But shame-based belonging can silently shape how you ask for care.",
-            counsel: "Your counsel: let values guide you—not shame. You can be kind and still be clear."
+            pattern: "You fear disappointing people.",
+            articulation: "When love is linked to goodness, boundaries can feel like selfishness—so you over-carry expectations.",
+            context: "Belonging is powerful. Shame-based belonging can silently shape how you ask for care.",
+            counsel: "Let values guide you—not shame. You can be kind and still be clear."
           },
           {
             pattern: "You hold desire and duty at once.",
-            articulation: "When love is shaped by communal meaning, you may feel torn between personal longing and collective responsibility.",
-            context: "Navigating love across expectations is a real cultural task, not personal weakness.",
-            counsel: "Your counsel: choose in alignment with your values—without using fear as your compass."
+            articulation: "When love has communal meaning, you may feel torn between personal longing and responsibility.",
+            context: "Navigating love across expectations is a cultural task, not personal weakness.",
+            counsel: "Choose in alignment with your values—without using fear as your compass."
           }
         ]
       },
       school: {
-        label: "School",
+        label: "House of Measure",
+        analysis: "This House learns love through performance, comparison, and belonging. It seeks certainty, progress, and signs of being chosen.",
         bg: "#e0f0f5",
-        sub: "comparison • performance • belonging",
         slips: [
           {
             pattern: "You grade love like an exam.",
-            articulation: "People who learned love through performance cultures often analyze signals constantly—certainty feels like safety.",
-            context: "High-pressure environments train comparison and optimization. Uncertainty becomes emotionally expensive.",
-            counsel: "Your counsel: ask directly once. One honest question can save 100 spirals."
+            articulation: "When safety comes from ‘getting it right,’ you may analyze love for certainty—signals become evidence.",
+            context: "High-pressure environments train comparison. Uncertainty becomes emotionally expensive.",
+            counsel: "Ask directly once. One honest question can save 100 spirals."
           },
           {
             pattern: "You feel behind.",
-            articulation: "When life is measured in milestones, love becomes another timeline—labels and progress can overshadow connection.",
+            articulation: "When life is measured in milestones, love becomes another timeline—labels can overshadow connection.",
             context: "Peer environments shape self-worth. ‘Keeping up’ becomes a hidden rule even in intimacy.",
-            counsel: "Your counsel: stop grading love. Focus on growth, not speed."
+            counsel: "Stop grading love. Focus on growth, not speed."
           },
           {
             pattern: "You perform to be chosen.",
-            articulation: "If belonging was conditional, you may earn love through competence—being ‘easy’ or ‘impressive’ becomes protection.",
-            context: "Social hierarchies teach people to trade authenticity for acceptance. That habit can follow you into relationships.",
-            counsel: "Your counsel: practice receiving without proving. Let care land."
+            articulation: "If belonging was conditional, you may earn love through competence—being impressive becomes protection.",
+            context: "Social hierarchies teach people to trade authenticity for acceptance.",
+            counsel: "Practice receiving without proving. Let care land."
           }
         ]
       },
       internet: {
-        label: "Internet",
+        label: "House of Distance",
+        analysis: "This House learns love through attention, trends, and detachment. It values control, optionality, and protecting dignity.",
         bg: "#e8e1f5",
-        sub: "attention • trends • detachment",
         slips: [
           {
             pattern: "You leave first to stay safe.",
-            articulation: "People who learned love online often treat distance as dignity—ghosting becomes a way to avoid vulnerability.",
-            context: "Attention economies normalize quick exits, endless options, and fear of looking ‘too much.’",
-            counsel: "Your counsel: leave loudly—one clear sentence is kinder than disappearing."
+            articulation: "When love is mediated by endless options, distance can feel like dignity—exiting becomes protection.",
+            context: "Attention economies normalize quick exits and fear of looking ‘too much.’",
+            counsel: "Leave loudly—one clear sentence is kinder than disappearing."
           },
           {
             pattern: "You speak in hints.",
-            articulation: "When love is mediated by signals—likes, views, timing—people can expect minds to be read instead of needs being spoken.",
-            context: "High-context signaling works online, but it easily misfires across cultures, personalities, and nervous systems.",
-            counsel: "Your counsel: say one thing plainly. Directness is not desperation."
+            articulation: "When love is learned through signals—timing, likes, silence—needs can become indirect tests.",
+            context: "High-context signaling works online, but misfires across personalities and cultures.",
+            counsel: "Say one thing plainly. Directness is not desperation."
           },
           {
             pattern: "Your feelings feel ‘not enough.’",
             articulation: "When life is curated, normal emotion can feel small—so you doubt your quiet love.",
-            context: "Online comparison rewards extremes. Real intimacy often looks ordinary, steady, and un-postable.",
-            counsel: "Your counsel: trust your quiet feelings. You don’t need to be loud to be real."
+            context: "Online comparison rewards extremes. Real intimacy often looks ordinary and steady.",
+            counsel: "Trust your quiet feelings. You don’t need to be loud to be real."
           }
         ]
       }
     };
 
-    // Recognition lines (rotate, but not divination — they’re just thresholds)
+    // Threshold lines: symbolic, not predictive
     const recognitionLines = [
       "“Love is learned before it is chosen.”",
       "“Most patterns began as protection.”",
       "“What kept you safe once still guides you.”",
       "“This is not fate. It is recognition.”",
-      "“No one is bad at love. They are trained by it.”"
+      "“You are not bad at love. You are trained by it.”"
+    ];
+
+    // Trait bank (user chooses traits; houses inferred later)
+    const TRAITS = [
+      { id:"fast",  title:"I fall too fast.", sub:"speed • spark • rush", w:{ media:2, internet:1 } },
+      { id:"numb",  title:"I don’t feel enough.", sub:"muted • small • numb", w:{ internet:2, media:1 } },
+      { id:"leave", title:"I leave first.", sub:"exit • control • safety", w:{ internet:2, family:1 } },
+      { id:"guilt", title:"I feel guilty wanting more.", sub:"need • guilt • harmony", w:{ family:2, religion:1 } },
+      { id:"peace", title:"I prioritize peace over truth.", sub:"quiet • restraint • harmony", w:{ family:2, school:1 } },
+      { id:"think", title:"I overthink signals.", sub:"analysis • certainty • fear", w:{ school:2, media:1 } },
+      { id:"prove", title:"I perform to be chosen.", sub:"earn • impress • belong", w:{ school:2, family:1 } },
+      { id:"duty",  title:"I take love seriously.", sub:"meaning • devotion • care", w:{ religion:2, family:1 } }
     ];
 
     /* =========================
-       RITUAL STATE
+       UI REFS
        ========================= */
     const tokenScreen = document.getElementById("token-screen");
     const recognitionScreen = document.getElementById("recognition-screen");
-    const teacherGrid = document.getElementById("teacherGrid");
+    const traitGrid = document.getElementById("traitGrid");
+
     const tokenDots = document.getElementById("tokenDots");
     const tokenStatus = document.getElementById("tokenStatus");
     const tokenClearBtn = document.getElementById("tokenClear");
     const beginRecognitionBtn = document.getElementById("beginRecognition");
+
     const backToTokensBtn = document.getElementById("backToTokens");
     const continueToSlipBtn = document.getElementById("continueToSlip");
+
     const recognitionLineEl = document.getElementById("recognitionLine");
     const countdownTextEl = document.getElementById("countdownText");
     const countBarEl = document.getElementById("countBar");
 
-    // Steps
     const stepToken = document.getElementById("stepToken");
     const stepRecognize = document.getElementById("stepRecognize");
     const stepArticulate = document.getElementById("stepArticulate");
     const stepCounsel = document.getElementById("stepCounsel");
 
+    /* =========================
+       STATE
+       ========================= */
     let tokensTotal = 3;
     let tokensLeft = 3;
-    let allocations = { family:0, media:0, religion:0, school:0, internet:0 };
 
+    let traitTokens = Object.fromEntries(TRAITS.map(t => [t.id, 0]));
+    let scores = { family:0, media:0, religion:0, school:0, internet:0 };
     let primaryKey = null;
     let secondaryKey = null;
-    let chosenSlipIndex = 0;
+
+    let recognitionTimer = null;
 
     function setStep(active){
-      [stepToken, stepRecognize, stepArticulate, stepCounsel].forEach(s => s.classList.remove("active"));
-      if(active === "token"){ stepToken.classList.add("active"); }
-      if(active === "recognition"){ stepRecognize.classList.add("active"); }
-      if(active === "articulation"){ stepArticulate.classList.add("active"); }
-      if(active === "counsel"){ stepCounsel.classList.add("active"); }
+      [stepToken, stepRecognize, stepArticulate, stepCounsel].forEach(s=>s.classList.remove("active"));
+      if(active === "token") stepToken.classList.add("active");
+      if(active === "recognition") stepRecognize.classList.add("active");
+      if(active === "articulation") stepArticulate.classList.add("active");
+      if(active === "counsel") stepCounsel.classList.add("active");
     }
-
-    function teacherOrder(){ return ["family","media","religion","school","internet"]; }
 
     function renderTokenDots(){
       tokenDots.innerHTML = "";
@@ -1064,134 +1047,155 @@
       }
     }
 
-    function computePrimarySecondary(){
-      const arr = teacherOrder().map(k => ({k, n: allocations[k]}));
-      arr.sort((a,b)=> b.n - a.n || teacherOrder().indexOf(a.k) - teacherOrder().indexOf(b.k));
+    function recomputeScores(){
+      scores = { family:0, media:0, religion:0, school:0, internet:0 };
+
+      for(const tr of TRAITS){
+        const c = traitTokens[tr.id] || 0;
+        if(c <= 0) continue;
+        for(const k of Object.keys(tr.w)){
+          scores[k] += c * tr.w[k];
+        }
+      }
+
+      const order = ["family","media","religion","school","internet"];
+      const arr = order.map(k => ({k, n: scores[k]}))
+        .sort((a,b)=> b.n - a.n || order.indexOf(a.k) - order.indexOf(b.k));
+
       primaryKey = arr[0].n > 0 ? arr[0].k : null;
       secondaryKey = arr[1].n > 0 ? arr[1].k : null;
-      return { primaryKey, secondaryKey };
+
+      beginRecognitionBtn.disabled = (tokensLeft !== 0);
     }
 
-    // Deterministic slip index from allocations (no randomness):
-    // Uses a weighted hash so the same allocation always yields the same slip.
+    // deterministic mapping to slip index (no randomness; professor-friendly)
     function deterministicSlipIndex(forTeacherKey){
-      const weights = { family:3, media:5, religion:7, school:11, internet:13 };
+      const w = { fast:3, numb:5, leave:7, guilt:11, peace:13, think:17, prove:19, duty:23 };
       let h = 0;
-      for(const k of teacherOrder()){
-        h += allocations[k] * weights[k];
+      for(const tr of TRAITS){
+        h += (traitTokens[tr.id] || 0) * w[tr.id];
       }
-      const count = teachers[forTeacherKey].slips.length;
-      return h % count;
+      return h % teachers[forTeacherKey].slips.length;
     }
 
-    function renderTeachers(){
-      teacherGrid.innerHTML = "";
-      computePrimarySecondary();
+    // symbolic “seal” id for sharing (deterministic)
+    function computeSeal(){
+      // base-36 short signature from weighted sum
+      const w = { fast:31, numb:37, leave:41, guilt:43, peace:47, think:53, prove:59, duty:61 };
+      let n = 0;
+      for(const tr of TRAITS){
+        n += (traitTokens[tr.id] || 0) * w[tr.id];
+      }
+      const seal = (n + 2026).toString(36).toUpperCase();
+      return "ISA-H2H-" + seal.padStart(4,"0");
+    }
 
-      teacherOrder().forEach(key=>{
-        const t = teachers[key];
-        const count = allocations[key];
+    function renderTraits(){
+      traitGrid.innerHTML = "";
+      recomputeScores();
 
-        const card = document.createElement("div");
-        card.className = "teacher";
-        card.setAttribute("role","button");
-        card.tabIndex = 0;
+      TRAITS.forEach(tr=>{
+        const count = traitTokens[tr.id] || 0;
+        const tile = document.createElement("div");
+        tile.className = "trait";
+        tile.tabIndex = 0;
 
         const pips = Array.from({length:3}).map((_,i)=> `<span class="pip ${i < count ? "on":""}"></span>`).join("");
 
-        card.innerHTML = `
-          <div class="t-tag">${(primaryKey === key && allocations[key] > 0) ? "LEADING" : ""}</div>
-          <div class="t-title">
-            <span>${t.label}</span>
-            <span style="font-size:.55rem; letter-spacing:2px; text-transform:uppercase; opacity:.75;">${t.sub}</span>
-          </div>
-          <div class="t-sub">Allocate influence, not preference</div>
-          <div class="t-meter">
-            <div class="t-count">Tokens: ${count}</div>
+        tile.innerHTML = `
+          <div class="trait-title">${tr.title}</div>
+          <div class="trait-sub">${tr.sub}</div>
+          <div class="trait-meter">
+            <div class="trait-count">Tokens: ${count}</div>
             <div class="pips">${pips}</div>
           </div>
         `;
 
         const addToken = ()=>{
           if(tokensLeft <= 0){
-            tokenStatus.textContent = "No tokens left. You may begin recognition.";
+            tokenStatus.textContent = "No tokens left. Begin recognition.";
             return;
           }
-          allocations[key] += 1;
+          traitTokens[tr.id] += 1;
           tokensLeft -= 1;
-          tokenStatus.textContent = "Token placed.";
+
           renderTokenDots();
-          renderTeachers();
-          beginRecognitionBtn.disabled = (tokensLeft !== 0);
+          renderTraits();
+
+          // tasteful chime on interaction
+          softChime("place");
+
+          tokenStatus.textContent = (tokensLeft > 0)
+            ? `Token placed. ${tokensLeft} left.`
+            : `Allocation complete. Proceed to recognition.`;
+
+          // subtle palette shift once a primary emerges (still not revealing it)
+          if(primaryKey){
+            document.body.style.backgroundColor = teachers[primaryKey].bg;
+          }
         };
 
-        card.addEventListener("click", addToken);
-        card.addEventListener("keydown", (e)=>{
+        tile.addEventListener("click", addToken);
+        tile.addEventListener("keydown", (e)=>{
           if(e.key === "Enter" || e.key === " "){ e.preventDefault(); addToken(); }
         });
 
-        teacherGrid.appendChild(card);
+        traitGrid.appendChild(tile);
       });
 
       if(tokensLeft > 0){
-        tokenStatus.textContent = "Place all 3 tokens to continue.";
-        beginRecognitionBtn.disabled = true;
-      } else {
-        tokenStatus.textContent = "Allocation complete. Begin recognition.";
-        beginRecognitionBtn.disabled = false;
-      }
-
-      // background becomes the primary teacher palette once determined (subtle prestige)
-      if(primaryKey){
-        document.body.style.backgroundColor = teachers[primaryKey].bg;
-      } else {
-        document.body.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--cream").trim() || "#f8f5f0";
+        tokenStatus.textContent = "Spend all 3 tokens to continue.";
       }
     }
 
-    function clearTokens(){
-      allocations = { family:0, media:0, religion:0, school:0, internet:0 };
+    function clearTraits(){
+      traitTokens = Object.fromEntries(TRAITS.map(t => [t.id, 0]));
       tokensLeft = tokensTotal;
-      primaryKey = null; secondaryKey = null;
+      primaryKey = null;
+      secondaryKey = null;
       tokenStatus.textContent = "Cleared.";
       renderTokenDots();
-      renderTeachers();
+      renderTraits();
       beginRecognitionBtn.disabled = true;
+      document.body.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--cream").trim() || "#f8f5f0";
       setStep("token");
+      softChime("gate");
     }
 
-    tokenClearBtn.addEventListener("click", clearTokens);
+    tokenClearBtn.addEventListener("click", clearTraits);
 
     /* =========================
        RECOGNITION GATE (3 seconds)
        ========================= */
-    let recognitionTimer = null;
-
     function startRecognition(){
-      computePrimarySecondary();
+      if(tokensLeft !== 0){
+        tokenStatus.textContent = "Please spend all tokens first.";
+        return;
+      }
+      recomputeScores();
       if(!primaryKey){
-        tokenStatus.textContent = "Please allocate tokens first.";
+        tokenStatus.textContent = "Please select at least one trait.";
         return;
       }
 
       setStep("recognition");
-
       tokenScreen.style.display = "none";
       recognitionScreen.style.display = "block";
 
-      // rotate a recognition line (non-divinatory threshold sentence)
+      // Recognition line chosen deterministically (still not revealing House)
       const idx = deterministicSlipIndex(primaryKey) % recognitionLines.length;
       recognitionLineEl.textContent = recognitionLines[idx];
 
-      // 3-second gate (feels premium)
+      // “Gate” chime
+      softChime("gate");
+
+      // 3-second unlock
       continueToSlipBtn.disabled = true;
-      let t = 3.0;
       countdownTextEl.textContent = "Continue unlocks in 3s";
       countBarEl.style.width = "0%";
 
       const start = performance.now();
       const duration = 3000;
-
       if(recognitionTimer) cancelAnimationFrame(recognitionTimer);
 
       const tick = (now)=>{
@@ -1219,49 +1223,63 @@
       recognitionScreen.style.display = "none";
       tokenScreen.style.display = "block";
       setStep("token");
+      softChime("place");
     });
 
     /* =========================
-       SLIP REVEAL (Articulation -> Counsel)
+       SLIP REVEAL (Trait -> House Analysis -> Counsel)
        ========================= */
     function showSlip(){
-      computePrimarySecondary();
+      recomputeScores();
       if(!primaryKey) return;
 
-      // deterministic choice of slip index
-      chosenSlipIndex = deterministicSlipIndex(primaryKey);
+      // Choose deterministic slip
+      const i = deterministicSlipIndex(primaryKey);
+      const slip = teachers[primaryKey].slips[i];
 
-      const slip = teachers[primaryKey].slips[chosenSlipIndex];
-
-      // Steps
+      // Step highlight with staged counsel
       setStep("articulation");
-      // Then we also highlight counsel after render (tiny timing)
-      setTimeout(()=> setStep("counsel"), 250);
 
-      // Render result
       document.getElementById("ritual-screen").style.display = "none";
       const result = document.getElementById("result-screen");
       result.style.display = "block";
+      requestAnimationFrame(()=> result.style.opacity = "1");
 
-      document.getElementById("pill-primary").textContent = `Primary: ${teachers[primaryKey].label}`;
+      // Fill pills (House revealed here, after traits + recognition)
+      document.getElementById("pill-primary").textContent = `House: ${teachers[primaryKey].label}`;
       document.getElementById("pill-secondary").textContent = `Secondary: ${secondaryKey ? teachers[secondaryKey].label : "—"}`;
+      document.getElementById("pill-sig").textContent = `Seal: ${computeSeal()}`;
 
-      // “Pattern” line (frontLine)
+      // Pattern + articulation + house analysis + context + counsel
       document.getElementById("frontLine").textContent = slip.pattern;
 
-      // Articulation / Context / Counsel
-      document.getElementById("articulationText").textContent = slip.articulation;
-      document.getElementById("contextText").textContent = (secondaryKey
-        ? `${slip.context} Secondary influence: ${teachers[secondaryKey].label} often colors how this pattern shows up.`
-        : slip.context
-      );
+      document.getElementById("articulationText").textContent =
+        slip.articulation + " (Derived from the traits you selected.)";
+
+      document.getElementById("houseText").textContent =
+        teachers[primaryKey].analysis +
+        (secondaryKey ? ` A secondary influence from ${teachers[secondaryKey].label} may color how this shows up.` : "");
+
+      document.getElementById("contextText").textContent = slip.context;
+
       document.getElementById("counselText").textContent = slip.counsel;
 
-      // background to primary palette
-      document.body.style.backgroundColor = teachers[primaryKey].bg;
+      // staged reveal so counsel feels distinct
+      const counselBox = document.getElementById("counselBox");
+      counselBox.style.opacity = "0";
+      counselBox.style.transform = "translateY(6px)";
+      counselBox.style.transition = "opacity .5s ease, transform .5s ease";
 
-      // Fade-in
-      requestAnimationFrame(()=> { result.style.opacity = "1"; });
+      // Reveal chime + counsel
+      softChime("reveal");
+      setTimeout(()=>{
+        setStep("counsel");
+        counselBox.style.opacity = "1";
+        counselBox.style.transform = "translateY(0)";
+      }, 900);
+
+      // background to house palette
+      document.body.style.backgroundColor = teachers[primaryKey].bg;
 
       // bind sound button on result
       const b2 = document.getElementById("soundBtn2");
@@ -1292,8 +1310,11 @@
        INIT
        ========================= */
     renderTokenDots();
-    renderTeachers();
+    renderTraits();
     setStep("token");
+
+    /* Keep the “Sound” toggle working */
+    document.getElementById("soundBtn").addEventListener("click", (e)=>{ e.stopPropagation(); toggleSound(); });
   </script>
 </body>
 </html>
