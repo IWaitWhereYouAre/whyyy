@@ -98,18 +98,10 @@
     /* =========================
        PETALS
        ========================= */
-    .petals {
-      position: fixed;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-      overflow: hidden;
-    }
+    .petals { position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
     .petal {
-      position: absolute;
-      top: -10%;
-      width: 10px;
-      height: 16px;
+      position: absolute; top: -10%;
+      width: 10px; height: 16px;
       border-radius: 60% 40% 60% 40%;
       background: rgba(232,213,209,0.55);
       box-shadow: 0 0 0 1px rgba(197,160,89,0.08);
@@ -126,21 +118,10 @@
     /* =========================
        BIRDS
        ========================= */
-    .birds {
-      position: fixed;
-      inset: 0;
-      z-index: 3;
-      pointer-events: none;
-      overflow: hidden;
-      opacity: 0.65;
-      filter: blur(0.1px);
-    }
+    .birds { position: fixed; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; opacity: 0.65; filter: blur(0.1px); }
     .bird {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 56px;
-      height: 30px;
+      position: absolute; left: 0; top: 0;
+      width: 56px; height: 30px;
       opacity: 0.55;
       animation: flyDiag linear infinite;
       transform: translate3d(var(--fromX), var(--fromY), 0) scale(var(--s, 1));
@@ -154,17 +135,9 @@
     }
     .bird .wing { transform-box: fill-box; transform-origin: center; animation: flap 0.35s ease-in-out infinite; }
     .bird .wing.right { animation-delay: 0.02s; }
-    @keyframes flap {
-      0%   { transform: rotate(8deg) scaleY(1); }
-      50%  { transform: rotate(-18deg) scaleY(0.92); }
-      100% { transform: rotate(8deg) scaleY(1); }
-    }
+    @keyframes flap { 0% { transform: rotate(8deg) scaleY(1);} 50% { transform: rotate(-18deg) scaleY(0.92);} 100% { transform: rotate(8deg) scaleY(1);} }
 
-    .vignette {
-      position: fixed; inset: 0;
-      background: radial-gradient(circle, transparent 50%, rgba(26, 42, 29, 0.1));
-      pointer-events: none; z-index: 5;
-    }
+    .vignette { position: fixed; inset: 0; background: radial-gradient(circle, transparent 50%, rgba(26, 42, 29, 0.1)); pointer-events: none; z-index: 5; }
     .botanical { position: fixed; width: 450px; opacity: 0.12; pointer-events: none; z-index: 3; }
     .top-left { top: -120px; left: -120px; transform: rotate(15deg); }
     .bottom-right { bottom: -120px; right: -120px; transform: rotate(195deg); }
@@ -172,13 +145,7 @@
     /* =========================
        HEADERS
        ========================= */
-    .isa-tag {
-      font-size: 0.6rem;
-      letter-spacing: 3px;
-      margin-bottom: 8px;
-      opacity: 0.7;
-      text-transform: uppercase;
-    }
+    .isa-tag { font-size: 0.6rem; letter-spacing: 3px; margin-bottom: 8px; opacity: 0.7; text-transform: uppercase; }
 
     h1.main-title {
       font-family: 'Pinyon Script', cursive;
@@ -193,52 +160,152 @@
       font-size: clamp(0.7rem, 2vw, 1rem);
       letter-spacing: clamp(4px, 1vw, 10px);
       text-transform: uppercase;
-      margin-bottom: clamp(14px, 3vh, 30px);
+      margin-bottom: clamp(14px, 3vh, 26px);
     }
 
     /* =========================
-       STATIONS
+       AUCTION (NEW GIMMICK)
        ========================= */
-    .station-wrap {
+    .auction-wrap {
       width: 100%;
-      max-width: 820px;
+      max-width: 900px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 10px;
-      padding: 10px;
+      padding: 14px 12px;
       box-sizing: border-box;
     }
-    @media (max-width: 820px) {
-      .station-wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    .station-btn {
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(197,160,89,0.55);
-      border-radius: 10px;
-      padding: 14px 12px;
-      text-align: left;
-      cursor: pointer;
-      transition: 0.25s;
-      backdrop-filter: blur(4px);
-      min-height: 74px;
+
+    .auction-top {
       display: flex;
-      flex-direction: column;
+      gap: 10px;
+      flex-wrap: wrap;
       justify-content: center;
-      gap: 6px;
+      align-items: center;
+      margin-bottom: 10px;
     }
-    .station-btn:hover { transform: translateY(-2px); border-color: var(--gold); }
-    .st-title {
+
+    .token-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid rgba(197,160,89,0.55);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(4px);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-size: 0.62rem;
+      opacity: 0.92;
+    }
+    .token-dots { display: inline-flex; gap: 6px; }
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(197,160,89,0.55);
+      background: rgba(197,160,89,0.18);
+    }
+    .dot.filled { background: rgba(197,160,89,0.85); }
+
+    .auction-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (max-width: 820px) { .auction-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 460px) { .auction-grid { grid-template-columns: 1fr; } }
+
+    .lot {
+      position: relative;
+      text-align: left;
+      border: 1px solid rgba(197,160,89,0.55);
+      border-radius: 14px;
+      padding: 14px 14px 12px 14px;
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(4px);
+      transition: transform .18s ease, border-color .18s ease;
+      cursor: pointer;
+      min-height: 108px;
+      overflow: hidden;
+    }
+    .lot:hover { transform: translateY(-2px); border-color: var(--gold); }
+
+    .lot::after {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border: 0.8px solid rgba(197,160,89,0.35);
+      border-radius: 10px;
+      pointer-events: none;
+    }
+
+    .lot-title {
       font-family: 'Playfair Display', serif;
-      font-size: 0.95rem;
-      letter-spacing: 0.5px;
+      font-size: 1.05rem;
+      letter-spacing: 0.3px;
     }
-    .st-sub {
+    .lot-sub {
+      margin-top: 6px;
       font-size: 0.62rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      opacity: 0.75;
-      line-height: 1.3;
+      opacity: 0.72;
+      line-height: 1.35;
+    }
+
+    .lot-bids {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .bid-count {
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.78;
+    }
+
+    .bid-pips { display: inline-flex; gap: 6px; }
+    .pip {
+      width: 12px; height: 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(26,42,29,0.25);
+      background: rgba(26,42,29,0.06);
+    }
+    .pip.on { background: rgba(26,42,29,0.75); border-color: rgba(26,42,29,0.25); }
+
+    .lot.selected {
+      border-color: rgba(26,42,29,0.72);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+    }
+
+    .lot-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 0.55rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 7px 9px;
+      border-radius: 999px;
+      background: rgba(26,42,29,0.85);
+      color: #fff;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: .18s ease;
+      pointer-events: none;
+    }
+    .lot.selected .lot-tag { opacity: 1; transform: translateY(0); }
+
+    .auction-note {
+      margin-top: 10px;
+      font-size: 0.62rem;
+      opacity: 0.62;
+      letter-spacing: 1px;
+      line-height: 1.35;
     }
 
     /* =========================
@@ -391,7 +458,7 @@
        BUTTONS
        ========================= */
     .btn-group {
-      margin-top: 20px;
+      margin-top: 18px;
       display: flex;
       justify-content: center;
       gap: 10px;
@@ -411,7 +478,7 @@
       backdrop-filter: blur(4px);
       flex: 1 1 auto;
       min-width: 120px;
-      max-width: 220px;
+      max-width: 240px;
     }
 
     .btn-save { background: var(--gold); color: #fff; }
@@ -430,7 +497,7 @@
 
     .tiny-note {
       font-size:0.62rem;
-      opacity:0.6;
+      opacity:0.62;
       letter-spacing:1px;
       margin-top:10px;
       line-height: 1.35;
@@ -454,26 +521,44 @@
     <div id="ritual-screen">
       <p class="isa-tag">ISA Chulalongkorn Presents</p>
       <h1 class="main-title">Heart to Heart</h1>
-      <p class="sub-theme">Love Is Learned</p>
+      <p class="sub-theme">The Love Auction</p>
 
-      <!-- Station choose -->
-      <div id="station-screen">
+      <!-- AUCTION SCREEN -->
+      <div id="auction-screen">
         <p style="margin: 10px 0 6px; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; opacity:0.75;">
-          Choose your primary teacher of love
+          Bid on what your love values most
         </p>
 
-        <div class="station-wrap" id="station-wrap">
-          <!-- injected -->
+        <div class="auction-wrap">
+          <div class="auction-top">
+            <div class="token-badge">
+              <span>Tokens</span>
+              <span class="token-dots" id="tokenDots"></span>
+            </div>
+            <div class="token-badge">
+              <span>Rule</span>
+              <span style="opacity:.85;">Spend up to 3 • Win 2 lots</span>
+            </div>
+          </div>
+
+          <div class="auction-grid" id="auctionGrid"></div>
+
+          <p class="auction-note">
+            Tip: you can click the same lot multiple times to add bids. When you’re satisfied, proceed.
+          </p>
+
+          <div class="btn-group" style="margin-top:14px;">
+            <button class="btn" id="auctionReset" type="button">Clear Bids</button>
+            <button class="btn btn-save" id="auctionProceed" type="button">Proceed</button>
+          </div>
+
+          <p class="tiny-note" id="auctionStatus"></p>
         </div>
-
-        <p class="tiny-note">
-          No right answer. Take what resonates, leave what doesn’t.
-        </p>
       </div>
 
-      <!-- Deck draw -->
+      <!-- DECK SCREEN -->
       <div id="deck-screen" style="display:none;">
-        <p id="station-picked" style="margin: 10px 0 6px; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; opacity:0.75;"></p>
+        <p id="teacher-picked" style="margin: 10px 0 6px; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; opacity:0.75;"></p>
 
         <div class="deck-area" id="deck-container"></div>
 
@@ -483,7 +568,7 @@
 
         <div class="btn-group" style="margin-top:16px;">
           <button class="btn btn-sound active" id="soundBtn" type="button">Sound: On</button>
-          <button class="btn" id="backToStations" type="button">Change Station</button>
+          <button class="btn" id="backToAuction" type="button">Back</button>
         </div>
         <p class="tiny-note">(Sound will begin on your first tap/click.)</p>
       </div>
@@ -499,7 +584,8 @@
 
         <div class="pill-row">
           <span class="pill" id="pill-teacher">Teacher: —</span>
-          <span class="pill" id="pill-vibe">You are not bad at love</span>
+          <span class="pill" id="pill-lots">Lots: —</span>
+          <span class="pill">You are not bad at love</span>
         </div>
 
         <div class="front-line" id="front-line"></div>
@@ -515,7 +601,7 @@
         </div>
 
         <div class="section">
-          <span class="sec-label">Advice meant for you</span>
+          <span class="sec-label">Counsel</span>
           <div class="sec-body advice" id="advice-text"></div>
         </div>
       </div>
@@ -534,7 +620,6 @@
        PETALS
        ========================= */
     const petalsHost = document.getElementById('petals');
-
     function spawnPetals(count = 16) {
       petalsHost.innerHTML = '';
       for (let i = 0; i < count; i++) {
@@ -553,7 +638,6 @@
         petalsHost.appendChild(p);
       }
     }
-
     spawnPetals(18);
     window.addEventListener('resize', () => spawnPetals(window.innerWidth < 480 ? 12 : 18));
 
@@ -579,7 +663,6 @@
         try { await audioCtx.resume(); } catch (e) {}
       }
       audioPrimed = true;
-
       const now = audioCtx.currentTime;
       masterGain.gain.cancelScheduledValues(now);
       masterGain.gain.setValueAtTime(masterGain.gain.value, now);
@@ -590,7 +673,6 @@
     function setSound(on) {
       soundOn = on;
       if (!audioPrimed || !audioCtx || !masterGain) { updateSoundButtons(); return; }
-
       const now = audioCtx.currentTime;
       masterGain.gain.cancelScheduledValues(now);
       masterGain.gain.setValueAtTime(masterGain.gain.value, now);
@@ -772,191 +854,291 @@
     startBirdFlights();
 
     /* =========================
-       GAME DATA (Stations + Cards)
+       GAME DATA (Teachers + Cards)
        ========================= */
-    const stations = {
+    const teachers = {
       family: {
         label: "Family",
-        sub: "Love as care • harmony • duty",
         bg: "#f3eddc",
         cards: [
           {
             front: "I stay even when I’m unsure.",
             explain: "If family taught you love, you likely learned that commitment means endurance—love is proven by showing up, even when it’s complicated.",
             context: "In many collectivist or family-centered cultures, love is modeled through sacrifice and responsibility. Stability can be valued more than self-expression.",
-            advice: "Your advice: practice naming your needs without apologizing. Clarity is not selfishness."
+            advice: "Your counsel: name your needs without apologizing. Clarity is not selfishness."
           },
           {
             front: "I feel guilty wanting more.",
             explain: "You may have learned that wanting ‘too much’ creates conflict—so you shrink your needs to protect the relationship.",
             context: "When harmony is a social value, people learn to manage tension silently. But silence can slowly become resentment.",
-            advice: "Your advice: start small—ask for one concrete thing. Let your needs exist in daylight."
+            advice: "Your counsel: ask for one concrete thing. Let your needs exist in daylight."
           },
           {
             front: "I prioritize peace over truth.",
             explain: "You’re not ‘avoiding’—you’re preserving safety. You learned love by keeping the room calm.",
             context: "Families teach emotional rules: who can speak, when, and how. Those rules travel into adult relationships.",
-            advice: "Your advice: practice ‘gentle honesty’: one honest sentence, said kindly, before you disappear."
+            advice: "Your counsel: one gentle honest sentence before you disappear."
           }
         ]
       },
       media: {
         label: "Media",
-        sub: "Love as intensity • drama • destiny",
         bg: "#fce3e3",
         cards: [
           {
             front: "I fall too fast.",
             explain: "If media taught you love, your nervous system may read ‘spark’ as truth—fast feelings look like fate.",
-            context: "Stories compress time. Two hours of romance becomes a template for real life, where intimacy actually takes repetition and boredom.",
-            advice: "Your advice: slow is not a lack of love. Let consistency be attractive."
+            context: "Stories compress time. Two hours of romance becomes a template for real life, where intimacy takes repetition and calm.",
+            advice: "Your counsel: slow is not a lack of love. Let consistency be attractive."
           },
           {
             front: "Boredom feels like failure.",
             explain: "You learned love should be cinematic—so calm feels suspicious, like something is missing.",
-            context: "Modern romance content rewards high emotion. But real attachment often looks quiet: errands, support, ordinary days.",
-            advice: "Your advice: don’t chase adrenaline to prove love. Ask: ‘Do I feel safe here?’"
+            context: "Modern romance content rewards high emotion. But real attachment often looks quiet: support, ordinary days.",
+            advice: "Your counsel: don’t chase adrenaline to prove love. Ask: ‘Do I feel safe here?’"
           },
           {
             front: "I confuse intensity with connection.",
             explain: "Intensity can be chemistry, not compatibility. Media often frames conflict as passion.",
             context: "Some cultures romanticize suffering as proof of love. In reality, stability is also a love language.",
-            advice: "Your advice: choose peace on purpose. Love should not require constant crisis to feel real."
+            advice: "Your counsel: choose peace on purpose. Love should not require constant crisis to feel real."
           }
         ]
       },
       religion: {
         label: "Religion",
-        sub: "Love as meaning • commitment • moral care",
         bg: "#fcfaf7",
         cards: [
           {
             front: "I take love very seriously.",
-            explain: "If religion taught you love, you may value devotion, loyalty, and long-term intention more than quick feelings.",
-            context: "Communities often teach love as a practice—something you do, not just something you feel.",
-            advice: "Your advice: commitment is beautiful—just make sure it includes tenderness toward yourself too."
+            explain: "If religion taught you love, you may value devotion and long-term intention more than quick feelings.",
+            context: "Communities often teach love as a practice—something you do, not only something you feel.",
+            advice: "Your counsel: commitment is beautiful—make sure it includes tenderness toward yourself too."
           },
           {
             front: "I fear disappointing people.",
             explain: "You may have learned love is linked to goodness—so conflict feels like failure, not a normal part of closeness.",
-            context: "Social belonging can become emotional pressure: to be ‘right,’ ‘pure,’ or ‘strong’ all the time.",
-            advice: "Your advice: allow imperfection. Love doesn’t require you to be flawless to be worthy."
+            context: "Belonging can become pressure: to be ‘right’ all the time. That pressure leaks into relationships.",
+            advice: "Your counsel: allow imperfection. Love doesn’t require you to be flawless to be worthy."
           },
           {
             front: "I struggle between desire and duty.",
-            explain: "You’re not broken—you’re holding two value systems at once: personal longing and communal responsibility.",
-            context: "Many people navigate love across cultural and religious expectations. That tension is real, not personal weakness.",
-            advice: "Your advice: name what you truly value, then choose in alignment—without shame as your compass."
+            explain: "You’re holding two value systems at once: personal longing and communal responsibility.",
+            context: "Many people navigate love across expectations. That tension is real, not personal weakness.",
+            advice: "Your counsel: choose in alignment with your values—without shame as your compass."
           }
         ]
       },
       school: {
         label: "School",
-        sub: "Love as comparison • performance • belonging",
         bg: "#e0f0f5",
         cards: [
           {
             front: "I feel behind.",
             explain: "If school taught you love, you may measure relationships like achievements—milestones, labels, timing.",
-            context: "Competitive systems train us to compare. Love becomes another place to ‘keep up.’",
-            advice: "Your advice: stop tracking love like grades. Focus on growth, not speed."
+            context: "Competitive systems train comparison. Love becomes another place to ‘keep up.’",
+            advice: "Your counsel: stop grading love. Focus on growth, not speed."
           },
           {
             front: "I overthink every signal.",
-            explain: "You may have learned that ‘getting it right’ is safety—so you analyze love like an exam.",
+            explain: "You learned that ‘getting it right’ is safety—so you analyze love like an exam.",
             context: "In high-pressure environments, uncertainty feels dangerous. But intimacy requires tolerating not knowing.",
-            advice: "Your advice: ask directly once. One honest question can save 100 anxious spirals."
+            advice: "Your counsel: ask directly once. One honest question can save 100 spirals."
           },
           {
             front: "I’m afraid of being chosen last.",
             explain: "Belonging can feel conditional—so you perform to earn love rather than receive it.",
-            context: "Peer cultures shape self-worth. Popularity, validation, and visibility become emotional currencies.",
-            advice: "Your advice: practice receiving. Let someone care for you without proving you deserve it first."
+            context: "Peer cultures shape self-worth. Popularity and validation become emotional currencies.",
+            advice: "Your counsel: practice receiving without proving you deserve it first."
           }
         ]
       },
       internet: {
         label: "Internet",
-        sub: "Love as attention • trends • detachment",
         bg: "#e8e1f5",
         cards: [
           {
             front: "I leave first.",
             explain: "If the internet taught you love, detachment can feel like control—ghosting becomes a way to avoid vulnerability.",
-            context: "Online culture normalizes quick exits: endless options, fast judgments, and fear of looking ‘too much.’",
-            advice: "Your advice: practice leaving loudly—one clear sentence is kinder than disappearing."
+            context: "Online culture normalizes quick exits: endless options, fear of looking ‘too much.’",
+            advice: "Your counsel: leave loudly—one clear sentence is kinder than disappearing."
           },
           {
             front: "I expect people to know without asking.",
             explain: "You’ve absorbed indirect communication—likes, views, hints. But real relationships need words, not algorithms.",
             context: "High-context signals work online, but they often create misunderstanding across cultures and personalities.",
-            advice: "Your advice: say one thing plainly. Directness is not desperation."
+            advice: "Your counsel: say one thing plainly. Directness is not desperation."
           },
           {
             front: "I don’t feel enough.",
-            explain: "Constant comparison can numb you—when everyone is curated, your real feelings can seem ‘small’ or ‘not dramatic enough.’",
-            context: "Attention economies reward extremes. Normal human emotion can feel invisible in a world of highlights.",
-            advice: "Your advice: trust your quiet feelings. You don’t need to be loud to be real."
+            explain: "Constant comparison can numb you—when everyone is curated, your real feelings can seem ‘small.’",
+            context: "Attention economies reward extremes. Normal emotion can feel invisible in a world of highlights.",
+            advice: "Your counsel: trust your quiet feelings. You don’t need to be loud to be real."
           }
         ]
       }
     };
 
     /* =========================
-       STATION UI
+       AUCTION LOTS (Values -> Teacher)
        ========================= */
-    const stationWrap = document.getElementById("station-wrap");
-    const stationScreen = document.getElementById("station-screen");
-    const deckScreen = document.getElementById("deck-screen");
-    const pickedLabel = document.getElementById("station-picked");
-    const backToStationsBtn = document.getElementById("backToStations");
-
-    let selectedStationKey = null;
-
-    function renderStations() {
-      stationWrap.innerHTML = "";
-      const order = ["family","media","religion","school","internet"];
-      order.forEach(key => {
-        const st = stations[key];
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "station-btn";
-        btn.innerHTML = `
-          <div class="st-title">${st.label}</div>
-          <div class="st-sub">${st.sub}</div>
-        `;
-        btn.addEventListener("click", () => chooseStation(key));
-        stationWrap.appendChild(btn);
-      });
-    }
-
-    function chooseStation(key) {
-      selectedStationKey = key;
-      const st = stations[key];
-      document.body.style.backgroundColor = st.bg;
-
-      stationScreen.style.display = "none";
-      deckScreen.style.display = "block";
-      pickedLabel.textContent = `Teacher selected: ${st.label}`;
-
-      resetDeckState();
-      buildDeck(12); // keep the same number of cards for the ritual feel
-      status.innerText = "Tap the deck to begin";
-    }
-
-    backToStationsBtn.addEventListener("click", () => {
-      selectedStationKey = null;
-      stationScreen.style.display = "block";
-      deckScreen.style.display = "none";
-      deck.innerHTML = "";
-      shuffleState = 0;
-      document.body.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--cream").trim() || "#f8f5f0";
-    });
-
-    renderStations();
+    const lots = [
+      { key: "intensity", title: "Intensity", sub: "spark • drama • destiny", teacher: "media" },
+      { key: "stability",  title: "Stability",  sub: "routine • safety • calm", teacher: "family" },
+      { key: "loyalty",    title: "Loyalty",    sub: "duty • devotion • staying", teacher: "religion" },
+      { key: "freedom",    title: "Freedom",    sub: "space • choice • distance", teacher: "internet" },
+      { key: "silence",    title: "Silence",    sub: "hints • restraint • composure", teacher: "family" },
+      { key: "clarity",    title: "Clarity",    sub: "words • boundaries • truth", teacher: "school" },
+    ];
 
     /* =========================
-       CARDS / DECK MECHANIC
+       AUCTION STATE + UI
+       ========================= */
+    const auctionScreen = document.getElementById("auction-screen");
+    const deckScreen = document.getElementById("deck-screen");
+    const auctionGrid = document.getElementById("auctionGrid");
+    const tokenDots = document.getElementById("tokenDots");
+    const auctionStatus = document.getElementById("auctionStatus");
+    const auctionResetBtn = document.getElementById("auctionReset");
+    const auctionProceedBtn = document.getElementById("auctionProceed");
+    const backToAuctionBtn = document.getElementById("backToAuction");
+    const teacherPicked = document.getElementById("teacher-picked");
+
+    let tokensTotal = 3;
+    let tokensLeft = 3;
+    let bids = {}; // lotKey -> count
+    let winners = []; // top 2 lot keys
+    let chosenTeacherKey = null;
+
+    function renderTokenDots() {
+      tokenDots.innerHTML = "";
+      for (let i = 0; i < tokensTotal; i++) {
+        const d = document.createElement("span");
+        d.className = "dot" + (i < tokensLeft ? " filled" : "");
+        tokenDots.appendChild(d);
+      }
+    }
+
+    function computeWinners() {
+      const scored = lots
+        .map(l => ({ key: l.key, count: bids[l.key] || 0 }))
+        .filter(x => x.count > 0)
+        .sort((a,b) => b.count - a.count || a.key.localeCompare(b.key));
+
+      winners = scored.slice(0, 2).map(s => s.key);
+      return winners;
+    }
+
+    function renderAuction() {
+      renderTokenDots();
+      computeWinners();
+
+      auctionGrid.innerHTML = "";
+      lots.forEach(lot => {
+        const count = bids[lot.key] || 0;
+        const isSelected = winners.includes(lot.key);
+
+        const el = document.createElement("div");
+        el.className = "lot" + (isSelected ? " selected" : "");
+        el.setAttribute("role", "button");
+        el.tabIndex = 0;
+
+        const pips = Array.from({length: 3}).map((_,i) => `<span class="pip ${i < count ? "on" : ""}"></span>`).join("");
+
+        el.innerHTML = `
+          <div class="lot-tag">${isSelected ? "WINNING" : ""}</div>
+          <div class="lot-title">${lot.title}</div>
+          <div class="lot-sub">${lot.sub}</div>
+          <div class="lot-bids">
+            <div class="bid-count">Bids: ${count}</div>
+            <div class="bid-pips">${pips}</div>
+          </div>
+        `;
+
+        const clickBid = () => {
+          if (tokensLeft <= 0) {
+            auctionStatus.textContent = "No tokens left. Proceed to reveal your House of Love.";
+            return;
+          }
+          bids[lot.key] = (bids[lot.key] || 0) + 1;
+          tokensLeft -= 1;
+          auctionStatus.textContent = "Bid placed.";
+          renderAuction();
+        };
+
+        el.addEventListener("click", clickBid);
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); clickBid(); }
+        });
+
+        auctionGrid.appendChild(el);
+      });
+
+      const w = computeWinners();
+      if (w.length === 0) {
+        auctionStatus.textContent = "Place at least 1 bid to begin the ritual.";
+      } else {
+        const names = w.map(k => lots.find(l => l.key === k)?.title).filter(Boolean);
+        auctionStatus.textContent = `Current winners: ${names.join(" & ")}.`;
+      }
+    }
+
+    function resetAuction() {
+      bids = {};
+      winners = [];
+      tokensLeft = tokensTotal;
+      auctionStatus.textContent = "Bids cleared.";
+      renderAuction();
+    }
+
+    function decideTeacherFromWinners() {
+      // If 0 bids, block proceed
+      const w = computeWinners();
+      if (w.length === 0) return null;
+
+      // Use the highest-bid winner to pick teacher
+      const topLotKey = w[0];
+      const lot = lots.find(l => l.key === topLotKey);
+      return lot ? lot.teacher : null;
+    }
+
+    auctionResetBtn.addEventListener("click", resetAuction);
+
+    auctionProceedBtn.addEventListener("click", () => {
+      const teacherKey = decideTeacherFromWinners();
+      if (!teacherKey) {
+        auctionStatus.textContent = "Place at least 1 bid first.";
+        return;
+      }
+      chosenTeacherKey = teacherKey;
+
+      // Visual: background shifts based on teacher palette
+      document.body.style.backgroundColor = teachers[chosenTeacherKey].bg;
+
+      // Move to deck screen
+      auctionScreen.style.display = "none";
+      deckScreen.style.display = "block";
+
+      const winNames = computeWinners().map(k => lots.find(l => l.key === k)?.title).filter(Boolean);
+      teacherPicked.textContent = `House revealed: ${teachers[chosenTeacherKey].label} • Lots: ${winNames.join(" & ")}`;
+
+      resetDeckState();
+      buildDeck(12);
+      status.innerText = "Tap the deck to begin";
+    });
+
+    backToAuctionBtn.addEventListener("click", () => {
+      chosenTeacherKey = null;
+      deck.innerHTML = "";
+      shuffleState = 0;
+      deckScreen.style.display = "none";
+      auctionScreen.style.display = "block";
+      document.body.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--cream").trim() || "#f8f5f0";
+      renderAuction();
+    });
+
+    /* =========================
+       DECK MECHANIC
        ========================= */
     const deck = document.getElementById('deck-container');
     const status = document.getElementById('status-text');
@@ -975,7 +1157,7 @@
         card.innerHTML = '<div class="card-crest">❦</div>';
         card.style.transform = `translate(${i * 0.5}px, ${i * 0.5}px)`;
         card.onclick = () => {
-          if (!selectedStationKey) return;
+          if (!chosenTeacherKey) return;
           if (shuffleState < 3) runShuffle();
           else if (shuffleState === 4) revealCard();
         };
@@ -1020,24 +1202,27 @@
       });
     }
 
-    function pickCardFromStation() {
-      const st = stations[selectedStationKey];
-      const idx = Math.floor(Math.random() * st.cards.length);
-      return st.cards[idx];
+    function pickCardFromTeacher() {
+      const t = teachers[chosenTeacherKey];
+      const idx = Math.floor(Math.random() * t.cards.length);
+      return t.cards[idx];
     }
 
     function revealCard() {
-      const st = stations[selectedStationKey];
-      const data = pickCardFromStation();
+      const t = teachers[chosenTeacherKey];
+      const data = pickCardFromTeacher();
+      const winNames = computeWinners().map(k => lots.find(l => l.key === k)?.title).filter(Boolean);
 
       document.getElementById('ritual-screen').style.opacity = '0';
-      document.body.style.backgroundColor = st.bg;
+      document.body.style.backgroundColor = t.bg;
 
       setTimeout(() => {
         document.getElementById('ritual-screen').style.display = 'none';
         document.getElementById('result-screen').style.display = 'block';
 
-        document.getElementById('pill-teacher').innerText = `Teacher: ${st.label}`;
+        document.getElementById('pill-teacher').innerText = `Teacher: ${t.label}`;
+        document.getElementById('pill-lots').innerText = `Lots: ${winNames.join(" & ") || "—"}`;
+
         document.getElementById('front-line').innerText = data.front;
         document.getElementById('explain-text').innerText = data.explain;
         document.getElementById('context-text').innerText = data.context;
@@ -1058,13 +1243,16 @@
       const captureArea = document.getElementById('capture-frame');
       html2canvas(captureArea, { backgroundColor: null, scale: 2 }).then(canvas => {
         const link = document.createElement('a');
-        link.download = 'HeartToHeart_ISA_LoveIsLearned.png';
+        link.download = 'HeartToHeart_ISA_LoveAuction.png';
         link.href = canvas.toDataURL("image/png");
         link.click();
       });
     }
 
-    /* Keep deck empty until station chosen */
+    /* =========================
+       INIT
+       ========================= */
+    renderAuction(); // start on auction
   </script>
 </body>
 </html>
