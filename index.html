@@ -9,6 +9,22 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&family=Pinyon+Script&display=swap');
 
+.opening-line{
+  margin: 12px auto 16px;
+  max-width: 720px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 3.4vw, 1.6rem);
+  line-height: 1.45;
+  font-style: italic;
+  color: rgba(26,42,29,0.9);
+}
+
+.opening-soft{
+  display:block;
+  margin-top: 6px;
+  opacity: 0.8;
+}
+
     :root{
       --gold:#c5a059;
       --deep-green:#1a2a1d;
@@ -588,18 +604,22 @@
   </svg>
 
 <p class="isa-tag">ISA Chulalongkorn Presents</p>
+
 <h1 class="main-title">Heart to Heart</h1>
+
 <p class="sub-theme">Love is Learned.</p>
+
 <p class="opening-line"> You’re not bad at love.</p>
 
-      <div class="ritual-bar" aria-label="Ritual progress">
-        <div class="steps">
-          <div class="step active" id="stepToken"><span class="step-dot"></span><span class="step-label">Tokens</span></div>
-          <div class="step" id="stepRecognize"><span class="step-dot"></span><span class="step-label">Recognition</span></div>
-          <div class="step" id="stepArticulate"><span class="step-dot"></span><span class="step-label">Articulation</span></div>
-          <div class="step" id="stepCounsel"><span class="step-dot"></span><span class="step-label">Counsel</span></div>
-        </div>
-      </div>
+
+<div class="ritual-bar" aria-label="Ritual progress">
+  <div class="steps">
+    <div class="step active" id="stepToken"><span class="step-dot"></span><span class="step-label">Tokens</span></div>
+    <div class="step" id="stepRecognize"><span class="step-dot"></span><span class="step-label">Recognition</span></div>
+    <div class="step" id="stepArticulate"><span class="step-dot"></span><span class="step-label">Articulation</span></div>
+    <div class="step" id="stepCounsel"><span class="step-dot"></span><span class="step-label">Counsel</span></div>
+  </div>
+</div>
 
       <!-- TOKEN SCREEN -->
       <div id="token-screen">
