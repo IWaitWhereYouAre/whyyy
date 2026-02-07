@@ -935,17 +935,17 @@
         bg:"#f3eddc",
         slips:[
           { pattern:"You protect closeness by staying.",
-            articulation:"When love is learned as responsibility, devotion can become endurance—staying becomes the proof.",
+            articulation:"When love is learned as responsibility, devotion can become endurance, staying becomes the proof.",
             context:"In many family-centered settings, emotions are managed to keep peace. Needs often become indirect requests.",
             counsel:"Name one need plainly, kindly, and early. Clarity is not disrespect."
           },
           { pattern:"You keep peace by shrinking needs.",
-            articulation:"When harmony is the rule, wanting more can feel like a threat—so you become easy to live with, not fully known.",
+            articulation:"When harmony is the rule, wanting more can feel like a threat, so you become easy to live with, not fully known.",
             context:"High-context communication rewards restraint. Over time, silence can turn into quiet resentment.",
             counsel:"Let your needs exist in daylight. Start small: one concrete request."
           },
           { pattern:"You manage love like a room’s temperature.",
-            articulation:"If moods mattered growing up, you may track tension instinctively—peace becomes the metric of safety.",
+            articulation:"If moods mattered growing up, you may track tension instinctively, peace becomes the metric of safety.",
             context:"Families teach invisible emotional rules: who can speak, when, and how.",
             counsel:"Practice gentle honesty: one true sentence before you disappear."
           }
@@ -956,12 +956,12 @@
         bg:"#fce3e3",
         slips:[
           { pattern:"You read intensity as truth.",
-            articulation:"When romance is learned through stories, adrenaline can look like destiny—fast feelings feel final.",
+            articulation:"When romance is learned through stories, adrenaline can look like destiny, fast feelings feel final.",
             context:"Narratives compress time and reward high emotion. Real intimacy grows through repetition and reliability.",
             counsel:"Slow is not a lack of love. Let consistency be attractive."
           },
           { pattern:"Calm feels suspicious.",
-            articulation:"If love is taught as a storyline, quiet can feel like emptiness—so peace looks like ‘nothing is happening.’",
+            articulation:"If love is taught as a storyline, quiet can feel like emptiness, so peace looks like ‘nothing is happening.’",
             context:"Modern romance often frames conflict as passion. Stable attachment often feels ordinary and safe.",
             counsel:"Don’t chase adrenaline to prove love. Ask: do I feel safe here?"
           },
@@ -973,23 +973,23 @@
         ]
       },
       religion: { label:"House of Meaning",
-        analysis:"This House learns love through values, devotion, and moral care. It treats love as practice—something you do, not only feel.",
+        analysis:"This House learns love through values, devotion, and moral care. It treats love as practice, something you do, not only feel.",
         bg:"#fcfaf7",
         slips:[
-          { pattern:"You take love seriously—beautifully.",
-            articulation:"When love is shaped by values, commitment can be an ethic—care becomes a daily practice.",
+          { pattern:"You take love seriously beautifully.",
+            articulation:"When love is shaped by values, commitment can be an ethic, care becomes a daily practice.",
             context:"Community ethics can strengthen loyalty. Sometimes the pressure to be ‘good’ makes normal conflict feel like failure.",
             counsel:"Devotion should include tenderness toward yourself. Imperfection doesn’t cancel worth."
           },
           { pattern:"You fear disappointing people.",
-            articulation:"When love is linked to goodness, boundaries can feel like selfishness—so you over-carry expectations.",
+            articulation:"When love is linked to goodness, boundaries can feel like selfishness, so you over-carry expectations.",
             context:"Belonging is powerful. Shame-based belonging can silently shape how you ask for care.",
-            counsel:"Let values guide you—not shame. You can be kind and still be clear."
+            counsel:"Let values guide you, not shame. You can be kind and still be clear."
           },
           { pattern:"You hold desire and duty at once.",
             articulation:"When love has communal meaning, you may feel torn between personal longing and responsibility.",
             context:"Navigating love across expectations is a cultural task, not personal weakness.",
-            counsel:"Choose in alignment with your values—without using fear as your compass."
+            counsel:"Choose in alignment with your values, without using fear as your compass."
           }
         ]
       },
@@ -998,17 +998,17 @@
         bg:"#e0f0f5",
         slips:[
           { pattern:"You grade love like an exam.",
-            articulation:"When safety comes from ‘getting it right,’ you may analyze love for certainty—signals become evidence.",
+            articulation:"When safety comes from ‘getting it right,’ you may analyze love for certainty, signals become evidence.",
             context:"High-pressure environments train comparison. Uncertainty becomes emotionally expensive.",
             counsel:"Ask directly once. One honest question can save 100 spirals."
           },
           { pattern:"You feel behind.",
-            articulation:"When life is measured in milestones, love becomes another timeline—labels can overshadow connection.",
+            articulation:"When life is measured in milestones, love becomes another timeline, labels can overshadow connection.",
             context:"Peer environments shape self-worth. ‘Keeping up’ becomes a hidden rule even in intimacy.",
             counsel:"Stop grading love. Focus on growth, not speed."
           },
           { pattern:"You perform to be chosen.",
-            articulation:"If belonging was conditional, you may earn love through competence—being impressive becomes protection.",
+            articulation:"If belonging was conditional, you may earn love through competence, being impressive becomes protection.",
             context:"Social hierarchies teach people to trade authenticity for acceptance.",
             counsel:"Practice receiving without proving. Let care land."
           }
@@ -1019,17 +1019,17 @@
         bg:"#e8e1f5",
         slips:[
           { pattern:"You leave first to stay safe.",
-            articulation:"When love is mediated by endless options, distance can feel like dignity—exiting becomes protection.",
+            articulation:"When love is mediated by endless options, distance can feel like dignity, exiting becomes protection.",
             context:"Attention economies normalize quick exits and fear of looking ‘too much.’",
-            counsel:"Leave loudly—one clear sentence is kinder than disappearing."
+            counsel:"Leave loudly, one clear sentence is kinder than disappearing."
           },
           { pattern:"You speak in hints.",
-            articulation:"When love is learned through signals—timing, likes, silence—needs can become indirect tests.",
+            articulation:"When love is learned through signals, timing, likes, silence, needs can become indirect tests.",
             context:"High-context signaling works online, but misfires across personalities and cultures.",
             counsel:"Say one thing plainly. Directness is not desperation."
           },
           { pattern:"Your feelings feel ‘not enough.’",
-            articulation:"When life is curated, normal emotion can feel small—so you doubt your quiet love.",
+            articulation:"When life is curated, normal emotion can feel small, so you doubt your quiet love.",
             context:"Online comparison rewards extremes. Real intimacy often looks ordinary and steady.",
             counsel:"Trust your quiet feelings. You don’t need to be loud to be real."
           }
@@ -1292,7 +1292,7 @@
       document.getElementById("pill-sig").textContent = `Seal: ${computeSeal()}`;
 
       document.getElementById("frontLine").textContent = slip.pattern;
-      document.getElementById("articulationText").textContent = slip.articulation + " (Derived from the traits you selected.)";
+      document.getElementById("articulationText").textContent = slip.articulation;
       document.getElementById("houseText").textContent =
         teachers[primaryKey].analysis +
         (secondaryKey ? ` A secondary influence from ${teachers[secondaryKey].label} may color how this shows up.` : "");
