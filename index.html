@@ -40,6 +40,7 @@
       position:relative;
     }
 
+    /* App becomes scroll container */
     #app-container{
       height: 100svh;
       overflow-y: auto;
@@ -84,7 +85,7 @@
       content:"";
       position:absolute; inset:0;
       background-image:url("https://www.transparenttextures.com/patterns/natural-paper.png");
-      opacity:0.35; /* softer, expensive paper */
+      opacity:0.35;
       mix-blend-mode:multiply;
     }
 
@@ -614,10 +615,112 @@
   </svg>
 
   <div id="app-container">
-    <!-- (YOUR BODY CONTENT + SCRIPT stays exactly the same as you pasted) -->
-    <!-- ✅ Only change needed below is teacher bg colors in JS -->
-    <!-- Keep everything else unchanged -->
-  </div>
+    <div id="ritual-screen">
+
+      <p class="isa-tag">ISA Chulalongkorn Presents</p>
+      <h1 class="main-title">Heart to Heart</h1>
+      <p class="sub-theme">Love is Learned.</p>
+
+      <p class="opening-line">
+        You’re not bad at love.
+        <span class="opening-soft">You learned it from what you lived.</span>
+      </p>
+
+      <div class="ritual-bar" aria-label="Ritual progress">
+        <div class="steps">
+          <div class="step active" id="stepToken"><span class="step-dot"></span><span class="step-label">Tokens</span></div>
+          <div class="step" id="stepRecognize"><span class="step-dot"></span><span class="step-label">Recognition</span></div>
+          <div class="step" id="stepArticulate"><span class="step-dot"></span><span class="step-label">Articulation</span></div>
+          <div class="step" id="stepCounsel"><span class="step-dot"></span><span class="step-label">Counsel</span></div>
+        </div>
+      </div>
+
+      <!-- TOKEN SCREEN -->
+      <div id="token-screen">
+        <p style="margin: 6px 0 6px; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; opacity:0.75;">
+          Spend 3 tokens on traits that feel like you
+        </p>
+        <p class="tiny-note" style="margin-top:6px;">Not a test. Not fate. Just recognition.</p>
+
+        <div class="token-top">
+          <div class="token-badge">
+            <span>Tokens left</span>
+            <span class="token-dots" id="tokenDots"></span>
+          </div>
+          <button class="btn" id="tokenClear" type="button">Clear</button>
+          <button class="btn btn-save" id="beginRecognition" type="button" disabled>Begin Recognition</button>
+          <button class="btn btn-sound active" id="soundBtn" type="button">Sound: On</button>
+        </div>
+
+        <div class="trait-grid" id="traitGrid"></div>
+        <p class="tiny-note" id="tokenStatus"></p>
+      </div>
+
+      <!-- RECOGNITION SCREEN -->
+      <div id="recognition-screen" style="display:none;">
+        <div class="panel">
+          <div class="panel-inner">
+            <p style="margin: 0; font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; opacity:0.75;">Recognition</p>
+            <div class="recognition-line" id="recognitionLine">“Love is learned before it is chosen.”</div>
+            <div class="countdown" id="countdownText">Continue unlocks in 3s</div>
+            <div class="bar" aria-hidden="true"><div id="countBar"></div></div>
+
+            <div class="btn-group" style="margin-top:14px;">
+              <button class="btn" id="backToTokens" type="button">Back</button>
+              <button class="btn btn-save" id="continueToSlip" type="button" disabled>Continue</button>
+            </div>
+            <p class="tiny-note">Take what resonates, leave what doesn’t.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /#ritual-screen -->
+
+    <!-- RESULT SCREEN -->
+    <div id="result-screen">
+      <div id="capture-frame">
+        <span class="result-isa">ISA Chulalongkorn</span>
+        <h2 class="result-theme">Heart to Heart</h2>
+
+        <div class="pill-row">
+          <span class="pill" id="pill-primary">House: —</span>
+          <span class="pill" id="pill-secondary">Secondary: —</span>
+          <span class="pill" id="pill-sig">Seal: —</span>
+        </div>
+
+        <div class="front-line" id="frontLine"></div>
+
+        <div class="section">
+          <span class="sec-label">Articulation</span>
+          <div class="articulation" id="articulationText"></div>
+        </div>
+
+        <div class="section">
+          <span class="sec-label">House Analysis</span>
+          <div class="sec-body small" id="houseText"></div>
+        </div>
+
+        <div class="section">
+          <span class="sec-label">Context</span>
+          <div class="sec-body small" id="contextText"></div>
+        </div>
+
+        <div class="section">
+          <span class="sec-label">Counsel meant for you</span>
+          <div class="counsel-box" id="counselBox">
+            <div class="counsel" id="counselText"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn" onclick="location.reload()">Reset</button>
+        <button class="btn btn-save" onclick="saveImage()">Save Picture</button>
+        <button class="btn btn-sound active" id="soundBtn2" type="button">Sound: On</button>
+      </div>
+      <p class="tiny-note">Saved to your downloads folder</p>
+    </div>
+  </div><!-- /#app-container -->
 
   <script>
     /* =========================
@@ -651,7 +754,7 @@
     spawnMotes(18);
     window.addEventListener("resize", ()=> spawnMotes(window.innerWidth < 480 ? 12 : 18));
 
-     /* =========================
+    /* =========================
        SOUND (relaxing piano ambient)
        ========================= */
     let audioCtx = null;
@@ -725,9 +828,6 @@
     /* Bind sound button (ONLY ONCE) */
     document.getElementById("soundBtn")?.addEventListener("click", (e) => { e.stopPropagation(); toggleSound(); });
 
-    /* -------------------------
-       Felt-piano note synth
-       ------------------------- */
     function playPianoNote(freq, { when=0, dur=1.8, vel=0.6, pan=0 } = {}) {
       if (!audioCtx || !audioPrimed || !soundOn) return;
       const t0 = audioCtx.currentTime + when;
@@ -1117,9 +1217,8 @@
       renderTraits();
       beginRecognitionBtn.disabled = true;
 
-      /* ✅ reset to new palette */
       document.body.style.backgroundColor =
-        getComputedStyle(document.documentElement).getPropertyValue("--sage").trim() || "#eef3ee";
+        getComputedStyle(document.documentElement).getPropertyValue("--sage").trim() || "#F2F1EA";
 
       setStep("token");
       softChime("gate");
@@ -1251,5 +1350,3 @@
   </script>
 </body>
 </html>
-
-
