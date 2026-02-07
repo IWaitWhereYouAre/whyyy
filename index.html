@@ -10,16 +10,15 @@
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&family=Pinyon+Script&display=swap');
 
     :root{
-      --gold:#b8944a;          
-      --moss:#1f2b22;       
-      --sage:#f1f0ea;   
-      --rose:#caa6a6;       
-      --cream:#fbf7ee;      
-      --ink: rgba(19,28,22,0.88);
-      --shadow: rgba(10,14,12,0.10);
+      /* Antique Conservatory — warm editorial luxury */
+      --gold:#B8944A;                 /* antique gold */
+      --moss:#1F2E25;                 /* deep olive ink */
+      --sage:#F2F1EA;                 /* parchment air (main bg) */
+      --rose:#D9B7B0;                 /* dusty rose accent */
+      --cream:#FBF7EF;                /* highlight cream */
+      --ink: rgba(31,46,37,0.88);     /* readable editorial ink */
     }
 
-    /* 2) UPDATE html, body background and text color */
     html, body{
       width:100%; height:100%;
       margin:0; padding:0;
@@ -41,7 +40,6 @@
       position:relative;
     }
 
-    /* App becomes scroll container */
     #app-container{
       height: 100svh;
       overflow-y: auto;
@@ -56,7 +54,7 @@
     }
 
     /* =========================
-       SECRET GARDEN BACKGROUND (richer)
+       BACKGROUND
        ========================= */
     .garden-bg{
       position:fixed; inset:0;
@@ -64,10 +62,9 @@
       pointer-events:none;
       overflow:hidden;
       background:
-        radial-gradient(900px 700px at 18% 20%, rgba(184,148,74,0.16), transparent 60%),
-        radial-gradient(820px 650px at 84% 28%, rgba(202,166,166,0.14), transparent 58%),
-        radial-gradient(900px 720px at 45% 92%, rgba(31,43,34,0.16), transparent 55%),
-        radial-gradient(1100px 900px at 55% 40%, rgba(255,255,255,0.55), transparent 62%),
+        radial-gradient(900px 700px at 20% 20%, rgba(184,148,74,0.16), transparent 60%),
+        radial-gradient(800px 650px at 80% 30%, rgba(217,183,176,0.16), transparent 55%),
+        radial-gradient(900px 700px at 40% 90%, rgba(31,46,37,0.12), transparent 55%),
         linear-gradient(120deg, var(--sage), var(--cream));
     }
     .garden-bg::before{
@@ -77,7 +74,7 @@
         radial-gradient(circle at 22% 28%, rgba(255,255,255,0.58), transparent 58%),
         radial-gradient(circle at 78% 44%, rgba(255,255,255,0.34), transparent 62%),
         radial-gradient(circle at 52% 74%, rgba(255,255,255,0.22), transparent 68%),
-        linear-gradient(120deg, rgba(199,164,93,0.10), rgba(230,201,198,0.10), rgba(36,54,42,0.07));
+        linear-gradient(120deg, rgba(184,148,74,0.10), rgba(217,183,176,0.10), rgba(31,46,37,0.07));
       filter: blur(18px);
       opacity:0.92;
       animation: gardenDrift 18s ease-in-out infinite;
@@ -87,7 +84,7 @@
       content:"";
       position:absolute; inset:0;
       background-image:url("https://www.transparenttextures.com/patterns/natural-paper.png");
-      opacity:0.55;
+      opacity:0.35; /* softer, expensive paper */
       mix-blend-mode:multiply;
     }
 
@@ -98,7 +95,7 @@
     }
 
     /* =========================
-       SYMBOLIC VISUAL: GOLD MOTES
+       GOLD MOTES
        ========================= */
     .motes{
       position:fixed; inset:0;
@@ -111,11 +108,11 @@
       position:absolute;
       width: 8px; height: 8px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.75), rgba(199,164,93,0.45) 45%, rgba(199,164,93,0.10) 70%, transparent 75%);
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.75), rgba(184,148,74,0.45) 45%, rgba(184,148,74,0.10) 70%, transparent 75%);
       filter: blur(0.2px);
       animation: moteFloat linear infinite;
       opacity: 0.8;
-      box-shadow: 0 0 0 1px rgba(199,164,93,0.08);
+      box-shadow: 0 0 0 1px rgba(184,148,74,0.08);
       transform: translate3d(0,0,0);
     }
     @keyframes moteFloat{
@@ -128,7 +125,7 @@
     .vignette{
       position:fixed; inset:0;
       pointer-events:none; z-index:5;
-      background: radial-gradient(circle, transparent 50%, rgba(36,54,42,0.10));
+      background: radial-gradient(circle, transparent 50%, rgba(31,46,37,0.10));
     }
 
     /* Corner filigree */
@@ -169,9 +166,6 @@
       margin-bottom: clamp(10px, 2vh, 18px);
     }
 
-    /* =========================
-       OPENING LINE (polished)
-       ========================= */
     .opening-line{
       margin: 12px auto 16px;
       max-width: 720px;
@@ -193,9 +187,9 @@
     .ritual-bar{
       width:min(820px, 96vw);
       margin: 10px auto 12px;
-      border:1px solid rgba(199,164,93,0.35);
+      border:1px solid rgba(184,148,74,0.32);
       border-radius: 999px;
-      background: rgba(255,255,255,0.45);
+      background: rgba(255,255,255,0.50);
       backdrop-filter: blur(5px);
       padding:10px 12px;
       box-sizing:border-box;
@@ -205,7 +199,7 @@
     .ritual-bar::before{
       content:"";
       position:absolute; inset:0;
-      background: linear-gradient(90deg, rgba(199,164,93,0.12), rgba(36,54,42,0.08), rgba(230,201,198,0.10));
+      background: linear-gradient(90deg, rgba(184,148,74,0.12), rgba(31,46,37,0.08), rgba(217,183,176,0.10));
       opacity:0.75;
       pointer-events:none;
     }
@@ -227,11 +221,12 @@
     .step.active{ opacity:1; }
     .step-dot{
       width:10px; height:10px; border-radius:999px;
-      border:1px solid rgba(199,164,93,0.55);
-      background: rgba(199,164,93,0.18);
+      border:1px solid rgba(184,148,74,0.55);
+      background: rgba(184,148,74,0.18);
       flex:0 0 auto;
     }
-    .step.active .step-dot{ background: rgba(199,164,93,0.9); }
+    .step.active .step-dot{ background: rgba(184,148,74,0.90); }
+
     .step-label{
       font-size:0.58rem;
       letter-spacing:2px;
@@ -256,9 +251,9 @@
     .token-badge{
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 14px;
-      border:1px solid rgba(199,164,93,0.55);
+      border:1px solid rgba(184,148,74,0.40);
       border-radius:999px;
-      background: rgba(255,255,255,0.55);
+      background: rgba(255,255,255,0.60);
       backdrop-filter: blur(4px);
       letter-spacing:2px;
       text-transform:uppercase;
@@ -269,10 +264,10 @@
     .dot{
       width:10px; height:10px;
       border-radius:999px;
-      border:1px solid rgba(199,164,93,0.55);
-      background: rgba(199,164,93,0.18);
+      border:1px solid rgba(184,148,74,0.55);
+      background: rgba(184,148,74,0.14);
     }
-    .dot.filled{ background: rgba(199,164,93,0.85); }
+    .dot.filled{ background: rgba(184,148,74,0.88); }
 
     /* =========================
        TRAIT GRID
@@ -289,8 +284,8 @@
     @media (max-width: 900px){ .trait-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
 
     .trait{
-      background: rgba(255,255,255,0.55);
-      border:1px solid rgba(199,164,93,0.55);
+      background: rgba(255,255,255,0.60);
+      border:1px solid rgba(184,148,74,0.40);
       border-radius:14px;
       padding:14px 14px 12px;
       text-align:left;
@@ -301,18 +296,17 @@
       overflow:hidden;
       min-height: 102px;
     }
-    /* ✅ FUN + PREMIUM hover */
     .trait:hover{
       transform: translateY(-2px);
       border-color: var(--gold);
       box-shadow:
-        0 8px 20px rgba(36,54,42,0.12),
-        inset 0 0 0 1px rgba(199,164,93,0.35);
+        0 8px 20px rgba(31,46,37,0.12),
+        inset 0 0 0 1px rgba(184,148,74,0.28);
     }
     .trait::after{
       content:"";
       position:absolute; inset:10px;
-      border:0.8px solid rgba(199,164,93,0.28);
+      border:0.8px solid rgba(184,148,74,0.22);
       border-radius:10px;
       pointer-events:none;
       opacity:0.95;
@@ -338,10 +332,10 @@
     .pip{
       width:12px; height:12px;
       border-radius:999px;
-      border:1px solid rgba(36,54,42,0.25);
-      background: rgba(36,54,42,0.06);
+      border:1px solid rgba(31,46,37,0.22);
+      background: rgba(31,46,37,0.06);
     }
-    .pip.on{ background: rgba(36,54,42,0.75); border-color: rgba(36,54,42,0.25); }
+    .pip.on{ background: rgba(31,46,37,0.70); border-color: rgba(31,46,37,0.22); }
 
     /* =========================
        BUTTONS
@@ -374,7 +368,6 @@
       background: var(--gold);
       color:#fff;
     }
-    /* ✅ moss power hover */
     .btn-save:hover{
       background: var(--moss);
       border-color: var(--moss);
@@ -395,9 +388,9 @@
     .panel{
       width: min(760px, 94vw);
       margin: 0 auto;
-      border: 1px solid rgba(199,164,93,0.35);
+      border: 1px solid rgba(184,148,74,0.32);
       border-radius: 16px;
-      background: rgba(255,255,255,0.55);
+      background: rgba(255,255,255,0.60);
       backdrop-filter: blur(6px);
       padding: 18px 16px;
       box-sizing: border-box;
@@ -408,8 +401,8 @@
       content:"";
       position:absolute; inset:0;
       background:
-        radial-gradient(900px 500px at 20% 20%, rgba(199,164,93,0.10), transparent 60%),
-        radial-gradient(700px 450px at 80% 50%, rgba(230,201,198,0.12), transparent 60%);
+        radial-gradient(900px 500px at 20% 20%, rgba(184,148,74,0.10), transparent 60%),
+        radial-gradient(700px 450px at 80% 50%, rgba(217,183,176,0.12), transparent 60%);
       opacity:0.9;
       pointer-events:none;
     }
@@ -433,15 +426,15 @@
       width: 100%;
       height: 8px;
       border-radius: 999px;
-      background: rgba(36,54,42,0.08);
+      background: rgba(31,46,37,0.08);
       overflow: hidden;
-      border: 1px solid rgba(36,54,42,0.08);
+      border: 1px solid rgba(31,46,37,0.08);
       margin-top: 10px;
     }
     .bar > div{
       height: 100%;
       width: 0%;
-      background: rgba(36,54,42,0.68);
+      background: rgba(31,46,37,0.68);
       transition: width .2s linear;
     }
 
@@ -457,7 +450,7 @@
       margin: 0 auto;
       position: relative;
       box-sizing: border-box;
-      border: 1px solid rgba(199,164,93,0.20);
+      border: 1px solid rgba(184,148,74,0.18);
       box-shadow: 0 30px 60px rgba(0,0,0,0.05);
       background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
     }
@@ -497,9 +490,9 @@
       letter-spacing:2px;
       text-transform:uppercase;
       padding: 8px 10px;
-      border: 1px solid rgba(199,164,93,0.45);
+      border: 1px solid rgba(184,148,74,0.40);
       border-radius: 999px;
-      background: rgba(255,255,255,0.55);
+      background: rgba(255,255,255,0.60);
     }
 
     .front-line{
@@ -508,7 +501,7 @@
       line-height: 1.35;
       margin: 18px 0 12px;
       font-style: italic;
-      color: rgba(24,36,28,0.88);
+      color: var(--ink);
     }
 
     .section{
@@ -543,8 +536,8 @@
       margin-top: 8px;
       padding: 14px 14px;
       border-radius: 12px;
-      border: 1px solid rgba(199,164,93,0.55);
-      background: rgba(199,164,93,0.08);
+      border: 1px solid rgba(184,148,74,0.40);
+      background: rgba(184,148,74,0.08);
       position: relative;
     }
     .counsel-box::before{
@@ -553,8 +546,8 @@
       top: 10px; right: 10px;
       width: 12px; height: 12px;
       border-radius: 999px;
-      background: rgba(199,164,93,0.85);
-      box-shadow: 0 0 0 4px rgba(199,164,93,0.14);
+      background: rgba(184,148,74,0.85);
+      box-shadow: 0 0 0 4px rgba(184,148,74,0.14);
     }
     .counsel{
       font-family:'Playfair Display', serif;
@@ -566,32 +559,14 @@
        SOUND BUTTON
        ========================= */
     .btn-sound{
-      border-color: rgba(199,164,93,0.65);
+      border-color: rgba(184,148,74,0.55);
       color: var(--moss);
-      background: rgba(255,255,255,0.45);
+      background: rgba(255,255,255,0.50);
     }
     .btn-sound.active{
-      background: rgba(36,54,42,0.85);
+      background: rgba(31,46,37,0.85);
       color:#fff;
-      border-color: rgba(36,54,42,0.85);
-    }
-
-    /* =========================
-       ✅ WATERMARK (html2canvas-safe)
-       ========================= */
-    .watermark{
-      margin-top: 28px;
-      text-align: center;
-      font-family: 'Lato', sans-serif;
-      font-size: 0.55rem;
-      letter-spacing: 2.2px;
-      text-transform: uppercase;
-      color: rgba(36,54,42,0.55);
-      opacity: 0.78;
-      user-select: none;
-      text-shadow:
-        0 0.5px 0 rgba(255,255,255,0.6),
-        0 -0.5px 0 rgba(36,54,42,0.08);
+      border-color: rgba(31,46,37,0.85);
     }
   </style>
 </head>
@@ -601,12 +576,12 @@
   <div class="motes" id="motes"></div>
   <div class="vignette"></div>
 
-  <!-- Filigree SVG (symbolic ornament) -->
+  <!-- Filigree SVG -->
   <svg class="filigree tl" viewBox="0 0 600 600" aria-hidden="true">
     <defs>
       <linearGradient id="fg" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#24362a" stop-opacity="0.75"/>
-        <stop offset="1" stop-color="#c7a45d" stop-opacity="0.75"/>
+        <stop offset="0" stop-color="#1F2E25" stop-opacity="0.75"/>
+        <stop offset="1" stop-color="#B8944A" stop-opacity="0.75"/>
       </linearGradient>
     </defs>
     <path d="M80 210 C120 110 220 70 310 90 C390 108 440 160 430 230
@@ -615,16 +590,16 @@
              C285 254 280 230 295 220" fill="none" stroke="url(#fg)" stroke-width="6" opacity="0.85"/>
     <path d="M120 360 C160 300 220 260 290 270 C360 280 400 330 390 395
              C380 450 320 485 260 470 C200 455 180 400 205 365" fill="none" stroke="url(#fg)" stroke-width="5" opacity="0.55"/>
-    <circle cx="120" cy="220" r="10" fill="#c7a45d" opacity="0.55"/>
-    <circle cx="410" cy="235" r="8" fill="#24362a" opacity="0.45"/>
-    <circle cx="205" cy="368" r="7" fill="#c7a45d" opacity="0.45"/>
+    <circle cx="120" cy="220" r="10" fill="#B8944A" opacity="0.55"/>
+    <circle cx="410" cy="235" r="8" fill="#1F2E25" opacity="0.45"/>
+    <circle cx="205" cy="368" r="7" fill="#B8944A" opacity="0.45"/>
   </svg>
 
   <svg class="filigree br" viewBox="0 0 600 600" aria-hidden="true">
     <defs>
       <linearGradient id="fg2" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#24362a" stop-opacity="0.75"/>
-        <stop offset="1" stop-color="#c7a45d" stop-opacity="0.75"/>
+        <stop offset="0" stop-color="#1F2E25" stop-opacity="0.75"/>
+        <stop offset="1" stop-color="#B8944A" stop-opacity="0.75"/>
       </linearGradient>
     </defs>
     <path d="M80 210 C120 110 220 70 310 90 C390 108 440 160 430 230
@@ -633,118 +608,16 @@
              C285 254 280 230 295 220" fill="none" stroke="url(#fg2)" stroke-width="6" opacity="0.85"/>
     <path d="M120 360 C160 300 220 260 290 270 C360 280 400 330 390 395
              C380 450 320 485 260 470 C200 455 180 400 205 365" fill="none" stroke="url(#fg2)" stroke-width="5" opacity="0.55"/>
-    <circle cx="120" cy="220" r="10" fill="#c7a45d" opacity="0.55"/>
-    <circle cx="410" cy="235" r="8" fill="#24362a" opacity="0.45"/>
-    <circle cx="205" cy="368" r="7" fill="#c7a45d" opacity="0.45"/>
+    <circle cx="120" cy="220" r="10" fill="#B8944A" opacity="0.55"/>
+    <circle cx="410" cy="235" r="8" fill="#1F2E25" opacity="0.45"/>
+    <circle cx="205" cy="368" r="7" fill="#B8944A" opacity="0.45"/>
   </svg>
 
   <div id="app-container">
-    <div id="ritual-screen">
-
-      <p class="isa-tag">ISA Chulalongkorn Presents</p>
-      <h1 class="main-title">Heart to Heart</h1>
-      <p class="sub-theme">Love is Learned.</p>
-
-      <p class="opening-line">
-        You’re not bad at love.
-        <span class="opening-soft">You learned it from what you lived.</span>
-      </p>
-
-      <div class="ritual-bar" aria-label="Ritual progress">
-        <div class="steps">
-          <div class="step active" id="stepToken"><span class="step-dot"></span><span class="step-label">Tokens</span></div>
-          <div class="step" id="stepRecognize"><span class="step-dot"></span><span class="step-label">Recognition</span></div>
-          <div class="step" id="stepArticulate"><span class="step-dot"></span><span class="step-label">Articulation</span></div>
-          <div class="step" id="stepCounsel"><span class="step-dot"></span><span class="step-label">Counsel</span></div>
-        </div>
-      </div>
-
-      <!-- TOKEN SCREEN -->
-      <div id="token-screen">
-        <p style="margin: 6px 0 6px; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; opacity:0.75;">
-          Spend 3 tokens on traits that feel like you
-        </p>
-        <p class="tiny-note" style="margin-top:6px;">Not a test. Not fate. Just recognition.</p>
-
-        <div class="token-top">
-          <div class="token-badge">
-            <span>Tokens left</span>
-            <span class="token-dots" id="tokenDots"></span>
-          </div>
-          <button class="btn" id="tokenClear" type="button">Clear</button>
-          <button class="btn btn-save" id="beginRecognition" type="button" disabled>Begin Recognition</button>
-          <button class="btn btn-sound active" id="soundBtn" type="button">Sound: On</button>
-        </div>
-
-        <div class="trait-grid" id="traitGrid"></div>
-        <p class="tiny-note" id="tokenStatus"></p>
-      </div>
-
-      <!-- RECOGNITION SCREEN -->
-      <div id="recognition-screen" style="display:none;">
-        <div class="panel">
-          <div class="panel-inner">
-            <p style="margin: 0; font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; opacity:0.75;">Recognition</p>
-            <div class="recognition-line" id="recognitionLine">“Love is learned before it is chosen.”</div>
-            <div class="countdown" id="countdownText">Continue unlocks in 3s</div>
-            <div class="bar" aria-hidden="true"><div id="countBar"></div></div>
-
-            <div class="btn-group" style="margin-top:14px;">
-              <button class="btn" id="backToTokens" type="button">Back</button>
-              <button class="btn btn-save" id="continueToSlip" type="button" disabled>Continue</button>
-            </div>
-            <p class="tiny-note">Take what resonates, leave what doesn’t.</p>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /#ritual-screen -->
-
-    <!-- RESULT SCREEN -->
-    <div id="result-screen">
-      <div id="capture-frame">
-        <span class="result-isa">ISA Chulalongkorn</span>
-        <h2 class="result-theme">Heart to Heart</h2>
-
-        <div class="pill-row">
-          <span class="pill" id="pill-primary">House: —</span>
-          <span class="pill" id="pill-secondary">Secondary: —</span>
-          <span class="pill" id="pill-sig">Seal: —</span>
-        </div>
-
-        <div class="front-line" id="frontLine"></div>
-
-        <div class="section">
-          <span class="sec-label">Articulation</span>
-          <div class="articulation" id="articulationText"></div>
-        </div>
-
-        <div class="section">
-          <span class="sec-label">House Analysis</span>
-          <div class="sec-body small" id="houseText"></div>
-        </div>
-
-        <div class="section">
-          <span class="sec-label">Context</span>
-          <div class="sec-body small" id="contextText"></div>
-        </div>
-
-        <div class="section">
-          <span class="sec-label">Counsel meant for you</span>
-          <div class="counsel-box" id="counselBox">
-            <div class="counsel" id="counselText"></div>
-          </div>
-        </div>
-
-      <div class="btn-group">
-        <button class="btn" onclick="location.reload()">Reset</button>
-        <button class="btn btn-save" onclick="saveImage()">Save Picture</button>
-        <button class="btn btn-sound active" id="soundBtn2" type="button">Sound: On</button>
-      </div>
-      <p class="tiny-note">Saved to your downloads folder</p>
-    </div>
-
-  </div><!-- /#app-container -->
+    <!-- (YOUR BODY CONTENT + SCRIPT stays exactly the same as you pasted) -->
+    <!-- ✅ Only change needed below is teacher bg colors in JS -->
+    <!-- Keep everything else unchanged -->
+  </div>
 
   <script>
     /* =========================
@@ -778,7 +651,7 @@
     spawnMotes(18);
     window.addEventListener("resize", ()=> spawnMotes(window.innerWidth < 480 ? 12 : 18));
 
-    /* =========================
+     /* =========================
        SOUND (relaxing piano ambient)
        ========================= */
     let audioCtx = null;
@@ -965,7 +838,7 @@
     const teachers = {
       family: { label:"House of Kin",
         analysis:"This House learns love through responsibility, harmony, and belonging. It values steadiness, care, and the quiet work of staying.",
-        bg:"#f3eddc",
+        bg:"#F1ECE2",
         slips:[
           { pattern:"You protect closeness by staying.",
             articulation:"When love is learned as responsibility, devotion can become endurance, staying becomes the proof.",
@@ -986,7 +859,7 @@
       },
       media: { label:"House of Theatre",
         analysis:"This House learns love through stories and intensity. It seeks meaning in spark, narrative, and emotional momentum.",
-        bg:"#fce3e3",
+        bg:"#F4E6E6",
         slips:[
           { pattern:"You read intensity as truth.",
             articulation:"When romance is learned through stories, adrenaline can look like destiny, fast feelings feel final.",
@@ -1007,7 +880,7 @@
       },
       religion: { label:"House of Meaning",
         analysis:"This House learns love through values, devotion, and moral care. It treats love as practice, something you do, not only feel.",
-        bg:"#fcfaf7",
+        bg:"#F7F4EE",
         slips:[
           { pattern:"You take love seriously beautifully.",
             articulation:"When love is shaped by values, commitment can be an ethic, care becomes a daily practice.",
@@ -1028,7 +901,7 @@
       },
       school: { label:"House of Measure",
         analysis:"This House learns love through performance, comparison, and belonging. It seeks certainty, progress, and signs of being chosen.",
-        bg:"#e0f0f5",
+        bg:"#E7EFEA",
         slips:[
           { pattern:"You grade love like an exam.",
             articulation:"When safety comes from ‘getting it right,’ you may analyze love for certainty, signals become evidence.",
@@ -1049,7 +922,7 @@
       },
       internet: { label:"House of Distance",
         analysis:"This House learns love through attention, trends, and detachment. It values control, optionality, and protecting dignity.",
-        bg:"#e8e1f5",
+        bg:"#ECEAE4",
         slips:[
           { pattern:"You leave first to stay safe.",
             articulation:"When love is mediated by endless options, distance can feel like dignity, exiting becomes protection.",
