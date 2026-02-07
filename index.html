@@ -10,19 +10,20 @@
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&family=Pinyon+Script&display=swap');
 
     :root{
-      --gold:#c5a059;
-      --deep-green:#1a2a1d;
-      --cream:#f8f5f0;
-      --blush:#e8d5d1;
-      --ink: rgba(26,42,29,0.86);
+      /* ✨ Upgraded Secret Garden palette */
+      --gold:#c7a45d;                 /* warmer antique gold */
+      --moss:#24362a;                 /* richer “deep green” */
+      --sage:#eef3ee;                 /* garden-air background */
+      --rose:#e6c9c6;                 /* subtle playful warmth */
+      --cream:#f6f4ef;                /* still present, but not dominant */
+      --ink: rgba(24,36,28,0.88);     /* deeper readable ink */
     }
 
-    /* Keep body hidden overflow (background cinematic),
-       BUT make the app scrollable (fix: only 4 tiles visible). */
+    /* 2) UPDATE html, body background and text color */
     html, body{
       width:100%; height:100%;
       margin:0; padding:0;
-      background: var(--cream);
+      background: var(--sage);
       overflow:hidden;
       -webkit-text-size-adjust:100%;
       touch-action:manipulation;
@@ -30,8 +31,8 @@
 
     body{
       min-height:100svh;
-      background-color:var(--cream);
-      color:var(--deep-green);
+      background-color:var(--sage);
+      color:var(--moss);
       font-family:'Lato', sans-serif;
       display:flex;
       justify-content:center;
@@ -55,7 +56,7 @@
     }
 
     /* =========================
-       SECRET GARDEN BACKGROUND
+       SECRET GARDEN BACKGROUND (richer)
        ========================= */
     .garden-bg{
       position:fixed; inset:0;
@@ -63,21 +64,21 @@
       pointer-events:none;
       overflow:hidden;
       background:
-        radial-gradient(900px 700px at 20% 20%, rgba(197,160,89,0.14), transparent 60%),
-        radial-gradient(800px 650px at 80% 30%, rgba(232,213,209,0.14), transparent 55%),
-        radial-gradient(900px 700px at 40% 90%, rgba(26,42,29,0.12), transparent 55%),
-        linear-gradient(120deg, rgba(248,245,240,1), rgba(248,245,240,1));
+        radial-gradient(900px 700px at 20% 20%, rgba(199,164,93,0.16), transparent 60%),
+        radial-gradient(800px 650px at 80% 30%, rgba(230,201,198,0.16), transparent 55%),
+        radial-gradient(900px 700px at 40% 90%, rgba(36,54,42,0.14), transparent 55%),
+        linear-gradient(120deg, var(--sage), var(--cream));
     }
     .garden-bg::before{
       content:"";
       position:absolute; inset:-35%;
       background:
-        radial-gradient(circle at 22% 28%, rgba(255,255,255,0.60), transparent 58%),
-        radial-gradient(circle at 78% 44%, rgba(255,255,255,0.38), transparent 62%),
-        radial-gradient(circle at 52% 74%, rgba(255,255,255,0.26), transparent 68%),
-        linear-gradient(120deg, rgba(197,160,89,0.10), rgba(232,213,209,0.10), rgba(26,42,29,0.06));
+        radial-gradient(circle at 22% 28%, rgba(255,255,255,0.58), transparent 58%),
+        radial-gradient(circle at 78% 44%, rgba(255,255,255,0.34), transparent 62%),
+        radial-gradient(circle at 52% 74%, rgba(255,255,255,0.22), transparent 68%),
+        linear-gradient(120deg, rgba(199,164,93,0.10), rgba(230,201,198,0.10), rgba(36,54,42,0.07));
       filter: blur(18px);
-      opacity:0.9;
+      opacity:0.92;
       animation: gardenDrift 18s ease-in-out infinite;
       transform: translate3d(0,0,0);
     }
@@ -88,6 +89,7 @@
       opacity:0.55;
       mix-blend-mode:multiply;
     }
+
     @keyframes gardenDrift{
       0%{transform:translate(-4%,-2%) rotate(-2deg);}
       50%{transform:translate(4%,2%) rotate(2deg);}
@@ -108,11 +110,11 @@
       position:absolute;
       width: 8px; height: 8px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.75), rgba(197,160,89,0.45) 45%, rgba(197,160,89,0.10) 70%, transparent 75%);
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.75), rgba(199,164,93,0.45) 45%, rgba(199,164,93,0.10) 70%, transparent 75%);
       filter: blur(0.2px);
       animation: moteFloat linear infinite;
       opacity: 0.8;
-      box-shadow: 0 0 0 1px rgba(197,160,89,0.08);
+      box-shadow: 0 0 0 1px rgba(199,164,93,0.08);
       transform: translate3d(0,0,0);
     }
     @keyframes moteFloat{
@@ -125,7 +127,7 @@
     .vignette{
       position:fixed; inset:0;
       pointer-events:none; z-index:5;
-      background: radial-gradient(circle, transparent 50%, rgba(26,42,29,0.10));
+      background: radial-gradient(circle, transparent 50%, rgba(36,54,42,0.10));
     }
 
     /* Corner filigree */
@@ -176,7 +178,7 @@
       font-size: clamp(1.1rem, 3.4vw, 1.6rem);
       line-height: 1.45;
       font-style: italic;
-      color: rgba(26,42,29,0.9);
+      color: var(--ink);
     }
     .opening-soft{
       display:block;
@@ -190,7 +192,7 @@
     .ritual-bar{
       width:min(820px, 96vw);
       margin: 10px auto 12px;
-      border:1px solid rgba(197,160,89,0.35);
+      border:1px solid rgba(199,164,93,0.35);
       border-radius: 999px;
       background: rgba(255,255,255,0.45);
       backdrop-filter: blur(5px);
@@ -202,7 +204,7 @@
     .ritual-bar::before{
       content:"";
       position:absolute; inset:0;
-      background: linear-gradient(90deg, rgba(197,160,89,0.12), rgba(26,42,29,0.08), rgba(232,213,209,0.10));
+      background: linear-gradient(90deg, rgba(199,164,93,0.12), rgba(36,54,42,0.08), rgba(230,201,198,0.10));
       opacity:0.75;
       pointer-events:none;
     }
@@ -224,11 +226,11 @@
     .step.active{ opacity:1; }
     .step-dot{
       width:10px; height:10px; border-radius:999px;
-      border:1px solid rgba(197,160,89,0.55);
-      background: rgba(197,160,89,0.18);
+      border:1px solid rgba(199,164,93,0.55);
+      background: rgba(199,164,93,0.18);
       flex:0 0 auto;
     }
-    .step.active .step-dot{ background: rgba(197,160,89,0.9); }
+    .step.active .step-dot{ background: rgba(199,164,93,0.9); }
     .step-label{
       font-size:0.58rem;
       letter-spacing:2px;
@@ -253,7 +255,7 @@
     .token-badge{
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 14px;
-      border:1px solid rgba(197,160,89,0.55);
+      border:1px solid rgba(199,164,93,0.55);
       border-radius:999px;
       background: rgba(255,255,255,0.55);
       backdrop-filter: blur(4px);
@@ -266,10 +268,10 @@
     .dot{
       width:10px; height:10px;
       border-radius:999px;
-      border:1px solid rgba(197,160,89,0.55);
-      background: rgba(197,160,89,0.18);
+      border:1px solid rgba(199,164,93,0.55);
+      background: rgba(199,164,93,0.18);
     }
-    .dot.filled{ background: rgba(197,160,89,0.85); }
+    .dot.filled{ background: rgba(199,164,93,0.85); }
 
     /* =========================
        TRAIT GRID
@@ -287,7 +289,7 @@
 
     .trait{
       background: rgba(255,255,255,0.55);
-      border:1px solid rgba(197,160,89,0.55);
+      border:1px solid rgba(199,164,93,0.55);
       border-radius:14px;
       padding:14px 14px 12px;
       text-align:left;
@@ -298,11 +300,18 @@
       overflow:hidden;
       min-height: 102px;
     }
-    .trait:hover{ transform: translateY(-2px); border-color: var(--gold); }
+    /* ✅ FUN + PREMIUM hover */
+    .trait:hover{
+      transform: translateY(-2px);
+      border-color: var(--gold);
+      box-shadow:
+        0 8px 20px rgba(36,54,42,0.12),
+        inset 0 0 0 1px rgba(199,164,93,0.35);
+    }
     .trait::after{
       content:"";
       position:absolute; inset:10px;
-      border:0.8px solid rgba(197,160,89,0.28);
+      border:0.8px solid rgba(199,164,93,0.28);
       border-radius:10px;
       pointer-events:none;
       opacity:0.95;
@@ -328,10 +337,10 @@
     .pip{
       width:12px; height:12px;
       border-radius:999px;
-      border:1px solid rgba(26,42,29,0.25);
-      background: rgba(26,42,29,0.06);
+      border:1px solid rgba(36,54,42,0.25);
+      background: rgba(36,54,42,0.06);
     }
-    .pip.on{ background: rgba(26,42,29,0.75); border-color: rgba(26,42,29,0.25); }
+    .pip.on{ background: rgba(36,54,42,0.75); border-color: rgba(36,54,42,0.25); }
 
     /* =========================
        BUTTONS
@@ -358,9 +367,17 @@
       min-width: 150px;
       max-width: 260px;
       border-radius: 10px;
+      color: var(--moss);
     }
-    .btn-save{ background: var(--gold); color:#fff; }
-    .btn-save:hover{ background: var(--deep-green); border-color: var(--deep-green); }
+    .btn-save{
+      background: var(--gold);
+      color:#fff;
+    }
+    /* ✅ moss power hover */
+    .btn-save:hover{
+      background: var(--moss);
+      border-color: var(--moss);
+    }
     .btn:disabled{ opacity:0.5; cursor:not-allowed; }
 
     .tiny-note{
@@ -377,7 +394,7 @@
     .panel{
       width: min(760px, 94vw);
       margin: 0 auto;
-      border: 1px solid rgba(197,160,89,0.35);
+      border: 1px solid rgba(199,164,93,0.35);
       border-radius: 16px;
       background: rgba(255,255,255,0.55);
       backdrop-filter: blur(6px);
@@ -390,8 +407,8 @@
       content:"";
       position:absolute; inset:0;
       background:
-        radial-gradient(900px 500px at 20% 20%, rgba(197,160,89,0.10), transparent 60%),
-        radial-gradient(700px 450px at 80% 50%, rgba(232,213,209,0.12), transparent 60%);
+        radial-gradient(900px 500px at 20% 20%, rgba(199,164,93,0.10), transparent 60%),
+        radial-gradient(700px 450px at 80% 50%, rgba(230,201,198,0.12), transparent 60%);
       opacity:0.9;
       pointer-events:none;
     }
@@ -415,15 +432,15 @@
       width: 100%;
       height: 8px;
       border-radius: 999px;
-      background: rgba(26,42,29,0.08);
+      background: rgba(36,54,42,0.08);
       overflow: hidden;
-      border: 1px solid rgba(26,42,29,0.08);
+      border: 1px solid rgba(36,54,42,0.08);
       margin-top: 10px;
     }
     .bar > div{
       height: 100%;
       width: 0%;
-      background: rgba(26,42,29,0.68);
+      background: rgba(36,54,42,0.68);
       transition: width .2s linear;
     }
 
@@ -439,7 +456,7 @@
       margin: 0 auto;
       position: relative;
       box-sizing: border-box;
-      border: 1px solid rgba(197,160,89,0.20);
+      border: 1px solid rgba(199,164,93,0.20);
       box-shadow: 0 30px 60px rgba(0,0,0,0.05);
       background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
     }
@@ -462,7 +479,7 @@
     .result-theme{
       font-family:'Pinyon Script', cursive;
       font-size: 2.7rem;
-      color: var(--deep-green);
+      color: var(--moss);
       margin: 0 0 8px 0;
       line-height: 1;
     }
@@ -479,7 +496,7 @@
       letter-spacing:2px;
       text-transform:uppercase;
       padding: 8px 10px;
-      border: 1px solid rgba(197,160,89,0.45);
+      border: 1px solid rgba(199,164,93,0.45);
       border-radius: 999px;
       background: rgba(255,255,255,0.55);
     }
@@ -490,7 +507,7 @@
       line-height: 1.35;
       margin: 18px 0 12px;
       font-style: italic;
-      color: rgba(26,42,29,0.88);
+      color: rgba(24,36,28,0.88);
     }
 
     .section{
@@ -525,8 +542,8 @@
       margin-top: 8px;
       padding: 14px 14px;
       border-radius: 12px;
-      border: 1px solid rgba(197,160,89,0.55);
-      background: rgba(197,160,89,0.08);
+      border: 1px solid rgba(199,164,93,0.55);
+      background: rgba(199,164,93,0.08);
       position: relative;
     }
     .counsel-box::before{
@@ -535,8 +552,8 @@
       top: 10px; right: 10px;
       width: 12px; height: 12px;
       border-radius: 999px;
-      background: rgba(197,160,89,0.85);
-      box-shadow: 0 0 0 4px rgba(197,160,89,0.14);
+      background: rgba(199,164,93,0.85);
+      box-shadow: 0 0 0 4px rgba(199,164,93,0.14);
     }
     .counsel{
       font-family:'Playfair Display', serif;
@@ -548,14 +565,32 @@
        SOUND BUTTON
        ========================= */
     .btn-sound{
-      border-color: rgba(197,160,89,0.65);
-      color: var(--deep-green);
+      border-color: rgba(199,164,93,0.65);
+      color: var(--moss);
       background: rgba(255,255,255,0.45);
     }
     .btn-sound.active{
-      background: rgba(26,42,29,0.85);
+      background: rgba(36,54,42,0.85);
       color:#fff;
-      border-color: rgba(26,42,29,0.85);
+      border-color: rgba(36,54,42,0.85);
+    }
+
+    /* =========================
+       ✅ WATERMARK (html2canvas-safe)
+       ========================= */
+    .watermark{
+      margin-top: 28px;
+      text-align: center;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 2.2px;
+      text-transform: uppercase;
+      color: rgba(36,54,42,0.55);
+      opacity: 0.78;
+      user-select: none;
+      text-shadow:
+        0 0.5px 0 rgba(255,255,255,0.6),
+        0 -0.5px 0 rgba(36,54,42,0.08);
     }
   </style>
 </head>
@@ -569,8 +604,8 @@
   <svg class="filigree tl" viewBox="0 0 600 600" aria-hidden="true">
     <defs>
       <linearGradient id="fg" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#1a2a1d" stop-opacity="0.75"/>
-        <stop offset="1" stop-color="#c5a059" stop-opacity="0.75"/>
+        <stop offset="0" stop-color="#24362a" stop-opacity="0.75"/>
+        <stop offset="1" stop-color="#c7a45d" stop-opacity="0.75"/>
       </linearGradient>
     </defs>
     <path d="M80 210 C120 110 220 70 310 90 C390 108 440 160 430 230
@@ -579,16 +614,16 @@
              C285 254 280 230 295 220" fill="none" stroke="url(#fg)" stroke-width="6" opacity="0.85"/>
     <path d="M120 360 C160 300 220 260 290 270 C360 280 400 330 390 395
              C380 450 320 485 260 470 C200 455 180 400 205 365" fill="none" stroke="url(#fg)" stroke-width="5" opacity="0.55"/>
-    <circle cx="120" cy="220" r="10" fill="#c5a059" opacity="0.55"/>
-    <circle cx="410" cy="235" r="8" fill="#1a2a1d" opacity="0.45"/>
-    <circle cx="205" cy="368" r="7" fill="#c5a059" opacity="0.45"/>
+    <circle cx="120" cy="220" r="10" fill="#c7a45d" opacity="0.55"/>
+    <circle cx="410" cy="235" r="8" fill="#24362a" opacity="0.45"/>
+    <circle cx="205" cy="368" r="7" fill="#c7a45d" opacity="0.45"/>
   </svg>
 
   <svg class="filigree br" viewBox="0 0 600 600" aria-hidden="true">
     <defs>
       <linearGradient id="fg2" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#1a2a1d" stop-opacity="0.75"/>
-        <stop offset="1" stop-color="#c5a059" stop-opacity="0.75"/>
+        <stop offset="0" stop-color="#24362a" stop-opacity="0.75"/>
+        <stop offset="1" stop-color="#c7a45d" stop-opacity="0.75"/>
       </linearGradient>
     </defs>
     <path d="M80 210 C120 110 220 70 310 90 C390 108 440 160 430 230
@@ -597,12 +632,11 @@
              C285 254 280 230 295 220" fill="none" stroke="url(#fg2)" stroke-width="6" opacity="0.85"/>
     <path d="M120 360 C160 300 220 260 290 270 C360 280 400 330 390 395
              C380 450 320 485 260 470 C200 455 180 400 205 365" fill="none" stroke="url(#fg2)" stroke-width="5" opacity="0.55"/>
-    <circle cx="120" cy="220" r="10" fill="#c5a059" opacity="0.55"/>
-    <circle cx="410" cy="235" r="8" fill="#1a2a1d" opacity="0.45"/>
-    <circle cx="205" cy="368" r="7" fill="#c5a059" opacity="0.45"/>
+    <circle cx="120" cy="220" r="10" fill="#c7a45d" opacity="0.55"/>
+    <circle cx="410" cy="235" r="8" fill="#24362a" opacity="0.45"/>
+    <circle cx="205" cy="368" r="7" fill="#c7a45d" opacity="0.45"/>
   </svg>
 
-  <!-- ✅ FIXED STRUCTURE: wrappers restored -->
   <div id="app-container">
     <div id="ritual-screen">
 
@@ -610,7 +644,6 @@
       <h1 class="main-title">Heart to Heart</h1>
       <p class="sub-theme">Love is Learned.</p>
 
-      <!-- ✅ polished opening -->
       <p class="opening-line">
         You’re not bad at love.
         <span class="opening-soft">You learned it from what you lived.</span>
@@ -701,6 +734,9 @@
             <div class="counsel" id="counselText"></div>
           </div>
         </div>
+
+        <!-- ✅ Watermark INSIDE capture-frame -->
+        <div class="watermark">ISA Chulalongkorn • Heart to Heart • 2026</div>
       </div>
 
       <div class="btn-group">
@@ -816,7 +852,7 @@
       window.addEventListener("keydown", once);
     })();
 
-    /* Bind sound buttons (ONLY ONCE) */
+    /* Bind sound button (ONLY ONCE) */
     document.getElementById("soundBtn")?.addEventListener("click", (e) => { e.stopPropagation(); toggleSound(); });
 
     /* -------------------------
@@ -1210,7 +1246,11 @@
       renderTokenDots();
       renderTraits();
       beginRecognitionBtn.disabled = true;
-      document.body.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--cream").trim() || "#f8f5f0";
+
+      /* ✅ reset to new palette */
+      document.body.style.backgroundColor =
+        getComputedStyle(document.documentElement).getPropertyValue("--sage").trim() || "#eef3ee";
+
       setStep("token");
       softChime("gate");
     }
@@ -1338,7 +1378,6 @@
     renderTokenDots();
     renderTraits();
     setStep("token");
-    // ✅ removed duplicate soundBtn binding
   </script>
 </body>
 </html>
