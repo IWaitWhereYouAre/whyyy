@@ -602,12 +602,12 @@
   <div class="motes" id="motes"></div>
   <div class="vignette"></div>
 
-  <!-- Filigree SVG (now uses CSS variables) -->
+  <!-- Filigree SVG (fixed: reliable stop-color attrs using CSS vars) -->
   <svg class="filigree tl" viewBox="0 0 600 600" aria-hidden="true">
     <defs>
       <linearGradient id="fg" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" style="stop-color: var(--moss); stop-opacity: 0.75"/>
-        <stop offset="1" style="stop-color: var(--gold); stop-opacity: 0.75"/>
+        <stop offset="0" stop-color="var(--moss)" stop-opacity="0.75"/>
+        <stop offset="1" stop-color="var(--gold)" stop-opacity="0.75"/>
       </linearGradient>
     </defs>
     <path d="M80 210 C120 110 220 70 310 90 C390 108 440 160 430 230
@@ -616,16 +616,16 @@
              C285 254 280 230 295 220" fill="none" stroke="url(#fg)" stroke-width="6" opacity="0.85"/>
     <path d="M120 360 C160 300 220 260 290 270 C360 280 400 330 390 395
              C380 450 320 485 260 470 C200 455 180 400 205 365" fill="none" stroke="url(#fg)" stroke-width="5" opacity="0.55"/>
-    <circle cx="120" cy="220" r="10" style="fill: var(--gold); opacity:0.55"/>
-    <circle cx="410" cy="235" r="8" style="fill: var(--moss); opacity:0.45"/>
-    <circle cx="205" cy="368" r="7" style="fill: var(--gold); opacity:0.45"/>
+    <circle cx="120" cy="220" r="10" fill="var(--gold)" opacity="0.55"/>
+    <circle cx="410" cy="235" r="8" fill="var(--moss)" opacity="0.45"/>
+    <circle cx="205" cy="368" r="7" fill="var(--gold)" opacity="0.45"/>
   </svg>
 
   <svg class="filigree br" viewBox="0 0 600 600" aria-hidden="true">
     <defs>
       <linearGradient id="fg2" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" style="stop-color: var(--moss); stop-opacity: 0.75"/>
-        <stop offset="1" style="stop-color: var(--gold); stop-opacity: 0.75"/>
+        <stop offset="0" stop-color="var(--moss)" stop-opacity="0.75"/>
+        <stop offset="1" stop-color="var(--gold)" stop-opacity="0.75"/>
       </linearGradient>
     </defs>
     <path d="M80 210 C120 110 220 70 310 90 C390 108 440 160 430 230
@@ -634,9 +634,9 @@
              C285 254 280 230 295 220" fill="none" stroke="url(#fg2)" stroke-width="6" opacity="0.85"/>
     <path d="M120 360 C160 300 220 260 290 270 C360 280 400 330 390 395
              C380 450 320 485 260 470 C200 455 180 400 205 365" fill="none" stroke="url(#fg2)" stroke-width="5" opacity="0.55"/>
-    <circle cx="120" cy="220" r="10" style="fill: var(--gold); opacity:0.55"/>
-    <circle cx="410" cy="235" r="8" style="fill: var(--moss); opacity:0.45"/>
-    <circle cx="205" cy="368" r="7" style="fill: var(--gold); opacity:0.45"/>
+    <circle cx="120" cy="220" r="10" fill="var(--gold)" opacity="0.55"/>
+    <circle cx="410" cy="235" r="8" fill="var(--moss)" opacity="0.45"/>
+    <circle cx="205" cy="368" r="7" fill="var(--gold)" opacity="0.45"/>
   </svg>
 
   <div id="app-container">
@@ -646,9 +646,7 @@
       <h1 class="main-title">Heart to Heart</h1>
       <p class="sub-theme">You’re not bad at love.</p>
 
-      <p class="opening-line">
-        Love is learned.
-      </p>
+      <p class="opening-line">Love is learned.</p>
 
       <div class="ritual-bar" aria-label="Ritual progress">
         <div class="steps">
@@ -958,11 +956,13 @@
 
     /* =========================
        RITUAL DATA
-       ========================= */
+       =========================
+       FIXED: bg now uses your new palette (and can safely be applied by JS)
+    */
     const teachers = {
       family: { label:"House of Kin",
         analysis:"This House learns love through responsibility, harmony, and belonging. It values steadiness, care, and the quiet work of staying.",
-        bg:"#F1ECE2",
+        bg:"var(--sage)",
         slips:[
           { pattern:"You protect closeness by staying.",
             articulation:"When love is learned as responsibility, devotion can become endurance, staying becomes the proof.",
@@ -983,7 +983,7 @@
       },
       media: { label:"House of Theatre",
         analysis:"This House learns love through stories and intensity. It seeks meaning in spark, narrative, and emotional momentum.",
-        bg:"#F4E6E6",
+        bg:"var(--cream)",
         slips:[
           { pattern:"You read intensity as truth.",
             articulation:"When romance is learned through stories, adrenaline can look like destiny, fast feelings feel final.",
@@ -1004,7 +1004,7 @@
       },
       religion: { label:"House of Meaning",
         analysis:"This House learns love through values, devotion, and moral care. It treats love as practice, something you do, not only feel.",
-        bg:"#F7F4EE",
+        bg:"var(--sage)",
         slips:[
           { pattern:"You take love seriously beautifully.",
             articulation:"When love is shaped by values, commitment can be an ethic, care becomes a daily practice.",
@@ -1025,7 +1025,7 @@
       },
       school: { label:"House of Measure",
         analysis:"This House learns love through performance, comparison, and belonging. It seeks certainty, progress, and signs of being chosen.",
-        bg:"#E7EFEA",
+        bg:"var(--cream)",
         slips:[
           { pattern:"You grade love like an exam.",
             articulation:"When safety comes from ‘getting it right,’ you may analyze love for certainty, signals become evidence.",
@@ -1046,7 +1046,7 @@
       },
       internet: { label:"House of Distance",
         analysis:"This House learns love through attention, trends, and detachment. It values control, optionality, and protecting dignity.",
-        bg:"#ECEAE4",
+        bg:"var(--sage)",
         slips:[
           { pattern:"You leave first to stay safe.",
             articulation:"When love is mediated by endless options, distance can feel like dignity, exiting becomes protection.",
@@ -1214,6 +1214,7 @@
             : `Allocation complete. Proceed to recognition.`;
 
           if(primaryKey){
+            // FIXED: this will now stay inside your new palette (no old pastel hex)
             document.body.style.backgroundColor = teachers[primaryKey].bg;
           }
         };
@@ -1241,8 +1242,8 @@
       renderTraits();
       beginRecognitionBtn.disabled = true;
 
-      document.body.style.backgroundColor =
-        getComputedStyle(document.documentElement).getPropertyValue("--sage").trim() || "#F2F1EA";
+      // FIXED: reset to theme variable (not a random fallback)
+      document.body.style.backgroundColor = "var(--sage)";
 
       setStep("token");
       softChime("gate");
@@ -1344,6 +1345,7 @@
         counselBox.style.transform = "translateY(0)";
       }, 900);
 
+      // FIXED: stays in your palette (no old pastel hex)
       document.body.style.backgroundColor = teachers[primaryKey].bg;
 
       const b2 = document.getElementById("soundBtn2");
@@ -1374,5 +1376,3 @@
   </script>
 </body>
 </html>
-
-
