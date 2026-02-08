@@ -588,6 +588,71 @@
       color:#fff;
       border-color: rgba(var(--obsidian-rgb),0.88);
     }
+/* =========================
+   EMERGENCY VALENTINE OVERRIDE
+   ========================= */
+
+    /* Force primary palette */
+:root{
+  --gold: #7B1E2B;
+  --gold-rgb: 123,30,43;
+
+  --rose: #5A0F1B;
+  --rose-rgb: 90,15,27;
+
+  --moss: #5A0F1B;
+  --ink: #5A0F1B;
+}
+
+/* Force text */
+body,
+p,
+span,
+h1,h2,h3,h4,h5,
+.trait-title,
+.trait-sub,
+.recognition-line,
+.front-line,
+.counsel,
+.articulation,
+.sec-body,
+.sec-label,
+.result-theme{
+  color: #5A0F1B !important;
+}
+
+/* Force borders */
+.panel,
+.trait,
+.btn,
+.btn-save,
+.token-badge,
+.pill,
+.ritual-bar,
+.step-dot,
+#capture-frame,
+.counsel-box{
+  border-color: rgba(123,30,43,0.75) !important;
+}
+
+/* Buttons */
+.btn{
+  color: #5A0F1B !important;
+}
+.btn-save{
+  background: #7B1E2B !important;
+  color: #fff !important;
+}
+.btn-save:hover{
+  background: #5A0F1B !important;
+}
+
+/* Kill gold visuals */
+.mote,
+.filigree circle{
+  background: rgba(123,30,43,0.45) !important;
+  box-shadow: none !important;
+}
   </style>
 </head>
 
@@ -1368,3 +1433,5 @@
   </script>
 </body>
 </html>
+
+
