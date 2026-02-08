@@ -10,13 +10,30 @@
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&family=Pinyon+Script&display=swap');
 
     :root{
-      /* Antique Conservatory — warm editorial luxury */
-      --gold:#B8944A;                 /* antique gold */
-      --moss:#1F2E25;                 /* deep olive ink */
-      --sage:#F2F1EA;                 /* parchment air (main bg) */
-      --rose:#D9B7B0;                 /* dusty rose accent */
-      --cream:#FBF7EF;                /* highlight cream */
-      --ink: rgba(31,46,37,0.88);     /* readable editorial ink */
+      /* Royal Wine / Burgundy Luxe */
+      --royal-wine: #5A0F1B;
+      --velvet-burgundy: #7B1E2B;
+      --antique-gold: #C2A14D;
+      --burnished-brass: #9E7C2F;
+      --obsidian: #0E0E11;
+      --smoked-plum: #2A0E1A;
+      --ivory-parchment: #F3E9D7;
+
+      /* App tokens */
+      --gold: var(--antique-gold);
+      --moss: var(--smoked-plum);          /* deep ink tone */
+      --sage: var(--ivory-parchment);      /* main background */
+      --rose: var(--velvet-burgundy);      /* accent */
+      --cream: #FBF4E6;                    /* soft highlight */
+      --ink: rgba(14,14,17,0.86);          /* obsidian ink */
+
+      /* RGB helpers for rgba() */
+      --gold-rgb: 194,161,77;     /* #C2A14D */
+      --moss-rgb: 42,14,26;       /* #2A0E1A */
+      --rose-rgb: 123,30,43;      /* #7B1E2B */
+      --obsidian-rgb: 14,14,17;   /* #0E0E11 */
+      --cream-rgb: 251,244,230;   /* #FBF4E6 */
+      --sage-rgb: 243,233,215;    /* #F3E9D7 */
     }
 
     html, body{
@@ -63,9 +80,9 @@
       pointer-events:none;
       overflow:hidden;
       background:
-        radial-gradient(900px 700px at 20% 20%, rgba(184,148,74,0.16), transparent 60%),
-        radial-gradient(800px 650px at 80% 30%, rgba(217,183,176,0.16), transparent 55%),
-        radial-gradient(900px 700px at 40% 90%, rgba(31,46,37,0.12), transparent 55%),
+        radial-gradient(900px 700px at 20% 20%, rgba(var(--gold-rgb),0.18), transparent 60%),
+        radial-gradient(800px 650px at 80% 30%, rgba(var(--rose-rgb),0.18), transparent 55%),
+        radial-gradient(900px 700px at 40% 90%, rgba(var(--moss-rgb),0.14), transparent 55%),
         linear-gradient(120deg, var(--sage), var(--cream));
     }
     .garden-bg::before{
@@ -75,7 +92,11 @@
         radial-gradient(circle at 22% 28%, rgba(255,255,255,0.58), transparent 58%),
         radial-gradient(circle at 78% 44%, rgba(255,255,255,0.34), transparent 62%),
         radial-gradient(circle at 52% 74%, rgba(255,255,255,0.22), transparent 68%),
-        linear-gradient(120deg, rgba(184,148,74,0.10), rgba(217,183,176,0.10), rgba(31,46,37,0.07));
+        linear-gradient(120deg,
+          rgba(var(--gold-rgb),0.12),
+          rgba(var(--rose-rgb),0.10),
+          rgba(var(--moss-rgb),0.08)
+        );
       filter: blur(18px);
       opacity:0.92;
       animation: gardenDrift 18s ease-in-out infinite;
@@ -109,11 +130,16 @@
       position:absolute;
       width: 8px; height: 8px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.75), rgba(184,148,74,0.45) 45%, rgba(184,148,74,0.10) 70%, transparent 75%);
+      background: radial-gradient(circle at 30% 30%,
+        rgba(255,255,255,0.75),
+        rgba(var(--gold-rgb),0.45) 45%,
+        rgba(var(--gold-rgb),0.10) 70%,
+        transparent 75%
+      );
       filter: blur(0.2px);
       animation: moteFloat linear infinite;
       opacity: 0.8;
-      box-shadow: 0 0 0 1px rgba(184,148,74,0.08);
+      box-shadow: 0 0 0 1px rgba(var(--gold-rgb),0.10);
       transform: translate3d(0,0,0);
     }
     @keyframes moteFloat{
@@ -126,7 +152,7 @@
     .vignette{
       position:fixed; inset:0;
       pointer-events:none; z-index:5;
-      background: radial-gradient(circle, transparent 50%, rgba(31,46,37,0.10));
+      background: radial-gradient(circle, transparent 50%, rgba(var(--obsidian-rgb),0.12));
     }
 
     /* Corner filigree */
@@ -176,11 +202,6 @@
       font-style: italic;
       color: var(--ink);
     }
-    .opening-soft{
-      display:block;
-      margin-top: 6px;
-      opacity: 0.8;
-    }
 
     /* =========================
        RITUAL BAR
@@ -188,7 +209,7 @@
     .ritual-bar{
       width:min(820px, 96vw);
       margin: 10px auto 12px;
-      border:1px solid rgba(184,148,74,0.32);
+      border:1px solid rgba(var(--gold-rgb),0.32);
       border-radius: 999px;
       background: rgba(255,255,255,0.50);
       backdrop-filter: blur(5px);
@@ -200,7 +221,11 @@
     .ritual-bar::before{
       content:"";
       position:absolute; inset:0;
-      background: linear-gradient(90deg, rgba(184,148,74,0.12), rgba(31,46,37,0.08), rgba(217,183,176,0.10));
+      background: linear-gradient(90deg,
+        rgba(var(--gold-rgb),0.12),
+        rgba(var(--obsidian-rgb),0.08),
+        rgba(var(--rose-rgb),0.10)
+      );
       opacity:0.75;
       pointer-events:none;
     }
@@ -222,11 +247,11 @@
     .step.active{ opacity:1; }
     .step-dot{
       width:10px; height:10px; border-radius:999px;
-      border:1px solid rgba(184,148,74,0.55);
-      background: rgba(184,148,74,0.18);
+      border:1px solid rgba(var(--gold-rgb),0.55);
+      background: rgba(var(--gold-rgb),0.18);
       flex:0 0 auto;
     }
-    .step.active .step-dot{ background: rgba(184,148,74,0.90); }
+    .step.active .step-dot{ background: rgba(var(--gold-rgb),0.92); }
 
     .step-label{
       font-size:0.58rem;
@@ -252,7 +277,7 @@
     .token-badge{
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 14px;
-      border:1px solid rgba(184,148,74,0.40);
+      border:1px solid rgba(var(--gold-rgb),0.40);
       border-radius:999px;
       background: rgba(255,255,255,0.60);
       backdrop-filter: blur(4px);
@@ -265,10 +290,10 @@
     .dot{
       width:10px; height:10px;
       border-radius:999px;
-      border:1px solid rgba(184,148,74,0.55);
-      background: rgba(184,148,74,0.14);
+      border:1px solid rgba(var(--gold-rgb),0.55);
+      background: rgba(var(--gold-rgb),0.14);
     }
-    .dot.filled{ background: rgba(184,148,74,0.88); }
+    .dot.filled{ background: rgba(var(--gold-rgb),0.88); }
 
     /* =========================
        TRAIT GRID
@@ -286,7 +311,7 @@
 
     .trait{
       background: rgba(255,255,255,0.60);
-      border:1px solid rgba(184,148,74,0.40);
+      border:1px solid rgba(var(--gold-rgb),0.40);
       border-radius:14px;
       padding:14px 14px 12px;
       text-align:left;
@@ -301,13 +326,13 @@
       transform: translateY(-2px);
       border-color: var(--gold);
       box-shadow:
-        0 8px 20px rgba(31,46,37,0.12),
-        inset 0 0 0 1px rgba(184,148,74,0.28);
+        0 8px 20px rgba(var(--obsidian-rgb),0.12),
+        inset 0 0 0 1px rgba(var(--gold-rgb),0.28);
     }
     .trait::after{
       content:"";
       position:absolute; inset:10px;
-      border:0.8px solid rgba(184,148,74,0.22);
+      border:0.8px solid rgba(var(--gold-rgb),0.22);
       border-radius:10px;
       pointer-events:none;
       opacity:0.95;
@@ -333,10 +358,10 @@
     .pip{
       width:12px; height:12px;
       border-radius:999px;
-      border:1px solid rgba(31,46,37,0.22);
-      background: rgba(31,46,37,0.06);
+      border:1px solid rgba(var(--obsidian-rgb),0.22);
+      background: rgba(var(--obsidian-rgb),0.06);
     }
-    .pip.on{ background: rgba(31,46,37,0.70); border-color: rgba(31,46,37,0.22); }
+    .pip.on{ background: rgba(var(--obsidian-rgb),0.78); border-color: rgba(var(--obsidian-rgb),0.22); }
 
     /* =========================
        BUTTONS
@@ -389,7 +414,7 @@
     .panel{
       width: min(760px, 94vw);
       margin: 0 auto;
-      border: 1px solid rgba(184,148,74,0.32);
+      border: 1px solid rgba(var(--gold-rgb),0.32);
       border-radius: 16px;
       background: rgba(255,255,255,0.60);
       backdrop-filter: blur(6px);
@@ -402,8 +427,8 @@
       content:"";
       position:absolute; inset:0;
       background:
-        radial-gradient(900px 500px at 20% 20%, rgba(184,148,74,0.10), transparent 60%),
-        radial-gradient(700px 450px at 80% 50%, rgba(217,183,176,0.12), transparent 60%);
+        radial-gradient(900px 500px at 20% 20%, rgba(var(--gold-rgb),0.10), transparent 60%),
+        radial-gradient(700px 450px at 80% 50%, rgba(var(--rose-rgb),0.12), transparent 60%);
       opacity:0.9;
       pointer-events:none;
     }
@@ -427,15 +452,15 @@
       width: 100%;
       height: 8px;
       border-radius: 999px;
-      background: rgba(31,46,37,0.08);
+      background: rgba(var(--obsidian-rgb),0.08);
       overflow: hidden;
-      border: 1px solid rgba(31,46,37,0.08);
+      border: 1px solid rgba(var(--obsidian-rgb),0.08);
       margin-top: 10px;
     }
     .bar > div{
       height: 100%;
       width: 0%;
-      background: rgba(31,46,37,0.68);
+      background: rgba(var(--obsidian-rgb),0.70);
       transition: width .2s linear;
     }
 
@@ -451,7 +476,7 @@
       margin: 0 auto;
       position: relative;
       box-sizing: border-box;
-      border: 1px solid rgba(184,148,74,0.18);
+      border: 1px solid rgba(var(--gold-rgb),0.18);
       box-shadow: 0 30px 60px rgba(0,0,0,0.05);
       background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
     }
@@ -491,7 +516,7 @@
       letter-spacing:2px;
       text-transform:uppercase;
       padding: 8px 10px;
-      border: 1px solid rgba(184,148,74,0.40);
+      border: 1px solid rgba(var(--gold-rgb),0.40);
       border-radius: 999px;
       background: rgba(255,255,255,0.60);
     }
@@ -537,8 +562,8 @@
       margin-top: 8px;
       padding: 14px 14px;
       border-radius: 12px;
-      border: 1px solid rgba(184,148,74,0.40);
-      background: rgba(184,148,74,0.08);
+      border: 1px solid rgba(var(--gold-rgb),0.40);
+      background: rgba(var(--gold-rgb),0.08);
       position: relative;
     }
     .counsel-box::before{
@@ -547,8 +572,8 @@
       top: 10px; right: 10px;
       width: 12px; height: 12px;
       border-radius: 999px;
-      background: rgba(184,148,74,0.85);
-      box-shadow: 0 0 0 4px rgba(184,148,74,0.14);
+      background: rgba(var(--gold-rgb),0.90);
+      box-shadow: 0 0 0 4px rgba(var(--gold-rgb),0.14);
     }
     .counsel{
       font-family:'Playfair Display', serif;
@@ -560,14 +585,14 @@
        SOUND BUTTON
        ========================= */
     .btn-sound{
-      border-color: rgba(184,148,74,0.55);
+      border-color: rgba(var(--gold-rgb),0.55);
       color: var(--moss);
       background: rgba(255,255,255,0.50);
     }
     .btn-sound.active{
-      background: rgba(31,46,37,0.85);
+      background: rgba(var(--obsidian-rgb),0.88);
       color:#fff;
-      border-color: rgba(31,46,37,0.85);
+      border-color: rgba(var(--obsidian-rgb),0.88);
     }
   </style>
 </head>
@@ -577,12 +602,12 @@
   <div class="motes" id="motes"></div>
   <div class="vignette"></div>
 
-  <!-- Filigree SVG -->
+  <!-- Filigree SVG (now uses CSS variables) -->
   <svg class="filigree tl" viewBox="0 0 600 600" aria-hidden="true">
     <defs>
       <linearGradient id="fg" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#1F2E25" stop-opacity="0.75"/>
-        <stop offset="1" stop-color="#B8944A" stop-opacity="0.75"/>
+        <stop offset="0" style="stop-color: var(--moss); stop-opacity: 0.75"/>
+        <stop offset="1" style="stop-color: var(--gold); stop-opacity: 0.75"/>
       </linearGradient>
     </defs>
     <path d="M80 210 C120 110 220 70 310 90 C390 108 440 160 430 230
@@ -591,16 +616,16 @@
              C285 254 280 230 295 220" fill="none" stroke="url(#fg)" stroke-width="6" opacity="0.85"/>
     <path d="M120 360 C160 300 220 260 290 270 C360 280 400 330 390 395
              C380 450 320 485 260 470 C200 455 180 400 205 365" fill="none" stroke="url(#fg)" stroke-width="5" opacity="0.55"/>
-    <circle cx="120" cy="220" r="10" fill="#B8944A" opacity="0.55"/>
-    <circle cx="410" cy="235" r="8" fill="#1F2E25" opacity="0.45"/>
-    <circle cx="205" cy="368" r="7" fill="#B8944A" opacity="0.45"/>
+    <circle cx="120" cy="220" r="10" style="fill: var(--gold); opacity:0.55"/>
+    <circle cx="410" cy="235" r="8" style="fill: var(--moss); opacity:0.45"/>
+    <circle cx="205" cy="368" r="7" style="fill: var(--gold); opacity:0.45"/>
   </svg>
 
   <svg class="filigree br" viewBox="0 0 600 600" aria-hidden="true">
     <defs>
       <linearGradient id="fg2" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#1F2E25" stop-opacity="0.75"/>
-        <stop offset="1" stop-color="#B8944A" stop-opacity="0.75"/>
+        <stop offset="0" style="stop-color: var(--moss); stop-opacity: 0.75"/>
+        <stop offset="1" style="stop-color: var(--gold); stop-opacity: 0.75"/>
       </linearGradient>
     </defs>
     <path d="M80 210 C120 110 220 70 310 90 C390 108 440 160 430 230
@@ -609,9 +634,9 @@
              C285 254 280 230 295 220" fill="none" stroke="url(#fg2)" stroke-width="6" opacity="0.85"/>
     <path d="M120 360 C160 300 220 260 290 270 C360 280 400 330 390 395
              C380 450 320 485 260 470 C200 455 180 400 205 365" fill="none" stroke="url(#fg2)" stroke-width="5" opacity="0.55"/>
-    <circle cx="120" cy="220" r="10" fill="#B8944A" opacity="0.55"/>
-    <circle cx="410" cy="235" r="8" fill="#1F2E25" opacity="0.45"/>
-    <circle cx="205" cy="368" r="7" fill="#B8944A" opacity="0.45"/>
+    <circle cx="120" cy="220" r="10" style="fill: var(--gold); opacity:0.55"/>
+    <circle cx="410" cy="235" r="8" style="fill: var(--moss); opacity:0.45"/>
+    <circle cx="205" cy="368" r="7" style="fill: var(--gold); opacity:0.45"/>
   </svg>
 
   <div id="app-container">
@@ -619,11 +644,10 @@
 
       <p class="isa-tag">ISA Chulalongkorn Presents</p>
       <h1 class="main-title">Heart to Heart</h1>
-      <p class="sub-theme">Love is Learned.</p>
+      <p class="sub-theme">You’re not bad at love.</p>
 
       <p class="opening-line">
-        You’re not bad at love.
-        <span class="opening-soft">You learned it from what you lived.</span>
+        Love is learned.
       </p>
 
       <div class="ritual-bar" aria-label="Ritual progress">
@@ -1350,3 +1374,5 @@
   </script>
 </body>
 </html>
+
+
